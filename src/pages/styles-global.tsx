@@ -13,20 +13,8 @@ const styles = StyleSheet.create({
         width: 250,
         height: 250,
         borderRadius: 100,
-        marginLeft: 15
     },
-
-    // input: {
-    //     marginTop: 10,
-    //     padding: 10,
-    //     width: 300,
-    //     height: 40,
-    //     backgroundColor: '#fff',
-    //     borderRadius: 15,
-    //     fontSize: 16,
-    //     fontWeight: 'bold',
-    // },
-
+    
     button: {
         backgroundColor: '#4169E1',
         marginTop: 10,
@@ -57,7 +45,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#4169E1',
         marginBottom:10,
-        marginTop: 30,
         alignSelf:"center",
         fontWeight:"bold"
     },
@@ -73,7 +60,6 @@ const styles = StyleSheet.create({
 
     inputAreaPassword: {
         marginTop: 10,
-        padding: 10,
         width: 300,
         height: 50,
         backgroundColor: '#4169E1',
@@ -85,30 +71,49 @@ const styles = StyleSheet.create({
 
     inputPass: {
         width: '85%',
-        backgroundColor: '#4169E1',
+        backgroundColor: '#FFF',
         height: 50,
         padding: 8,
         fontSize: 16,
-        color: '#FFF',
+        color: '#4169E1',
         fontWeight: 'bold',
+        borderColor: '#4169E1',
+        borderWidth: 5,
+        borderRadius: 10,
+    },
+
+    inputText: {
+        width: '100%',
+        backgroundColor: '#FFF',
+        height: 50,
+        padding: 8,
+        fontSize: 16,
+        color: '#4169E1',
+        fontWeight: 'bold',
+        borderColor: '#4169E1',
+        borderWidth: 5,
+        borderRadius: 10,
     },
     input: {
         marginTop: 10,
-        padding: 10,
         width: 300,
         height: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: '#4169E1',
         borderRadius: 10,
-        fontSize: 16,
         fontWeight: 'bold',
-        color: "#FFF"
     },
+
     iconEye: {
         width: '15%',
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#4169E1'
+        backgroundColor: '#4169E1',
+        borderWidth: 5,
+        borderRadius: 15,
+        borderColor: '#4169E1'
     },
 })
 
