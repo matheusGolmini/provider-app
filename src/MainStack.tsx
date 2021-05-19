@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from './pages/Login';
 import Register from './pages/Register';
+import MainTab from './MainTab';
 
 const AppStack = createStackNavigator();
 
@@ -13,6 +14,7 @@ export default function Routes(){
            <AppStack.Navigator screenOptions={{ headerShown: false }}>
                <AppStack.Screen name='Login' component={Login} />
                <AppStack.Screen name='Register' component={Register} />
+               <AppStack.Screen name='MainTab' component={MainTab} />
            </AppStack.Navigator>
        </NavigationContainer>
     )

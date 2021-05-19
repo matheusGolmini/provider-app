@@ -12,7 +12,7 @@ const Login = () => {
 
 
     function navigateToHome() {
-        navigation.navigate('Home');
+        navigation.navigate('MainTab');
     }
 
     function navigateToRegister(){
