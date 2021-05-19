@@ -19,14 +19,21 @@ export default function Routes() {
         <Tab.Navigator
             tabBarOptions={{
                 style: {
-                    backgroundColor: '#121212',
-                    borderTopColor: 'transparent'
+                    backgroundColor: '#FFF',
+                    borderTopColor: 'transparent',
+                    height: 60
+                    
                 },
-                activeTintColor: '#FFF',
+                activeTintColor: '#37b7dc',
+                inactiveTintColor: '#8BE5FF',
                 tabStyle: {
                     paddingBottom: 5,
                     paddingTop: 5,
-                }
+                    borderBottomWidth: 4, 
+                    borderBottomColor: '#37b7dc',
+                    borderTopWidth: 4,
+                    borderTopColor: '#37b7dc'
+                },
             }}
         >
             <Tab.Screen 
