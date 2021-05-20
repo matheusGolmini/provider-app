@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import MonthlyBarChart from '../../components/Graphics/monthlyBarChart';
 
 const Profile = () => {
-  return(
-      <View style={styles.container}>
-          <Text style={styles.text}>Profile</Text>
-      </View>
-  )
+    return (
+        <>
+           <View style={styles.container}>
+                <Text style={styles.text}>Profile</Text>
+            </View>
+            <MonthlyBarChart />
+        </>
+    )
 }
-
 
 const styles = StyleSheet.create({
     container: {
