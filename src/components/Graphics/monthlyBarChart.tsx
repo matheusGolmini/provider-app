@@ -9,7 +9,7 @@ const MonthlyBarChart = () => {
     const contentInset = { top: 30, bottom: 30 }
     const fill = 'rgb(134, 65, 244)'
 
-    const data = [ 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+    const data = [ 10, 0, 0, 0, 0, 0, 20, 0, 0, 0, 1, 100]
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
