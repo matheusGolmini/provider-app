@@ -1,10 +1,21 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { XAxis, Grid, YAxis, BarChart } from 'react-native-svg-charts';
 import UtilsDate from '../../utils/date';
 
-const MonthlyBarChart = () => {
+const { width } = Dimensions.get('window');
 
+const MonthlyBarChart = () => {
+    const [ sizeHeight, setSizeHeight] = useState<number>(350)
+    const [ sizeWidth, setSizeWidth] = useState<number>(350)
+
+    useEffect(() => {
+        const validWidth = sizeWidth > width ? false : true;
+        if(!validWidth) {
+            setSizeWidth(width - 40)
+            setSizeHeight(width -40)
+        }
+    })
 
     const contentInset = { top: 30, bottom: 30 }
     const fill = 'rgb(134, 65, 244)'
@@ -24,17 +35,17 @@ const MonthlyBarChart = () => {
                         fontSize: 10,
                         fontWeight: 'bold'
                     }}
-                    style={{height: 350, flexDirection: 'row'}}
+                    style={{height: sizeHeight, flexDirection: 'row'}}
                     numberOfTicks={10}
                     formatLabel={(value) => `R$ ${value}`}
                 /> 
-                <BarChart style={{ height: 350, width: 350 }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30 }}>
+                <BarChart style={{ height: sizeHeight, width: sizeWidth }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30 }}>
             
                     <Grid belowChart={false}/>
                 </BarChart>
             </View>
             <XAxis
-                style={{ width: 350, marginLeft: 30 }}
+                style={{ width: sizeWidth, marginLeft: 30 }}
                 data={data}
                 formatLabel={(__, index) => UtilsDate.getTheAcronymOfTheMonth(index)}
                 contentInset={{ left: 15, right: 15 }}
