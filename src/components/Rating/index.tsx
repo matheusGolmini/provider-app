@@ -6,18 +6,12 @@ interface Reating {
     value: boolean;
     sizeWidth: number;
     sizeHeight: number;
-    userId: string;
+    ratingNumber?: number;
 }
 
-export default function Reating({value, sizeWidth, sizeHeight, userId}: Reating) {
+export default function Reating({value, sizeWidth, sizeHeight, ratingNumber}: Reating) {
     const [ maxReating, setMaxReating ] = useState<number[]>([1,2,3,4,5]);
-    const [ defaultRating, setDefaultRating ] = useState<number>(0);
-
-    if(!value) {
-        useEffect(() => {
-            setDefaultRating(userId === '123' ? 5: 1);
-        }, []);
-    }
+    const [ defaultRating, setDefaultRating ] = useState<number>(!!ratingNumber ? ratingNumber: 0 );
     
     function controlRating(num: number) {
         if(num === defaultRating) {

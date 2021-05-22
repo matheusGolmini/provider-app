@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart } from 'react-native-svg-charts';
+import { PieChart, PieChartData } from 'react-native-svg-charts';
 import { Text } from 'react-native-svg';
 import Lybrary, { Dimensions, View } from 'react-native';
+import { Service } from '../../mocks';
 
 const { width, height } = Dimensions.get('window');
 
-
-
-const ServicesPieChart = () => {
-    const [ size, setSize ] = useState<number>(300)
+const ServicesPieChart = ({defaultSize, isText, dataValue} : {defaultSize?: number, isText: boolean, dataValue?: Service[]}) => {
+    const [ size, setSize ] = useState<number>(defaultSize ? defaultSize: 300);
 
     useEffect(() => {
         const valid = size > width || size > height ? false : true;
@@ -17,19 +16,21 @@ const ServicesPieChart = () => {
         }
     })
 
-    const data = [30, 10, 25, 18, 17];
-    const pieData = data.map((value, index) => ({
-        value,
+    const data = dataValue ? dataValue : [30, 10, 25, 18, 17];
+    console.log(data)
+    const pieData = data.map((value: number | Service, index: number) => ({
+        value: typeof value === 'number' ? value : value.serviceAmount,
         key: `${index}-${value}`,
         svg: {
-            fill: (
+            fill: typeof value === 'number' ?(
                 '#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000'
             ).slice(0, 7)
+            : value.color
         }
     }))
 
     const Label = (({slices}: any) => {
-        return slices.map((slice: any, index: number) => {
+        return slices.map((slice: any, index: any) => {
             const { pieCentroid, data } = slice;
             return (
                 <Text
@@ -49,9 +50,15 @@ const ServicesPieChart = () => {
 
     return(
         <>
-            <View style={styles.container}>
-                <Lybrary.Text style={styles.text} >Gráfico de Serviços Realizados</Lybrary.Text>
-            </ View>
+            {
+                isText
+                ? 
+                    <View style={styles.container}>
+                        <Lybrary.Text style={styles.text} >Gráfico de Serviços Realizados</Lybrary.Text>
+                    </ View>
+                : <Lybrary.Text />
+            }
+           
                 <PieChart style={{height: size, marginTop: 10}} data={pieData}>
                     <Label />
                 </PieChart>

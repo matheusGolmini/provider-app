@@ -5,9 +5,11 @@ import UtilsDate from '../../utils/date';
 
 const { width } = Dimensions.get('window');
 
-const MonthlyBarChart = () => {
-    const [ sizeHeight, setSizeHeight] = useState<number>(350)
-    const [ sizeWidth, setSizeWidth] = useState<number>(350)
+const MonthlyBarChart = ({defaultSize, isText, dataValues} : {defaultSize?: number, isText: boolean, dataValues?: number[]}) => {
+    const [ sizeHeight, setSizeHeight] = useState<number>(defaultSize ? defaultSize: 350)
+    const [ sizeWidth, setSizeWidth] = useState<number>(defaultSize ? defaultSize: 350)
+
+    const data : number[] = !!dataValues ? dataValues : [ 10, 0, 0, 0, 0, 0, 20, 0, 0, 0, 1, 100];
 
     useEffect(() => {
         const validWidth = sizeWidth > width ? false : true;
@@ -20,11 +22,17 @@ const MonthlyBarChart = () => {
     const contentInset = { top: 30, bottom: 30 }
     const fill = 'rgb(134, 65, 244)'
 
-    const data = [ 10, 0, 0, 0, 0, 0, 20, 0, 0, 0, 1, 100]
-
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.text}> Gráfico de ganhos por mês</Text>
+            {
+                isText
+                ? 
+                    <View style={styles.container}>
+                        <Text style={styles.text}> Gráfico de ganhos por mês</Text>
+                    </ View>
+                : <Text />
+            }
+           
             <View style={{ flexDirection: 'row' }}>
 
                 <YAxis
