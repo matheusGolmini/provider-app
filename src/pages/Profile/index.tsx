@@ -35,7 +35,7 @@ const Profile = () => {
       >
       <View style={styles.container}>
         <View style={{flexDirection: 'row', marginTop: 50, alignItems: 'center', margin: 20}}>
-          <Image style={styles.logo} source={require('../../assets/avatar.jpg')}/>
+          <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
           <View style={{marginLeft: 5}}>
             <Text style={styles.text}>{client?.name}</Text>
           </View>

@@ -16,7 +16,7 @@ export interface Service {
 
 export function getUserMock() : UserService {
     return {
-        name: 'Vinicius',
+        name: 'Matheus',
         image: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg',
         ratingNumber: 3,
         services: [

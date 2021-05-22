@@ -83,17 +83,17 @@ const ProfileEdit = () => {
                     <View style={{alignItems: 'center', marginTop: 2}}> 
                         <TouchableOpacity 
                             onPress={ pickImage }
-                        >
                             
+                        >
                             {image === null 
-                                ? <ImageBackground style={styles.logo} source={require('../../assets/avatar.jpg')}>
-                                    <View style={{
-                                        flex: 1,
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Icon name="camera"  size={35} color="#FFF" style={styles.camera}/>
-                                    </View>
+                                ? <ImageBackground style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} >
+                                        <View style={{
+                                            flex: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Icon name="camera"  size={35} color="#FFF" style={styles.camera}/>
+                                        </View>
                                 </ImageBackground>  
                                 : <Image  source={ {uri: image }} style={{...styles.logo,  borderColor: '#4169E1'}}/>
                             }
