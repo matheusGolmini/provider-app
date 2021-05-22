@@ -17,7 +17,6 @@ const ServicesPieChart = ({defaultSize, isText, dataValue} : {defaultSize?: numb
     })
 
     const data = dataValue ? dataValue : [30, 10, 25, 18, 17];
-    console.log(data)
     const pieData = data.map((value: number | Service, index: number) => ({
         value: typeof value === 'number' ? value : value.serviceAmount,
         key: `${index}-${value}`,
