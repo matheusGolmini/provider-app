@@ -6,10 +6,10 @@ import ModalPicker from '../../components/ModalPicker';
 
 const NewJob = () => {
     const[name, setName] = useState<string>('');
-    const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
+    // const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
     const[typeSelected, setTypeSelected] = useState<string>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    console.log(isModalVisible)
+
     return(
         <>
             <ScrollView

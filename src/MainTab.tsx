@@ -24,6 +24,7 @@ export default function Routes() {
                     height: 60
                     
                 },
+                keyboardHidesTabBar: true,
                 activeTintColor: '#37b7dc',
                 inactiveTintColor: '#8BE5FF',
                 tabStyle: {
