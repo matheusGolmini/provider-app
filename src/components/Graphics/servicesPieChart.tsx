@@ -53,7 +53,7 @@ const ServicesPieChart = ({defaultSize, isText, dataValue} : {defaultSize?: numb
                 isText
                 ? 
                     <View style={styles.container}>
-                        <Lybrary.Text style={styles.text} >Gráfico de Serviços Realizados</Lybrary.Text>
+                        <Lybrary.Text style={styles.text} >Serviços Realizados</Lybrary.Text>
                     </ View>
                 : <Lybrary.Text />
             }
@@ -77,6 +77,7 @@ const styles = Lybrary.StyleSheet.create({
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
+        color: '#37b7dc'
     }
 })
 

@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#37b7dc'
     },
     logo: {
         width: 150,
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     },
     TextModal: {
         fontSize: 20,
-        color: 'black',
+        color: '#37b7dc',
         fontWeight: 'bold'
     },
     

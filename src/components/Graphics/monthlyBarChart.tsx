@@ -28,7 +28,7 @@ const MonthlyBarChart = ({defaultSize, isText, dataValues} : {defaultSize?: numb
                 isText
                 ? 
                     <View style={styles.container}>
-                        <Text style={styles.text}> Gráfico de ganhos por mês</Text>
+                        <Text style={styles.text}> Ganhos por mês</Text>
                     </ View>
                 : <Text />
             }
@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#37b7dc'
     }
 })
 
