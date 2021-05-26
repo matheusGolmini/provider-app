@@ -1,17 +1,79 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Modal } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import ModalPicker from '../../components/ModalPicker';
+import ComponentDateTimePicker from '../../components/DateTimePicker';
 
 const NewJob = () => {
-    const[name, setName] = useState<string>('');
+    const[emailClient, setEmailClient] = useState<string>('');
+    const[sortDescription, setSortDescription] = useState<string>('');
+    const[description, setDescription] = useState<string>('');
+    const[serviceDaysNumber, setServiceDaysNumber] = useState<number | null>(null);
+    const[serviceValue, setServiceValue] = useState<number | null>(null);
     // const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
-    const[typeSelected, setTypeSelected] = useState<string>('');
+    const[typeSelected, setTypeSelected] = useState<string| null>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+    //calendar
+    const [initDate, setInitDate] = useState<string | null>(null);
+    const [endDate, setEndDate] = useState<string | null>(null);
+
+    //buttonControl
+    const [disableButton, setDisableButton] = useState<boolean>(true);
+    const [opacityButton, setOpacityButton] = useState<number>(0.5);
+
+    useEffect(() => {
+        console.log(disableButton);
+        console.log(opacityButton);
+        if(
+            !!emailClient && 
+            !!sortDescription && 
+            !!description &&
+            !!serviceDaysNumber && 
+            !!serviceValue && 
+            !!initDate &&
+            !!endDate &&
+            !!typeSelected
+        ) {
+            setDisableButton(false)
+            setOpacityButton(1)
+        } else {
+            setDisableButton(true)
+            setOpacityButton(0.5)
+        }
+    })
+
+    function saveNewService() {
+        console.log(
+            {
+                "emailClient": emailClient ,
+                "sortDescription": sortDescription,
+                "description": description,
+                "serviceDaysNumber": serviceDaysNumber,
+                "serviceValue": serviceValue,
+                "initDate": initDate,
+                "endDate": endDate,
+                "typeSelected": typeSelected
+            }
+            
+        );
+
+    }
+
+    function clearState() {
+        setEmailClient('');
+        setSortDescription('');
+        setDescription('');
+        setTypeSelected('');
+        setServiceDaysNumber(null);
+        setServiceValue(null);
+        setInitDate(null);
+        setEndDate(null);
+    }
+
     return(
-        <>
+        <> 
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
@@ -21,51 +83,69 @@ const NewJob = () => {
                         source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}}
                     />
                     <Text style={{...styles.text, marginTop: 10}}>Adicione um serviço</Text>
+
                     <View style={styles.input}>
                         <TextInput 
                             style={styles.inputText} 
-                            onChangeText={(val) => setName(val)}
-                            placeholder='Nome' 
+                            keyboardType={'email-address'}
+                            onChangeText={(val) => setEmailClient(val)}
+                            placeholder='E-mail do cliente' 
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
+
+
                     <View style={styles.input}>
                         <TextInput 
                             style={styles.inputText} 
-                            onChangeText={(val) => setName(val)}
-                            placeholder='Id do cliente' 
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            onChangeText={(val) => setName(val)}
+                            onChangeText={(val) => setSortDescription(val)}
                             placeholder='Descrição curta' 
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
+
                     <View style={styles.input}>
                         <TextInput 
                             style={styles.inputText} 
-                            onChangeText={(val) => setName(val)}
+                            onChangeText={(val) => setDescription(val)}
                             placeholder='Descrição completa' 
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
+               
                     <View style={styles.input}>
                         <TextInput 
                             style={styles.inputText} 
-                            onChangeText={(val) => setName(val)}
+                            keyboardType={'number-pad'}
+                            onChangeText={(val) => setServiceDaysNumber(Number(val))}
+                            placeholder='Quantidade estimada de dias' 
+                            placeholderTextColor='#37b7dc'
+                        />
+                    </View>
+
+
+                    <View style={styles.input}>
+                        <TextInput 
+                            style={styles.inputText} 
+                            keyboardType={'number-pad'}
+                            onChangeText={(val) => setServiceValue(Number(val))}
                             placeholder='Valor' 
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
+
+                    <ComponentDateTimePicker 
+                        endDate={endDate}
+                        initDate={initDate}
+                        setEndDate={setEndDate}
+                        setInitDate={setInitDate}
+                    />
+                 
                     <TouchableOpacity 
-                        style={{...styles.buttonPicker, margin: 25}}
+                        style={{...styles.buttonPicker}}
                         onPress={ () => setIsModalVisible(!isModalVisible) }
                     >
-                        <Text style={styles.buttonTextPicker}>{typeSelected === '' ? 'Selecione o tipo de serviço...' : typeSelected}</Text>
+                        <Text style={styles.buttonTextPicker}>{typeSelected === '' ? 'Selecione o tipo de serviço' : typeSelected}</Text>
                         <Feather 
                             name='arrow-down' 
                             size={20} 
@@ -88,13 +168,13 @@ const NewJob = () => {
 
                     </Modal>
                     <TouchableOpacity 
-                        style={{...styles.button, margin: 25}}
-                        onPress={ () => {} }
+                        style={{...styles.button, marginBottom: 30, marginTop: 10, opacity: opacityButton}}
+                        disabled={disableButton}
+                        onPress={ saveNewService }
                     >
                         <Text style={styles.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
-
-               
+                    
                 </View>
             </ScrollView>
         </>
@@ -120,6 +200,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#37b7dc'
     },
+    textInfo: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#37b7dc',
+        marginHorizontal: 5
+    },
     inputText: {
         width: '100%',
         backgroundColor: '#FFF',
@@ -144,7 +230,6 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#37b7dc',
-        marginTop: 10,
         width: 300,
         height: 60,
         flexDirection: 'row',

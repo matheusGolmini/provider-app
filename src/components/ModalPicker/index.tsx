@@ -8,7 +8,7 @@ const types = ['Eletricista', 'Pedreiro', 'Encanador', 'Encanador1', 'Encanador3
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
-    setTypeSelected:  React.Dispatch<React.SetStateAction<string>>;
+    setTypeSelected:  React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const ModalPicker = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
