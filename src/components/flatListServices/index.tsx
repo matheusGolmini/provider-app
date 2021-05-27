@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Linking, Modal} from 'react-native';
 
 import styles from './styles'; 
 import { FlatList } from 'react-native-gesture-handler';
 import { IDetailService } from '../../interfaces/detailService ';
 import Rating from '../../components/Rating/index';
+import ModalContrat from '../ModalContrat';
 
 
 interface PropsComponent {
@@ -85,6 +86,59 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
                         >
                             <Text style={{...styles.buttonText, color:  'white'}}> Ajuda</Text>
                         </TouchableOpacity>
+
+                        
+                    </View>
+                )}
+            />
+        </View>  
+    )
+}
+
+export function ListContractSign(propsComponent: PropsComponent) {
+    const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const[typeSelected, setTypeSelected] = useState<string| null>('');
+
+    return (
+        <View style={styles.container}>
+            <FlatList 
+                data={propsComponent.props.service}
+                keyExtractor={(service: IDetailService) => String(service.id)}
+                showsVerticalScrollIndicator={false}    
+                renderItem={({item: service})=> (
+                    <View style={ { ...styles.task, borderColor: service.color }}>
+                        <Image style={styles.logo} source={{uri: service.imageProvider}}/>
+                        <Text style={{...styles.text, color: service.color, marginTop: 15}}>Cliente {service.nameProvider}</Text>
+                        <Text style={{...styles.text, color: service.color}}>Data inicio: 01/02/2021</Text>
+                        <Text style={{...styles.text, color: service.color}}>Acordo: {service.combinedContract}</Text>
+                        <Text style={{...styles.text, color: service.color}}>Data finalização: 01/22/2021</Text>
+                        
+                        <Text style={{...styles.text, color: service.color}}>Valor pago: {service.value} reais</Text>
+
+                        <TouchableOpacity 
+                            style={{...styles.tasksButton2, backgroundColor: service.color, borderColor: service.color}} 
+                            onPress={() => setIsModalVisible(!isModalVisible)}
+                        >
+                            <Text style={{...styles.buttonText, color:  'white'}}> Assinar contrato </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={{...styles.tasksButton2, backgroundColor: service.color, borderColor: service.color}} 
+                            onPress={() => {}}
+                        >
+                            <Text style={{...styles.buttonText, color:  'white'}}> Ajuda</Text>
+                        </TouchableOpacity>
+
+                        <Modal
+                            transparent={true}
+                            animationType={'fade'}
+                            visible={isModalVisible}
+                        >
+                            <ModalContrat 
+                                setIsModalVisible={setIsModalVisible}
+                                setTypeSelected={setTypeSelected}
+                            />
+
+                        </Modal>
 
                         
                     </View>
