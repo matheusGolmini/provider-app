@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import UtilsDate from '../../utils/date';
@@ -14,20 +14,36 @@ interface ComponentDateTimePicker {
 const ComponentDateTimePicker = ({setInitDate, initDate, setEndDate, endDate}: ComponentDateTimePicker) => {
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
+    const [disabled, setDisabled] = useState(true);
+    const [opacityButton, setOpacityButton] = useState<number>(0.5);
+    const [date, setDate] = useState<Date>(new Date());
 
-    const onChange = (event: any, selectedDate: any) => {
-        if(selectedDate) {
+    useEffect(() => {
+        if(!!initDate) {
+            setDisabled(false)
+            setOpacityButton(1)
+        }else {
+            setDisabled(true)
+            setOpacityButton(0.5)
+        }
+    }, [initDate])
+
+    const onChange = async (event: any, selectedDate: any) => {
+        if(!selectedDate) {
             setShow(false)
             setShow2(false)
+            return 
         }
         if(show) { 
             setShow(!show)
             setInitDate(UtilsDate.formatDate(selectedDate)) 
+            setDate(new Date(selectedDate))
         };
         if(show2) {
             setShow2(!show2)
             setEndDate(UtilsDate.formatDate(selectedDate));
         } 
+        
     };
 
     const showMode = () => {
@@ -55,8 +71,9 @@ const ComponentDateTimePicker = ({setInitDate, initDate, setEndDate, endDate}: C
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={{...styles.buttonPicker, marginTop: 10}} 
+                style={{...styles.buttonPicker, marginTop: 10, opacity: opacityButton}} 
                 onPress={showMode2}
+                disabled={disabled}
             >
                 <Text style={styles.buttonTextPicker}>{endDate ? endDate : 'Escolha a data do término'}</Text>
                 <Feather 
@@ -82,10 +99,10 @@ const ComponentDateTimePicker = ({setInitDate, initDate, setEndDate, endDate}: C
             {show2 && (
                 <DateTimePicker
                 testID="dateTimePicker"
-                value={UtilsDate.addDay(2)}
+                value={UtilsDate.addDay(1, date)}
                 mode={'date'}
                 is24Hour={true}
-                minimumDate={UtilsDate.addDay(2)}
+                minimumDate={UtilsDate.addDay(1,date)}
                 display="default"
                 onChange={onChange}
                 />

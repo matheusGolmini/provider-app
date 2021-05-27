@@ -18,14 +18,12 @@ const NewJob = () => {
     //calendar
     const [initDate, setInitDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
-
+ 
     //buttonControl
     const [disableButton, setDisableButton] = useState<boolean>(true);
-    const [opacityButton, setOpacityButton] = useState<number>(0.5);
+    const [opacityButton, setOpacityButton] = useState<number>();
 
     useEffect(() => {
-        console.log(disableButton);
-        console.log(opacityButton);
         if(
             !!emailClient && 
             !!sortDescription && 
@@ -168,11 +166,11 @@ const NewJob = () => {
 
                     </Modal>
                     <TouchableOpacity 
-                        style={{...styles.button, marginBottom: 30, marginTop: 10, opacity: opacityButton}}
+                        style={{...styles.button, marginBottom: 30, marginTop: 10}}
                         disabled={disableButton}
                         onPress={ saveNewService }
                     >
-                        <Text style={styles.buttonText}>Cadastrar</Text>
+                        <Text style={{...styles.buttonText, opacity: opacityButton}}>Cadastrar</Text>
                     </TouchableOpacity>
                     
                 </View>
