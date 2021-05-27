@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { text } from '../../mocks/index';
 
 
 const { height, width } =  Dimensions.get('window');
-
-const types = ['Eletricista', 'Pedreiro', 'Encanador', 'Encanador1', 'Encanador3', 'Encanador4', 'Encanador5', 'Encanador1', 'Encanador3', 'Encanador4', 'Encanador5'];
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,23 +22,12 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
             setOpacity(0.5)
             setDisabled(true)
         }
-        
     }
 
     function contractSign()  {
         console.log("Eu aceito o contrato");
         setIsModalVisible(false)
     }
-
-    const options = types.map((item, index) => {
-        return (
-            <View>
-                <Text style={styles.text}>
-                    {item}
-                </Text>
-            </View>
-        )
-    })
 
     return(
         <View style={styles.container}>
@@ -56,7 +44,7 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
                         scrollEventThrottle={16}
                         showsVerticalScrollIndicator={false}
                     >
-                        {options}
+                        <Text style={styles.text}>{text}</Text>
                     </ScrollView>
                 </View>
 
@@ -103,7 +91,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        margin: 20,
+        margin: 15,
         fontSize: 20,
         fontWeight: 'bold',
         color: '#37b7dc',
