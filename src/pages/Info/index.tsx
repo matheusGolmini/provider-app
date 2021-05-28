@@ -1,25 +1,203 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,Image } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import Reating from '../../components/Rating';
 
 
 const Info = () => {
-  return(
-      <View style={styles.container}>
-          <Text style={styles.text}>Informação</Text>
-      </View>
-  )
+
+    return(
+        <>
+            <View style={styles.container}>
+                <Image
+                    style={{...styles.logo}} 
+                    source={require('../../assets/duvida.jpg')}
+                />
+                
+                <Text style={styles.title}>Informações</Text>
+
+            
+            </View>
+
+            <ScrollView
+                style={{marginTop: 15}}
+            >
+
+           
+
+                <View style={styles.info}>
+
+                
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={styles.subTitle}>Score</Text>
+                        <Reating 
+                            sizeHeight={40}
+                            sizeWidth={40}
+                            ratingNumber={5}
+                            value={false}
+                        />
+                    </View>
+                    <View style={{alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+                        
+                        <Text style={styles.textQuestion}> 1 - Qual a impotanccia de ter um score alto?</Text>
+                        <Text style={styles.textReponseQuestion}>Seu perfil será exibido para os clientes com maior frequência!</Text>
+                        <Text style={styles.textReponseQuestion}>A cada serviço prestado é cobrado uma comição, quanto maior o seu score menor a comissão cobrada nos serviços.</Text>
+                        
+                        <Text style={styles.textQuestion}>Porcentagem de cada score:</Text>
+                        <ScoreInfo />
+                        
+                        
+                    </View>
+                </View>
+            </ScrollView>
+            <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 20}}>
+
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => {}}
+                >
+                    <Text style={styles.buttonText}>Ajuda</Text>
+                </TouchableOpacity>
+            </View>
+        </>
+    )
+}
+
+function ScoreInfo () {
+    return (
+        <>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={0}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 10% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={1}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 9% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={2}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 8% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={3}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 7.5% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={4}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 7% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={5}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 6.5% por serviço</Text>
+            </View>
+            <View style={styles.infoStar}>
+                <Reating 
+                    sizeHeight={25}
+                    sizeWidth={25}
+                    ratingNumber={6}
+                    value={false}
+                />
+                <Text style={{fontSize: 18}}> Cobrado 6% por serviço</Text>
+            </View>
+        </>
+    )
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        marginTop: 25,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    text: {
+
+    logo: {
+        width: 150,
+        height: 150,
+        borderRadius: 100,
+        borderWidth: 5,
+        marginTop: 25,
+    },
+
+    title: {
         fontSize: 25,
         fontWeight: 'bold'
+    },
+
+    info: {
+        padding: 24,
+        borderRadius: 8,
+        marginBottom: 16,
+    },
+
+    subTitle: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        justifyContent: 'center'
+    },
+
+    textQuestion: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+
+    textReponseQuestion: {
+        fontSize: 20,
+        padding: 10
+    },
+
+    infoStar: {
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        flexDirection: 'row', 
+    },
+    button: {
+        backgroundColor: '#37b7dc',
+        marginTop: 10,
+        width: 150,
+        height: 40,
+        flexDirection: 'row',
+        borderRadius: 10,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+    buttonText: {
+        flex: 1,
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
     }
 })
 
