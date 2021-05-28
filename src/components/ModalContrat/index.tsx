@@ -15,7 +15,7 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
     const [opacity, setOpacity] = useState<number>(0.5);
 
     function scroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
-        if(event.nativeEvent.contentOffset.y >=  (height/ 2) - 25) {
+        if(event.nativeEvent.contentOffset.y >=  4770) {
             setOpacity(1)
             setDisabled(false)
         }else {
@@ -44,7 +44,7 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
                         scrollEventThrottle={16}
                         showsVerticalScrollIndicator={false}
                     >
-                        <Text style={styles.text}>{text}</Text>
+                        <Text style={styles.contratText}>{text}</Text>
                     </ScrollView>
                 </View>
 
@@ -101,6 +101,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         borderColor: '#37b7dc',
+    },
+
+    contratText: {
+        margin: 15,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
     },
 
     button: {
