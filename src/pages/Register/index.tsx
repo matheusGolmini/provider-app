@@ -6,15 +6,18 @@ import { useNavigation } from '@react-navigation/core';
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Feather } from '@expo/vector-icons';
 
 const Register = () => {
     const navigation = useNavigation();
 
     const [image, setImage] = useState<string | null>(null);
+    const [imageDocument, setImageDocument] = useState<string | null>(null);
     const[name, setName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const[email, setEmail] = useState<string>('');
     const[phone, setPhone] = useState<string>('');
+    const[Cpf, setCpf] = useState<string>('');
     const [conPassword, setConPassword] = useState<string>('');
     const[conEmail, setConEmail] = useState<string>('');
     const[hidePass, setHidePass] = useState<boolean>(true);
@@ -25,7 +28,7 @@ const Register = () => {
     const [messageModal, setMessageModal ] = useState<string>('');
 
     useEffect(() => {
-        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email){
+        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!Cpf && !!imageDocument){
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -34,16 +37,19 @@ const Register = () => {
         }
     })
 
-    const pickImage = async () => {
+    const pickImage = async (type: string) => {
         let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
 
         if (!result.cancelled) {
-        setImage(result.uri);
+            type === 'imagePerfil' 
+                ? setImage(result.uri)
+                : setImageDocument(result.uri)
+
         }
     };
 
@@ -92,7 +98,7 @@ const Register = () => {
             >
                 <View style={stylesGlobal.container}>
                     <TouchableOpacity 
-                        onPress={ pickImage }
+                        onPress={ () => pickImage('imagePerfil') }
                     >
                         {image === null 
                             ? <ImageBackground 
@@ -121,6 +127,19 @@ const Register = () => {
                     </View>
                     <View style={stylesGlobal.input}>
                         <TextInput 
+                            placeholder='CPF'
+                            placeholderTextColor='#4169E1'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={stylesGlobal.inputText}
+                            onChangeText={(val) => setCpf(val)}
+                        />
+
+                    </View>
+
+                    
+                    <View style={stylesGlobal.input}>
+                        <TextInput 
                             placeholder='Telefone'
                             placeholderTextColor='#4169E1'
                             keyboardType='number-pad'
@@ -130,6 +149,22 @@ const Register = () => {
                         />
 
                     </View>
+
+                    <TouchableOpacity 
+                        style={{...styles.buttonDocument}}
+                        onPress={ () => pickImage('imageDocument') }
+                    >
+                        <Text style={{...styles.buttonDocumentText, opacity: !!imageDocument ? 1 : 0.5,}}>{'Adicione um documento'}</Text>
+                        <Feather 
+                            name='check' 
+                            color='white' 
+                            size={30}
+                            style={{
+                                marginHorizontal: 20,
+                                opacity: !!imageDocument ? 1 : 0.5,
+                            }}
+                        />
+                    </TouchableOpacity>
                 
                     <View style={stylesGlobal.input}>
                         <TextInput 
@@ -244,23 +279,23 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: '#4169E1'
     
-      },
-    
-      title: {
+    },
+
+    title: {
         marginTop: 20,
         fontSize: 20,
         color: 'black',
         fontWeight: 'bold'
-      },
-    
-      buttonArea: {
+    },
+
+    buttonArea: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         margin: 20
-      },
-    
-      buttonModal: {
+    },
+
+    buttonModal: {
         backgroundColor: '#4169E1',
         marginTop: 10,
         width: 100,
@@ -268,7 +303,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 10,
         alignItems: 'center',
-      },
+    },
+    buttonDocument: {
+        backgroundColor: '#4169E1',
+        marginTop: 10,
+        width: 300,
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+    buttonDocumentText: {
+        padding: 8,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    }
 })
 
 export default Register;
