@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet,Image } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import CreateTicket from '../../components/createTicket';
 import Reating from '../../components/Rating';
 
 
 const Info = () => {
-
+    const [controlPicker, setControlPicker] = useState<boolean>(false);
     return(
         <>
             <View style={styles.container}>
@@ -55,10 +56,17 @@ const Info = () => {
 
                 <TouchableOpacity 
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => {
+                        setControlPicker(!controlPicker);
+                    }}
                 >
                     <Text style={styles.buttonText}>Ajuda</Text>
                 </TouchableOpacity>
+                {
+                    controlPicker ? 
+                    <CreateTicket/>
+                    : <></>
+                }
             </View>
         </>
     )

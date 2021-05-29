@@ -14,6 +14,7 @@ const mockServicePayment: IDetailService[] = [
         service: 'Pintor',
         is_payment: false,
         value: 1000,
+        help_open: false
     },
     {
         id: '2',
@@ -27,6 +28,7 @@ const mockServicePayment: IDetailService[] = [
         service: 'Pedreiro',
         is_payment: false,
         value: 1500,
+        help_open: false
     }
 ];
 
@@ -44,7 +46,8 @@ const mockServiceInProgress: IDetailService[] = [
         is_payment: true,
         value: 800,
         start_date: new Date(),
-        end_date: new Date()
+        end_date: new Date(),
+        help_open: false
     }
 ];
 
@@ -62,7 +65,8 @@ const mockServiceServicesFinished: IDetailService[] = [
         is_payment: true,
         value: 800,
         start_date: new Date(),
-        end_date: new Date()
+        end_date: new Date(),
+        help_open: false
     }
 ];
 

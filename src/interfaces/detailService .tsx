@@ -12,4 +12,5 @@ export interface IDetailService {
     start_date?: Date;
     end_date?: Date;
     color: string;
+    help_open: boolean;
 }
