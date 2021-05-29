@@ -106,6 +106,26 @@ const styles =  StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
+
+  buttonPicker: {
+    backgroundColor: '#37b7dc',
+    marginTop: 10,
+    width: 300,
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 10,
+    overflow: 'hidden',
+    alignItems: 'center',
+  },
+
+  buttonTextPicker: {
+    padding: 8,
+    alignItems: 'center',
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
 });
 
 export default styles;

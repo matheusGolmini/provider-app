@@ -41,10 +41,6 @@ const styles =  StyleSheet.create({
     justifyContent: 'center',
   },
 
-  menuWrapper: {
-    marginTop: 20,
-  },
-
   menuItem: {
     flexDirection: 'row',
     paddingVertical: 15,

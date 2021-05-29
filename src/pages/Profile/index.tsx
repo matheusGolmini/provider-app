@@ -50,7 +50,7 @@ const Profile = () => {
           
         </View>
         
-        <View style={styles.userInfoSection}>
+        {/* <View style={styles.userInfoSection}>
           <View style={styles.row}>
             <Icon name='email' size={30} style={{color: '#4169E1'}}/>
             <Text style={{...styles.text, fontSize: 20, marginLeft: 20}}>{client?.email}</Text>
@@ -61,27 +61,11 @@ const Profile = () => {
             <Text style={{...styles.text, fontSize: 20, marginLeft: 20}}>{client?.phone}</Text>
           </View>
 
-        </View>
+        </View> */}
 
-        <View style={styles.infoBoxWrapper}>
-          <View style={{
-            ...styles.infoBox,
-            borderRightColor: '#4169E1',
-            borderRightWidth: 3
-            
-          }}>
-            <Text style={{...styles.text, fontSize: 20}}> 0 </Text>
-            <Text style={{...styles.text, fontSize: 13, color:'#708090'}}> Serviços em aprovação </Text>
-          </View>
+        
 
-          <View style={styles.infoBox}>
-            <Text style={{...styles.text, fontSize: 20}}> 20 </Text>
-            <Text style={{...styles.text, fontSize: 13, color:'#708090'}}> Serviços finalizados </Text>
-          </View>
-
-        </View>
-
-        <View style={styles.menuWrapper}>
+        <View >
           <TouchableOpacity
             onPress={() => goTo('ProfileEditEmail')}
           >
@@ -98,12 +82,39 @@ const Profile = () => {
               <Text style={{...styles.menuItemText}}> Alterar Senha </Text>
             </View>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => goTo('ProfileEditAddress')}
+          >
+            <View style={styles.menuItem}>
+              <Icon name='home' size={30}style={{color: '#FF0000'}}/>
+              <Text style={{...styles.menuItemText}}> Alterar Endereço </Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.menuItem}>
               <Icon name='account-check-outline' size={30}style={{color: '#FF0000'}}/>
               <Text style={{...styles.menuItemText}}> Ajuda </Text>
             </View>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.infoBoxWrapper}>
+          <View style={{
+            ...styles.infoBox,
+            borderRightColor: '#4169E1',
+            borderRightWidth: 3
+            
+          }}>
+            <Text style={{...styles.text, fontSize: 20}}> 0 </Text>
+            <Text style={{...styles.text, fontSize: 13, color:'#708090'}}> Serviços em andamento</Text>
+          </View>
+
+          <View style={styles.infoBox}>
+            <Text style={{...styles.text, fontSize: 20}}> 20 </Text>
+            <Text style={{...styles.text, fontSize: 13, color:'#708090'}}> Serviços finalizados </Text>
+          </View>
+
         </View>
         
         

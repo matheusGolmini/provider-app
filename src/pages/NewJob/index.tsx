@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import ModalPicker from '../../components/ModalPicker';
 import ComponentDateTimePicker from '../../components/DateTimePicker';
+import { types } from '../../mocks/index';
 
 const NewJob = () => {
     const[emailClient, setEmailClient] = useState<string>('');
@@ -162,6 +163,7 @@ const NewJob = () => {
                         <ModalPicker 
                             setIsModalVisible={setIsModalVisible}
                             setTypeSelected={setTypeSelected}
+                            data={types}
                         />
 
                     </Modal>

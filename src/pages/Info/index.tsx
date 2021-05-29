@@ -21,6 +21,7 @@ const Info = () => {
 
             <ScrollView
                 style={{marginTop: 15}}
+                showsVerticalScrollIndicator={false}
             >
 
            
@@ -41,7 +42,7 @@ const Info = () => {
                         
                         <Text style={styles.textQuestion}> 1 - Qual a impotanccia de ter um score alto?</Text>
                         <Text style={styles.textReponseQuestion}>Seu perfil será exibido para os clientes com maior frequência!</Text>
-                        <Text style={styles.textReponseQuestion}>A cada serviço prestado é cobrado uma comição, quanto maior o seu score menor a comissão cobrada nos serviços.</Text>
+                        <Text style={styles.textReponseQuestion}>A cada serviço prestado é cobrado uma comissão, quanto maior o seu score menor a comissão cobrada nos serviços.</Text>
                         
                         <Text style={styles.textQuestion}>Porcentagem de cada score:</Text>
                         <ScoreInfo />

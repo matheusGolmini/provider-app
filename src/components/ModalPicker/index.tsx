@@ -4,21 +4,22 @@ import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from
 
 const { height, width } =  Dimensions.get('window');
 
-const types = ['Eletricista', 'Pedreiro', 'Encanador', 'Encanador1', 'Encanador3', 'Encanador4', 'Encanador5'];
+
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
     setTypeSelected:  React.Dispatch<React.SetStateAction<string | null>>;
+    data: string[]
 }
 
-const ModalPicker = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
+const ModalPicker = ({setIsModalVisible, setTypeSelected, data}: ModalPicker) => {
 
     const onPressItem = (option: string) => {
         setIsModalVisible(false)
         setTypeSelected(option)
     }
 
-    const options = types.map((item, index) => {
+    const options = data.map((item, index) => {
         return (
             <TouchableOpacity   
                 style={styles.option}

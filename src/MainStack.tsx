@@ -7,6 +7,7 @@ import MainTab from './MainTab';
 import ProfileEdit from './pages/ProfileEdit'
 import ProfileEditEmail from './pages/ProfileEdit/editEmail'
 import ProfileEditPassword from './pages/ProfileEdit/editPassword'
+import ProfileEditAddress from './pages/ProfileEdit/editAddress'
 
 const AppStack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function Routes(){
                <AppStack.Screen name='ProfileEdit' component={ProfileEdit} />
                <AppStack.Screen name='ProfileEditEmail' component={ProfileEditEmail} />
                <AppStack.Screen name='ProfileEditPassword' component={ProfileEditPassword} />
+               <AppStack.Screen name='ProfileEditAddress' component={ProfileEditAddress} />
            </AppStack.Navigator>
        </NavigationContainer>
     )

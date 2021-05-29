@@ -49,6 +49,40 @@ export function getUserMock() : UserService {
     }
 }
 
+export const types = ['Eletricista', 'Pedreiro', 'Encanador', 'Encanador1', 'Encanador3', 'Encanador4', 'Encanador5'];
+export const states = [
+    "Acre - AC",
+    "Alagoas - AL",
+    "Amapá - AP",
+    "Amazonas - AM",
+    "Bahia - BA",
+    "Ceará - CE",
+    "Distrito Federal - DF",
+    "Espírito Santo - ES",
+    "Goiás - GO",
+    "Maranhão - MA",
+    "Mato Grosso - MT",
+    "Mato Grosso do Sul - MS",
+    "Minas Gerais - MG",
+    "Pará - PA",
+    "Paraíba - PB",
+    "Paraná - PR",
+    "Pernambuco - PE",
+    "Piauí - PI",
+    "Rio de Janeiro - RJ",
+    "Rio Grande do Norte - RN",
+    "Rio Grande do Sul - RS",
+    "Rondônia - RO",
+    "Roraima - RR",
+    "Santa Catarina - SC",
+    "São Paulo - SP",
+    "Sergipe - SE",
+    "Tocantins - TO"
+]
+
+const isSaveAddress = false;
+
+
 export const text = `CONTRATO DE PRESTAÇÃO DE SERVIÇO
 CONTRATANTE: Reparo-Rápido S/A, Nome Fantasia:
 Reparo-Rápido, CNPJ nº:0000000-01,
