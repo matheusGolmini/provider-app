@@ -18,14 +18,13 @@ const ProfileEditAddress = () => {
     const[cep, setCep] = useState<string>('');
     const[rua, setRua] = useState<string>('');
     const[complemento, setComplemento] = useState<string>('');
-    const[estado, setEstado] = useState<string>('');
     const[numero, setNumero] = useState<number | null>(null);
 
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const[stateSelected, setStateSelected] = useState<string| null>('');
 
     useEffect(() => {
-        if(!!cep && !!rua && !!estado && !!numero){
+        if(!!cep && !!rua && !!stateSelected && !!numero){
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -46,7 +45,7 @@ const ProfileEditAddress = () => {
             cep,
             rua,
             complemento,
-            estado,
+            stateSelected,
             numero
         });
         navigation.navigate('Home')

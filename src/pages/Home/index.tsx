@@ -4,16 +4,19 @@ import ServicesPieChart from '../../components/Graphics/servicesPieChart';
 import MonthlyBarChart from '../../components/Graphics/monthlyBarChart';
 import Reating from '../../components/Rating';
 import { getUserMock, UserService } from '../../mocks';
+import { isSaveAddress } from '../../mocks/index'
+import ModalAddress from '../../components/ModalAddress';
 
 
 
 const Home = () => {
     const [visibleModalTwo, setVisibleModalTwo ] = useState<boolean>(false);
     const [userService, setUserService ] = useState<UserService | undefined>(undefined);
-    const n  = 1;
+    const [isModalAddressVisible, setIsModalAddressVisible] = useState<boolean>(false);
 
     useEffect(() => {
         setUserService(getUserMock())
+        setIsModalAddressVisible(isSaveAddress ? false : true)
     }, [])
 
     return(
@@ -48,7 +51,14 @@ const Home = () => {
                             <View style={{marginTop: 50}}/>
                             <ServicesPieChart isText={true} dataValue={userService.services}/> 
                         </ScrollView>
-                }       
+                }    
+                <Modal
+                    visible={isModalAddressVisible}
+                >
+                    <ModalAddress
+                        setIsModalAddressVisible={setIsModalAddressVisible}
+                    />
+                </Modal>   
             </View>
             <Modal
                 animationType='slide'

@@ -80,7 +80,7 @@ export const states = [
     "Tocantins - TO"
 ]
 
-const isSaveAddress = false;
+export const isSaveAddress = false;
 
 
 export const text = `CONTRATO DE PRESTAÇÃO DE SERVIÇO
