@@ -129,15 +129,6 @@ function ScoreInfo () {
                 />
                 <Text style={{fontSize: 18}}> Cobrado 6.5% por serviço</Text>
             </View>
-            <View style={styles.infoStar}>
-                <Reating 
-                    sizeHeight={25}
-                    sizeWidth={25}
-                    ratingNumber={6}
-                    value={false}
-                />
-                <Text style={{fontSize: 18}}> Cobrado 6% por serviço</Text>
-            </View>
         </>
     )
 }
