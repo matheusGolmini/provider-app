@@ -7,6 +7,7 @@ import { IDetailService } from '../../interfaces/detailService ';
 import Rating from '../../components/Rating/index';
 import ModalContrat from '../ModalContrat';
 import CreateTicket from '../createTicket';
+import { Feather } from '@expo/vector-icons';
 
 
 interface PropsComponent {
@@ -116,7 +117,7 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
 
 export function ListContractSign(propsComponent: PropsComponent) {
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const[typeSelected, setTypeSelected] = useState<string| null>('');
+    const[signedContract, setSignedContract] = useState<boolean>(false);
     const [controlPicker, setControlPicker] = useState<boolean>(false);
 
     return (
@@ -136,10 +137,26 @@ export function ListContractSign(propsComponent: PropsComponent) {
                         <Text style={{...styles.text, color: service.color}}>Valor pago: {service.value} reais</Text>
 
                         <TouchableOpacity 
-                            style={{...styles.tasksButton2, backgroundColor: service.color, borderColor: service.color}} 
+                            style={{
+                                ...styles.tasksButton2, 
+                                backgroundColor: service.color, 
+                                borderColor: service.color,  
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }} 
                             onPress={() => setIsModalVisible(!isModalVisible)}
+                            disabled={signedContract}
                         >
-                            <Text style={{...styles.buttonText, color:  'white'}}> Assinar contrato </Text>
+                            <Text style={{...styles.buttonText, color:  'white'}}> {signedContract ? 'Contrato assindo' : 'Assinar contrato' } </Text>
+                            <Feather 
+                                name='check' 
+                                color='white' 
+                                size={25}
+                                style={{
+                                    marginHorizontal: 20,
+                                    opacity: signedContract ? 1 : 0.5,
+                                }}
+                            />
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={{...styles.tasksButton2, backgroundColor: service.color, borderColor: service.color}} 
@@ -163,7 +180,7 @@ export function ListContractSign(propsComponent: PropsComponent) {
                         >
                             <ModalContrat 
                                 setIsModalVisible={setIsModalVisible}
-                                setTypeSelected={setTypeSelected}
+                                setSignedContract={setSignedContract}
                             />
 
                         </Modal>

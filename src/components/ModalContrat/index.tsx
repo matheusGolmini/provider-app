@@ -8,10 +8,10 @@ const { height, width } =  Dimensions.get('window');
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
-    setTypeSelected:  React.Dispatch<React.SetStateAction<string | null>>;
+    setSignedContract: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
+const ModalContrat = ({setIsModalVisible, setSignedContract}: ModalPicker) => {
     const [disabled, setDisabled] = useState<boolean>(true);
     const [opacity, setOpacity] = useState<number>(0.5);
 
@@ -28,6 +28,7 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
     function contractSign()  {
         console.log("Eu aceito o contrato");
         setIsModalVisible(false)
+        setSignedContract(true)
     }
 
     return(
