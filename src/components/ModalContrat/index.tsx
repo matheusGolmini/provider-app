@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { text } from '../../mocks/index';
+import { Feather } from '@expo/vector-icons';
 
 
 const { height, width } =  Dimensions.get('window');
@@ -32,10 +33,16 @@ const ModalContrat = ({setIsModalVisible, setTypeSelected}: ModalPicker) => {
     return(
         <View style={styles.container}>
             <View
-                style={{...styles.modal, width: width- 10, height: height/ 1.5}}
+                style={{...styles.modal, width: width- 10, height: height/ 1.5, alignItems: 'center',}}
             >   
-            <Text style={styles.title}> Leia e Assine </Text>
-
+                <TouchableOpacity 
+                    onPress={() => setIsModalVisible(false)}
+                >
+                    <Feather name={'x'} size={27} color={'#37b7dc'}/>
+                </TouchableOpacity>
+                
+                <Text style={styles.title}> Leia e Assine </Text>
+                
                 <View
                     style={{...styles.contrat, width: width- 30, height: height/ 2}}
                 >  
@@ -84,7 +91,6 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        margin: 20,
         fontSize: 25,
         fontWeight: 'bold',
         color: '#37b7dc',
