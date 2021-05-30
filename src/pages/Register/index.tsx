@@ -17,7 +17,9 @@ const Register = () => {
     const [password, setPassword] = useState<string>('');
     const[email, setEmail] = useState<string>('');
     const[phone, setPhone] = useState<string>('');
-    const[Cpf, setCpf] = useState<string>('');
+    const[cpf, setCpf] = useState<string>('');
+    const[rg, setRg] = useState<string>('');
+    const[cnpj, setCnpj] = useState<string>('');
     const [conPassword, setConPassword] = useState<string>('');
     const[conEmail, setConEmail] = useState<string>('');
     const[hidePass, setHidePass] = useState<boolean>(true);
@@ -28,7 +30,7 @@ const Register = () => {
     const [messageModal, setMessageModal ] = useState<string>('');
 
     useEffect(() => {
-        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!Cpf && !!imageDocument){
+        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg){
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -133,6 +135,29 @@ const Register = () => {
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
                             onChangeText={(val) => setCpf(val)}
+                        />
+
+                    </View>
+                    <View style={stylesGlobal.input}>
+                        <TextInput 
+                            placeholder='CNPJ'
+                            placeholderTextColor='#4169E1'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={stylesGlobal.inputText}
+                            onChangeText={(val) => setCnpj(val)}
+                        />
+
+                    </View>
+
+                    <View style={stylesGlobal.input}>
+                        <TextInput 
+                            placeholder='RJ'
+                            placeholderTextColor='#4169E1'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={stylesGlobal.inputText}
+                            onChangeText={(val) => setRg(val)}
                         />
 
                     </View>
