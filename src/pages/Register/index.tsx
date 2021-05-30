@@ -157,7 +157,7 @@ const Register = () => {
 
                     <View style={stylesGlobal.input}>
                         <TextInput 
-                            placeholder='RJ'
+                            placeholder='RG'
                             placeholderTextColor='#4169E1'
                             keyboardType='number-pad'
                             autoCorrect={false}

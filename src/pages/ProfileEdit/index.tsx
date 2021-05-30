@@ -17,10 +17,13 @@ const ProfileEdit = () => {
     const [opacityButton, setOpacityButton] = useState<number>(0.5);
     const[name, setName] = useState<string>('');
     const[phone, setPhone] = useState<string>('');
+    const[cpf, setCpf] = useState<string>('');
+    const[rg, setRg] = useState<string>('');
+    const[cnpj, setCnpj] = useState<string>('');
     const [visible, setVisible ] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!!name || !!phone || !! image){
+        if(!!name || !!phone || !! image || !!cpf || !!rg || !!cnpj) {
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -108,6 +111,43 @@ const ProfileEdit = () => {
                             autoCorrect={false}
                             onChangeText={(val) => setName(val)}
                             style={{marginLeft: 20, fontSize: 18}}
+                        />
+
+                    </View>
+                    <View style={{...styles.action, marginTop: 20}}>
+                        <FontAwesome  name='user-o' size={20}/>
+                        <TextInput 
+                            placeholder='CPF'
+                            placeholderTextColor='#666666'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={{marginLeft: 20, fontSize: 18}}
+                            onChangeText={(val) => setCpf(val)}
+                        />
+
+                    </View>
+                    <View style={{...styles.action, marginTop: 20}}>
+                        <FontAwesome  name='user-o' size={20}/>
+                        <TextInput 
+                            placeholder='CNPJ'
+                            placeholderTextColor='#666666'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={{marginLeft: 20, fontSize: 18}}
+                            onChangeText={(val) => setCnpj(val)}
+                        />
+
+                    </View>
+
+                    <View style={{...styles.action, marginTop: 20}}>
+                        <FontAwesome  name='user-o' size={20}/>
+                        <TextInput 
+                            placeholder='RG'
+                            placeholderTextColor='#666666'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={{marginLeft: 20, fontSize: 18}}
+                            onChangeText={(val) => setRg(val)}
                         />
 
                     </View>
