@@ -9,10 +9,11 @@ const { height, width } =  Dimensions.get('window');
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
     setTypeSelected:  React.Dispatch<React.SetStateAction<string | null>>;
+    color?: string;
     data: string[]
 }
 
-const ModalPicker = ({setIsModalVisible, setTypeSelected, data}: ModalPicker) => {
+const ModalPicker = ({setIsModalVisible, setTypeSelected, data, color}: ModalPicker) => {
 
     const onPressItem = (option: string) => {
         setIsModalVisible(false)
@@ -26,7 +27,7 @@ const ModalPicker = ({setIsModalVisible, setTypeSelected, data}: ModalPicker) =>
                 key={index}
                 onPress={() => onPressItem(item)}
             >
-                <Text style={styles.text}>
+                <Text style={{...styles.text, color: color ? color :'#37b7dc'}}>
                     {item}
                 </Text>
 
@@ -40,7 +41,7 @@ const ModalPicker = ({setIsModalVisible, setTypeSelected, data}: ModalPicker) =>
             style={styles.container}
         >
             <View
-                style={{...styles.modal, width: width- 20, height: height/ 2}}
+                style={{...styles.modal, width: width- 20, height: height/ 2, borderColor: color ? color : '#37b7dc'}}
             >
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         borderWidth: 5,
-        borderColor: '#37b7dc'
+        
     },
 
     option: {

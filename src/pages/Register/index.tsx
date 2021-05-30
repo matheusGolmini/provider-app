@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feather } from '@expo/vector-icons';
+import ModalPicker from '../../components/ModalPicker';
+import { types } from '../../mocks/index';
 
 const Register = () => {
     const navigation = useNavigation();
@@ -29,8 +31,11 @@ const Register = () => {
     const [visibleModalTwo, setVisibleModalTwo ] = useState<boolean>(false);
     const [messageModal, setMessageModal ] = useState<string>('');
 
+    const[typeSelected, setTypeSelected] = useState<string| null>('');
+    const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
     useEffect(() => {
-        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg){
+        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg && !!typeSelected){
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -248,6 +253,34 @@ const Register = () => {
                             
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity 
+                        style={{...styles.buttonPicker}}
+                        onPress={ () => setIsModalVisible(!isModalVisible) }
+                    >
+                        <Text style={styles.buttonTextPicker}>{typeSelected === '' ? 'Selecione o tipo de serviço' : typeSelected}</Text>
+                        <Feather 
+                            name='arrow-down' 
+                            size={20} 
+                            style={{
+                                color: 'white',
+                                paddingHorizontal: 15
+                            }}
+                        />
+                    </TouchableOpacity>
+
+                    <Modal
+                        transparent={true}
+                        animationType={'fade'}
+                        visible={isModalVisible}
+                    >
+                        <ModalPicker 
+                            setIsModalVisible={setIsModalVisible}
+                            setTypeSelected={setTypeSelected}
+                            data={types}
+                            color={'#4169E1'}
+                        />
+
+                    </Modal>
             
                     <TouchableOpacity 
                         style={{...stylesGlobal.button, margin: 25, opacity: opacityButton}}
@@ -341,6 +374,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonDocumentText: {
+        padding: 8,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    buttonPicker: {
+        backgroundColor: '#4169E1',
+        marginTop: 10,
+        width: 300,
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+
+    buttonTextPicker: {
         padding: 8,
         alignItems: 'center',
         color: 'white',
