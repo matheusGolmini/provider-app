@@ -184,7 +184,7 @@ const Register = () => {
                         style={{...styles.buttonDocument}}
                         onPress={ () => pickImage('imageDocument') }
                     >
-                        <Text style={{...styles.buttonDocumentText, opacity: !!imageDocument ? 1 : 0.5,}}>{'Adicione um documento'}</Text>
+                        <Text style={{...styles.buttonDocumentText, opacity: !!imageDocument ? 1 : 0.5,}}>{!!imageDocument ? 'Documento adicionado' : 'Adicione um documento'}</Text>
                         <Feather 
                             name='check' 
                             color='white' 

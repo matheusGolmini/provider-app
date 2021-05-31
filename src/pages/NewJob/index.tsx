@@ -32,8 +32,7 @@ const NewJob = () => {
             !!serviceDaysNumber && 
             !!serviceValue && 
             !!initDate &&
-            !!endDate &&
-            !!typeSelected
+            !!endDate
         ) {
             setDisableButton(false)
             setOpacityButton(1)
@@ -140,7 +139,8 @@ const NewJob = () => {
                         setInitDate={setInitDate}
                     />
                  
-                    <TouchableOpacity 
+                    {/* Pode ser usada em um feature futura*/}
+                    {/* <TouchableOpacity 
                         style={{...styles.buttonPicker}}
                         onPress={ () => setIsModalVisible(!isModalVisible) }
                     >
@@ -153,7 +153,7 @@ const NewJob = () => {
                                 paddingHorizontal: 15
                             }}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <Modal
                         transparent={true}
