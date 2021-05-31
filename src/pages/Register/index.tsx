@@ -120,7 +120,7 @@ const Register = () => {
                                     <Icon name="camera"  size={35} color="#FFF" style={styles.camera}/>
                                 </View>  
                             </ImageBackground >
-                            : <Image  source={ {uri: image }} style={stylesGlobal.logo}/>
+                            : <Image  source={ {uri: image }} style={{...stylesGlobal.logo,  marginTop: 20, width: 170, height: 170}}/>
                         }
                     </TouchableOpacity>
                     <Text style={{...stylesGlobal.headerText, marginTop: 30}}>Reparo Rápido</Text>
