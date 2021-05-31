@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feather } from '@expo/vector-icons';
 import ModalPicker from '../../components/ModalPicker';
 import { types } from '../../mocks/index';
+import ModalConfirmRegister from '../../components/ModalConfirmRegister';
 
 const Register = () => {
     const navigation = useNavigation();
@@ -33,6 +34,10 @@ const Register = () => {
 
     const[typeSelected, setTypeSelected] = useState<string| null>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+
+    const[isModalVisibleRegister, setIsModalVisibleRegister] = useState<boolean>(false);
+
 
     useEffect(() => {
         if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg && !!typeSelected){
@@ -60,10 +65,6 @@ const Register = () => {
         }
     };
 
-    function navigateToLogin(){
-        navigation.navigate('Login');
-    }
-
     async function register () {
         const data = ({
             email: email.toLowerCase(),
@@ -76,7 +77,7 @@ const Register = () => {
         });
         try {
             console.log(data);
-            navigateToLogin();
+          
         
         } catch (error) {
             alert('Deu ruim');
@@ -86,6 +87,8 @@ const Register = () => {
     function emailAndPasswordEqual(){
         if(email.toLowerCase() === conEmail.toLowerCase()){
             if(password === conPassword) {
+                console.log("aqui")
+                setIsModalVisibleRegister(!isModalVisibleRegister)
                 register();
             } else {
                 setMessageModal('As senhas não estão iguais!')
@@ -287,7 +290,7 @@ const Register = () => {
                         onPress={ emailAndPasswordEqual }
                         disabled={disableButton}
                     >
-                        <Text style={stylesGlobal.buttonText}>Cadastrar</Text>
+                        <Text style={stylesGlobal.buttonText}>Pré-cadastro</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView> 
@@ -310,6 +313,17 @@ const Register = () => {
     
                 </View>
             </Modal>
+            <Modal
+                transparent={true}
+                animationType={'fade'}
+                visible={isModalVisibleRegister}
+            >
+                <ModalConfirmRegister 
+                    setIsModalVisible={setIsModalVisibleRegister}
+                />
+
+            </Modal>
+           
         </>
     )
 }
