@@ -33,7 +33,7 @@ const Register = () => {
     const [visibleModalTwo, setVisibleModalTwo ] = useState<boolean>(false);
     const [messageModal, setMessageModal ] = useState<string>('');
 
-    const[typeSelected, setTypeSelected] = useState<string| null>('');
+    const[typeSelected, setTypeSelected] = useState<string>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
 
