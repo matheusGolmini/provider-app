@@ -13,16 +13,19 @@ interface Carousel {
 
 const Carousel = (data: {values: Carousel }) => {
     const [visible, setVisible ] = useState<boolean>(false);
-    const [index, setIndex ] = useState<number>(0);
+    const [item, setItem ] = useState<IServicesImages>();
 
     const scrollX = new Animated.Value(0)
     let position = Animated.divide(scrollX, width)
 
     const {services, color} = data.values;
 
-    function removeImage(index: number){
+    function removeImage() {
         setVisible(!visible);
+       if(item) {
+        const index = services.indexOf(item);
         services.splice(index, 1);
+       }
     }
 
     if (data && services.length) {
@@ -43,9 +46,8 @@ const Carousel = (data: {values: Carousel }) => {
                         return  ( 
                             <Pressable
                                 onLongPress={() => { 
-                                    setIndex(index)
-                                    setVisible(!visible) 
-                                   
+                                    setItem(item)
+                                    setVisible(!visible)  
                                 }}
                             >
                                 <CarouselItem item={{service: item, color: color ? color : 'black'}} />
@@ -83,7 +85,7 @@ const Carousel = (data: {values: Carousel }) => {
                         <View style={styles.buttonArea}>
                             <TouchableOpacity 
                                 style={{...styles.buttonModal, marginHorizontal: 10, backgroundColor: color}}
-                                onPress={() =>  removeImage(index)}
+                                onPress={removeImage}
                             >
                                 <Text style={styles.buttonText}>Sim</Text>
                             </TouchableOpacity>

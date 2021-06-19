@@ -10,12 +10,29 @@ import Carousel from '../../components/carousel/carousel';
 import { IServicesImages } from '../../interfaces/servicesImges';
 import { servicesImages } from '../../mocks/mock-images-jobs';
 import Reating from '../../components/Rating';
+import * as ImagePicker from 'expo-image-picker';
 
 const Profile = () => {
   const [image, setImage] = useState<string | null>(null);
   const [client, setClient] = useState<IClient>();
   const [controlPicker, setControlPicker] = useState<boolean>(false);
   const [ services, setServices] = useState<IServicesImages[]>([]);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setServices([...services, {
+        id: services[services.length -1].id + 1,
+        url: result.uri
+      }])
+    }
+  };
 
   const navigation = useNavigation();
 
@@ -60,22 +77,20 @@ const Profile = () => {
           
         </View>
         
-        {/* <View style={styles.userInfoSection}>
-          <View style={styles.row}>
-            <Icon name='email' size={30} style={{color: '#4169E1'}}/>
-            <Text style={{...styles.text, fontSize: 20, marginLeft: 20}}>{client?.email}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Icon name='phone' size={30} style={{color: '#4169E1'}}/>
-            <Text style={{...styles.text, fontSize: 20, marginLeft: 20}}>{client?.phone}</Text>
-          </View>
-
-        </View> */}
         <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
         <Carousel values={{services, color: client?.color}}/> 
 
         <View >
+
+          <TouchableOpacity
+            onPress={pickImage}
+          >
+            <View style={styles.menuItem}>
+              <Icon name='camera' size={30}style={{color: client?.color}}/>
+              <Text style={{...styles.menuItemText}}> Adicionar imagem </Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => goTo('ProfileEditEmail')}
           >
@@ -84,6 +99,7 @@ const Profile = () => {
               <Text style={{...styles.menuItemText}}> Alterar E-mail </Text>
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => goTo('ProfileEditPassword')}
           >

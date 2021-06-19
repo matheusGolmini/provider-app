@@ -41,7 +41,7 @@ const Info = () => {
                     </View>
                     <View style={{alignItems: 'flex-start', justifyContent: 'flex-start'}}>
                         
-                        <Text style={styles.textQuestion}> 1 - Qual a impotanccia de ter um score alto?</Text>
+                        <Text style={styles.textQuestion}> 1 - Qual a importância de ter um score alto?</Text>
                         <Text style={styles.textReponseQuestion}>Seu perfil será exibido para os clientes com maior frequência!</Text>
                         <Text style={styles.textReponseQuestion}>A cada serviço prestado é cobrado uma taxa, quanto maior o seu score menor a comissão nos serviços.</Text>
                         
