@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Modal } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { Feather } from '@expo/vector-icons';
 import ModalPicker from '../../components/ModalPicker';
 import ComponentDateTimePicker from '../../components/DateTimePicker';
 import { types } from '../../mocks/index';
+import ModalCreateNewService from '../../components/ModalCreateNewService';
 
 const NewJob = () => {
     const[emailClient, setEmailClient] = useState<string>('');
     const[sortDescription, setSortDescription] = useState<string>('');
     const[description, setDescription] = useState<string>('');
-    const[serviceDaysNumber, setServiceDaysNumber] = useState<number | null>(null);
-    const[serviceValue, setServiceValue] = useState<number | null>(null);
+    const[serviceDaysNumber, setServiceDaysNumber] = useState<number | string>('');
+    const[serviceValue, setServiceValue] = useState<number | string>('');
     // const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
-    const[typeSelected, setTypeSelected] = useState<string| null>('');
+    const[typeSelected, setTypeSelected] = useState<string| string>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+    const[isModalFinishiVisible, setIsModalFinishiVisible] = useState<boolean>(false);
 
     //calendar
     const [initDate, setInitDate] = useState<string | null>(null);
@@ -40,7 +42,7 @@ const NewJob = () => {
             setDisableButton(true)
             setOpacityButton(0.5)
         }
-    })
+    }, [emailClient, sortDescription, description, serviceDaysNumber, serviceValue, initDate, endDate])
 
     function saveNewService() {
         console.log(
@@ -56,6 +58,8 @@ const NewJob = () => {
             }
             
         );
+        setIsModalFinishiVisible(!isModalFinishiVisible)
+        clearState()
 
     }
 
@@ -64,8 +68,8 @@ const NewJob = () => {
         setSortDescription('');
         setDescription('');
         setTypeSelected('');
-        setServiceDaysNumber(null);
-        setServiceValue(null);
+        setServiceDaysNumber('');
+        setServiceValue('');
         setInitDate(null);
         setEndDate(null);
     }
@@ -85,6 +89,7 @@ const NewJob = () => {
                     <View style={styles.input}>
                         <TextInput 
                             style={styles.inputText} 
+                            value={emailClient}
                             keyboardType={'email-address'}
                             onChangeText={(val) => setEmailClient(val)}
                             placeholder='E-mail do cliente' 
@@ -98,6 +103,7 @@ const NewJob = () => {
                             style={styles.inputText} 
                             onChangeText={(val) => setSortDescription(val)}
                             placeholder='Descrição curta' 
+                            value={sortDescription}
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
@@ -107,6 +113,7 @@ const NewJob = () => {
                             style={styles.inputText} 
                             onChangeText={(val) => setDescription(val)}
                             placeholder='Descrição completa' 
+                            value={description}
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
@@ -115,7 +122,8 @@ const NewJob = () => {
                         <TextInput 
                             style={styles.inputText} 
                             keyboardType={'number-pad'}
-                            onChangeText={(val) => setServiceDaysNumber(Number(val))}
+                            onChangeText={(val) => setServiceDaysNumber(val)}
+                            value={serviceDaysNumber}
                             placeholder='Quantidade estimada de dias' 
                             placeholderTextColor='#37b7dc'
                         />
@@ -126,8 +134,9 @@ const NewJob = () => {
                         <TextInput 
                             style={styles.inputText} 
                             keyboardType={'number-pad'}
-                            onChangeText={(val) => setServiceValue(Number(val))}
-                            placeholder='Valor' 
+                            onChangeText={(val) => setServiceValue(val)}
+                            value={serviceValue}
+                            placeholder='Valor do serviço' 
                             placeholderTextColor='#37b7dc'
                         />
                     </View>
@@ -167,6 +176,7 @@ const NewJob = () => {
                         />
 
                     </Modal>
+
                     <TouchableOpacity 
                         style={{...styles.button, marginBottom: 30, marginTop: 10}}
                         disabled={disableButton}
@@ -174,6 +184,16 @@ const NewJob = () => {
                     >
                         <Text style={{...styles.buttonText, opacity: opacityButton}}>Cadastrar</Text>
                     </TouchableOpacity>
+
+                    <Modal
+                        transparent={true}
+                        animationType={'fade'}
+                        visible={isModalFinishiVisible}
+                    >
+                        <ModalCreateNewService 
+                            setIsModalVisible={setIsModalFinishiVisible}
+                        />
+                    </Modal>
                     
                 </View>
             </ScrollView>
