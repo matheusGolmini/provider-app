@@ -21,6 +21,7 @@ const Register = () => {
     const[email, setEmail] = useState<string>('');
     const[phone, setPhone] = useState<string>('');
     const[cpf, setCpf] = useState<string>('');
+    const[bankAccountNumber, setBankAccountNumber] = useState<string>('');
     const[rg, setRg] = useState<string>('');
     const[cnpj, setCnpj] = useState<string>('');
     const [conPassword, setConPassword] = useState<string>('');
@@ -40,7 +41,7 @@ const Register = () => {
 
 
     useEffect(() => {
-        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg && !!typeSelected){
+        if(!!name && !!phone && !!conPassword && !!password && !!conEmail && !!email && !!cpf && !!imageDocument && !!cnpj && !!rg && !!typeSelected && !!bankAccountNumber) {
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -166,6 +167,18 @@ const Register = () => {
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
                             onChangeText={(val) => setRg(val)}
+                        />
+
+                    </View>
+
+                     <View style={stylesGlobal.input}>
+                        <TextInput 
+                            placeholder='Número da conta bancária'
+                            placeholderTextColor='#4169E1'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={stylesGlobal.inputText}
+                            onChangeText={(val) => setBankAccountNumber(val)}
                         />
 
                     </View>

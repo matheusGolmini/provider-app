@@ -24,7 +24,7 @@ const NewJob = () => {
  
     //buttonControl
     const [disableButton, setDisableButton] = useState<boolean>(true);
-    const [opacityButton, setOpacityButton] = useState<number>();
+    const [opacityButton, setOpacityButton] = useState<number>(); 
 
     useEffect(() => {
         if(
