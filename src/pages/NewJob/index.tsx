@@ -10,10 +10,10 @@ const NewJob = () => {
     const[emailClient, setEmailClient] = useState<string>('');
     const[sortDescription, setSortDescription] = useState<string>('');
     const[description, setDescription] = useState<string>('');
-    const[serviceDaysNumber, setServiceDaysNumber] = useState<number | string>('');
-    const[serviceValue, setServiceValue] = useState<number | string>('');
+    const[serviceDaysNumber, setServiceDaysNumber] = useState<string>('');
+    const[serviceValue, setServiceValue] = useState<string>('');
     // const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
-    const[typeSelected, setTypeSelected] = useState<string| string>('');
+    const[typeSelected, setTypeSelected] = useState<string>('');
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
     const[isModalFinishiVisible, setIsModalFinishiVisible] = useState<boolean>(false);

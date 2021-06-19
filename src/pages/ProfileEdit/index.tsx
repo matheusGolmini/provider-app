@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, ImageBackground, Modal} from "react-native"
+import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ScrollView} from "react-native"
 import * as ImagePicker from 'expo-image-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -18,12 +18,13 @@ const ProfileEdit = () => {
     const[name, setName] = useState<string>('');
     const[phone, setPhone] = useState<string>('');
     const[cpf, setCpf] = useState<string>('');
+    const[bankAccountNumber, setBankAccountNumber] = useState<string>('');
     const[rg, setRg] = useState<string>('');
     const[cnpj, setCnpj] = useState<string>('');
     const [visible, setVisible ] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!!name || !!phone || !! image || !!cpf || !!rg || !!cnpj) {
+        if(!!name || !!phone || !! image || !!cpf || !!rg || !!cnpj || !!bankAccountNumber) {
             setDisableButton(false)
             setOpacityButton(1)
         }else {
@@ -61,6 +62,10 @@ const ProfileEdit = () => {
 
     return (
         <> 
+            <ScrollView 
+                style={{backgroundColor: '#fff'}}
+                showsVerticalScrollIndicator={false}
+            >
             <View 
                 style={{backgroundColor: '#fff'}}
             >
@@ -151,6 +156,19 @@ const ProfileEdit = () => {
                         />
 
                     </View>
+
+                    <View style={{...styles.action, marginTop: 20}}>
+                        <FontAwesome  name='user-o' size={20}/>
+                        <TextInput 
+                            placeholder='Número da conta bancária'
+                            placeholderTextColor='#666666'
+                            keyboardType='number-pad'
+                            autoCorrect={false}
+                            style={{marginLeft: 20, fontSize: 18}}
+                            onChangeText={(val) => setBankAccountNumber(val)}
+                        />
+
+                    </View>
                     <View style={styles.action}>
                         <FontAwesome  name='phone' size={20}/>
                         <TextInput 
@@ -205,6 +223,7 @@ const ProfileEdit = () => {
     
                 </View>
             </Modal>
+            </ScrollView>
         </>
     )
 }

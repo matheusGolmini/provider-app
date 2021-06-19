@@ -4,4 +4,6 @@ export interface IClient {
     email: string;
     phone: string;
     avatar: string;
+    color: string;
+    ratingNumber: number,
 }
