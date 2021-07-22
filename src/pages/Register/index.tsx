@@ -62,7 +62,6 @@ const Register = () => {
             type === 'imagePerfil' 
                 ? setImage(result.uri)
                 : setImageDocument(result.uri)
-
         }
     };
 
@@ -171,7 +170,7 @@ const Register = () => {
 
                     </View>
 
-                     <View style={stylesGlobal.input}>
+                    {/* <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='Número da conta bancária'
                             placeholderTextColor='#605C99'
@@ -181,7 +180,7 @@ const Register = () => {
                             onChangeText={(val) => setBankAccountNumber(val)}
                         />
 
-                    </View>
+                    </View> */}
 
                     
                     <View style={stylesGlobal.input}>

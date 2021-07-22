@@ -1,7 +1,8 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Entypo, Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -21,19 +22,20 @@ export default function Routes() {
                 style: {
                     backgroundColor: '#FFF',
                     borderTopColor: 'transparent',
-                    height: 60
-                    
+                    position: 'absolute',
+                    left: 20,
+                    right: 20,
+                    bottom: 15,
+                    borderRadius: 15,
+                    height: 60,
+                    ...styles.shadow
                 },
                 keyboardHidesTabBar: true,
-                activeTintColor: '#37b7dc',
-                inactiveTintColor: '#8BE5FF',
+                activeTintColor: '#302E4D',
+                inactiveTintColor: '#605C99',
                 tabStyle: {
                     paddingBottom: 5,
-                    paddingTop: 5,
-                    borderBottomWidth: 4, 
-                    borderBottomColor: '#37b7dc',
-                    borderTopWidth: 4,
-                    borderTopColor: '#37b7dc'
+                    paddingTop: 5
                 },
             }}
         >
@@ -73,7 +75,7 @@ export default function Routes() {
                 component={Info} 
                 options={{
                     tabBarIcon: ({size, color}) => (
-                        <Feather name="info" size={size} color={color} />
+                        <Entypo name="info" size={size} color={color} />
                     )
                 }}
             />
@@ -90,3 +92,16 @@ export default function Routes() {
         </Tab.Navigator>
     )
 }
+
+const styles = StyleSheet.create({
+    shadow: {
+        shadowColor: '#302E4D',
+        shadowOffset: {
+            width: 0, 
+            height: 10
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5
+    }
+})
