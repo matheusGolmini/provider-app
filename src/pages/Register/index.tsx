@@ -133,13 +133,13 @@ const Register = () => {
                             style={stylesGlobal.inputText} 
                             onChangeText={(val) => setName(val)}
                             placeholder='Nome' 
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                         />
                     </View>
                     <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='CPF'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                             keyboardType='number-pad'
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
@@ -150,7 +150,7 @@ const Register = () => {
                     <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='CNPJ'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                             keyboardType='number-pad'
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
@@ -162,7 +162,7 @@ const Register = () => {
                     <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='RG'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                             keyboardType='number-pad'
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
@@ -174,7 +174,7 @@ const Register = () => {
                      <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='Número da conta bancária'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                             keyboardType='number-pad'
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
@@ -187,7 +187,7 @@ const Register = () => {
                     <View style={stylesGlobal.input}>
                         <TextInput 
                             placeholder='Telefone'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                             keyboardType='number-pad'
                             autoCorrect={false}
                             style={stylesGlobal.inputText}
@@ -218,7 +218,7 @@ const Register = () => {
                             style={stylesGlobal.inputText} 
                             onChangeText={(val) => setEmail(val)}
                             placeholder='E-mail' 
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                         />
                     </View>
 
@@ -228,7 +228,7 @@ const Register = () => {
                             style={stylesGlobal.inputText} 
                             onChangeText={(val) => setConEmail(val)}
                             placeholder='Confirmação de e-mail'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                         /> 
                     </View>
                     
@@ -239,7 +239,7 @@ const Register = () => {
                             secureTextEntry={hidePass} 
                             onChangeText={(val) => setPassword(val)}
                             placeholder='Senha'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                         />
                         <TouchableOpacity style={stylesGlobal.iconEye} onPress={() => setHidePass(!hidePass)}>
                             {
@@ -257,7 +257,7 @@ const Register = () => {
                             secureTextEntry={hideConPass} 
                             onChangeText={(val) => setConPassword(val)}
                             placeholder='Confirmação de senha'
-                            placeholderTextColor='#4169E1'
+                            placeholderTextColor='#605C99'
                         />
                         <TouchableOpacity style={stylesGlobal.iconEye} onPress={() => setHideConPass(!hideConPass)}>
                             {
@@ -293,7 +293,7 @@ const Register = () => {
                             setIsModalVisible={setIsModalVisible}
                             setTypeSelected={setTypeSelected}
                             data={types}
-                            color={'#4169E1'}
+                            color={'#302E4D'}
                         />
 
                     </Modal>
@@ -362,8 +362,7 @@ const styles = StyleSheet.create({
         elevation: 10,
         alignItems: 'center',
         borderWidth: 5,
-        borderColor: '#4169E1'
-    
+        borderColor: '#302E4D'
     },
 
     title: {
@@ -381,7 +380,7 @@ const styles = StyleSheet.create({
     },
 
     buttonModal: {
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         marginTop: 10,
         width: 100,
         height: 40,
@@ -390,7 +389,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonDocument: {
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         marginTop: 10,
         width: 300,
         height: 50,
@@ -408,7 +407,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonPicker: {
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         marginTop: 10,
         width: 300,
         height: 50,

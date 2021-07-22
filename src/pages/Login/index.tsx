@@ -27,7 +27,7 @@ const Login = () => {
         }
     }
 
-
+    
     return (
         <View style={stylesGlobal.container}>
             <Text style={{...stylesGlobal.headerText, marginTop: 20} }>Reparo Rápido</Text>
@@ -40,7 +40,7 @@ const Login = () => {
                     style={stylesGlobal.inputText} 
                     onChangeText={(val) => setEmail(val)}
                     placeholder='Digite seu E-mail'
-                    placeholderTextColor='#4169E1'
+                    placeholderTextColor='#605C99'
                 />
             </View>
             
@@ -50,7 +50,7 @@ const Login = () => {
                     secureTextEntry={hidePass} 
                     onChangeText={(val) => setPassword(val)}
                     placeholder='Senha'
-                    placeholderTextColor='#4169E1'
+                    placeholderTextColor='#605C99'
                 />
                 <TouchableOpacity style={stylesGlobal.iconEye} onPress={() => setHidePass(!hidePass)}>
                     {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#4169E1',
+        color: '#605C99',
         fontSize: 18,
         fontWeight: 'bold',
     },

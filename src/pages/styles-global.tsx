@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     
     button: {
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         marginTop: 10,
         width: 300,
         height: 60,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
     headerText: { 
         fontSize: 25,
-        color: '#4169E1',
+        color: '#302E4D',
         marginBottom:10,
         alignSelf:"center",
         fontWeight:"bold"
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 300,
         height: 50,
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         borderRadius: 10,
         fontWeight: 'bold',
         flexDirection: 'row',
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 8,
         fontSize: 16,
-        color: '#4169E1',
+        color: '#302E4D',
         fontWeight: 'bold',
-        borderColor: '#4169E1',
-        borderWidth: 5,
+        borderColor: '#302E4D',
+        borderWidth: 1,
         borderRadius: 10,
     },
 
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 8,
         fontSize: 16,
-        color: '#4169E1',
+        color: '#302E4D',
         fontWeight: 'bold',
-        borderColor: '#4169E1',
-        borderWidth: 5,
+        borderColor: '#302E4D',
+        borderWidth: 1,
         borderRadius: 10,
     },
     input: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         borderRadius: 10,
         fontWeight: 'bold',
     },
@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#4169E1',
+        backgroundColor: '#302E4D',
         borderWidth: 5,
         borderRadius: 15,
-        borderColor: '#4169E1'
+        borderColor: '#302E4D'
     },
 })
 
