@@ -20,7 +20,8 @@ export default function Routes() {
         <>
             <SafeAreaView>
                 <StatusBar 
-                    backgroundColor="#605C99"
+                    barStyle="light-content"
+                    backgroundColor="#302E4D"
                 />
             </SafeAreaView>
             <Tab.Navigator
@@ -51,7 +52,7 @@ export default function Routes() {
                     options={{
                         tabBarIcon: ({ size, color}) => (
                             <Entypo name="home" size={size} color={color} />
-                        )
+                        ),
                     }}
                 />
 
