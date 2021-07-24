@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Modal} from "react-native"
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Feather } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, Modal} from "react-native"
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 
@@ -56,7 +55,10 @@ const ProfileEditEmail = () => {
             >
                 <View style={styles.container}>
                     <View style={styles.action}>
-                        <FontAwesome  name='envelope-o' size={20}/>
+                        <Icon 
+                            name='email' size={30} 
+                            color='#605C99'
+                        />
                         <TextInput 
                             placeholder='E-mail'
                             placeholderTextColor='#666666'
@@ -68,7 +70,10 @@ const ProfileEditEmail = () => {
 
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome  name='envelope-o' size={20}/>
+                        <Icon 
+                            name='email' size={30} 
+                            color='#605C99'
+                        />
                         <TextInput 
                             placeholder='Confirmar E-mail'
                             placeholderTextColor='#666666'

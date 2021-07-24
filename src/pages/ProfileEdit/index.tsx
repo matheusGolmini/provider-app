@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity, ImageBackground, Modal, ScrollView
 import * as ImagePicker from 'expo-image-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Feather } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 
