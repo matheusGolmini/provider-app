@@ -16,13 +16,83 @@ export default function Routes(){
     return(
        <NavigationContainer>
            <AppStack.Navigator screenOptions={{ headerShown: false }}>
-               <AppStack.Screen name='Login' component={Login} />
-               <AppStack.Screen name='Register' component={Register} />
-               <AppStack.Screen name='MainTab' component={MainTab} />
-               <AppStack.Screen name='ProfileEdit' component={ProfileEdit} />
-               <AppStack.Screen name='ProfileEditEmail' component={ProfileEditEmail} />
-               <AppStack.Screen name='ProfileEditPassword' component={ProfileEditPassword} />
-               <AppStack.Screen name='ProfileEditAddress' component={ProfileEditAddress} />
+                <AppStack.Screen name='Login' component={Login} />
+                <AppStack.Screen name='Register' component={Register} />
+                <AppStack.Screen name='MainTab' component={MainTab} />
+                <AppStack.Screen 
+                    name='ProfileEdit' 
+                    component={ProfileEdit}
+
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Alterar Dados',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99',
+                        }
+                    }}
+                />
+                <AppStack.Screen 
+                    name='ProfileEditEmail' 
+                    component={ProfileEditEmail} 
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Alterar E-mail',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99',
+                        }
+                    }}
+                />
+                <AppStack.Screen 
+                    name='ProfileEditPassword' 
+                    component={ProfileEditPassword} 
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Alterar Senha',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99'
+                        }
+                    }}
+                />
+                <AppStack.Screen 
+                    name='ProfileEditAddress' 
+                    component={ProfileEditAddress} 
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Alterar Endereço',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99',
+                        },
+
+                    }}
+                />
            </AppStack.Navigator>
        </NavigationContainer>
     )
