@@ -59,30 +59,9 @@ const ProfileEditAddress = () => {
                 style={{backgroundColor: '#fff'}}
             >
                 <View style={styles.container}>
-                    <TouchableOpacity 
-                        onPress={ navigateBack }
-                        style={{
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <Feather 
-                            name='arrow-left' 
-                            size={20} 
-                            style={{
-                                color: 'black',
-                                paddingHorizontal: 10
-                            }}
-                        
-                        />
-                        <Text style={{color:'#666666', fontSize: 12}}>Voltar</Text>
-                    </TouchableOpacity>
-                
-                    <View style={{alignItems: 'center', marginTop: 2}}> 
-                        <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
-                        <Text style={styles.text}>Matheus</Text>
-                    </View>
+    
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#4169E1" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={20}/>
                         <TextInput 
                             placeholder='* Cep'
                             placeholderTextColor='#666666'
@@ -98,19 +77,19 @@ const ProfileEditAddress = () => {
                         style={{...styles.action}}
                         onPress={ () => setIsModalVisible(!isModalVisible) }
                     >
-                        <FontAwesome  name='home' color="#4169E1" size={20}/>
-                        <Text style={{color: !!stateSelected? 'black':'#666666', marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}>{!!stateSelected ? stateSelected: 'Selecione um estado'}</Text>
+                        <FontAwesome  name='home' color="#605C99" size={20}/>
+                        <Text style={{color: !!stateSelected? 'black':'#666666', marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}>{!!stateSelected ? stateSelected: '* Selecione um estado'}</Text>
                         <Feather 
                             name='arrow-down' 
                             size={20} 
                             style={{
-                                color: '#4169E1',
+                                color: '#605C99',
                                 paddingHorizontal: 15
                             }}
                         />
                     </TouchableOpacity>
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#4169E1" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={20}/>
                         <TextInput 
                             placeholder='* Rua'
                             placeholderTextColor='#666666'
@@ -122,7 +101,7 @@ const ProfileEditAddress = () => {
 
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#4169E1" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={20}/>
                         <TextInput 
                             placeholder='* Número'
                             placeholderTextColor='#666666'
@@ -135,7 +114,7 @@ const ProfileEditAddress = () => {
                     </View>
 
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#4169E1" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={20}/>
                         <TextInput 
                             placeholder='Complemento'
                             placeholderTextColor='#666666'

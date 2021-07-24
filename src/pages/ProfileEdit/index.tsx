@@ -70,23 +70,6 @@ const ProfileEdit = () => {
                 style={{backgroundColor: '#fff'}}
             >
                 <View style={styles.container}>
-                    <TouchableOpacity 
-                        onPress={ navigateBack }
-                        style={{
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <Feather 
-                            name='arrow-left' 
-                            size={20} 
-                            style={{
-                                color: 'black',
-                                paddingHorizontal: 10
-                            }}
-                        
-                        />
-                        <Text style={{color:'#666666', fontSize: 12}}>Voltar</Text>
-                    </TouchableOpacity>
                 
                     <View style={{alignItems: 'center', marginTop: 2}}> 
                         <TouchableOpacity 

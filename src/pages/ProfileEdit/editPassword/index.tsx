@@ -60,28 +60,6 @@ const ProfileEditPassword = () => {
                 style={{backgroundColor: '#fff'}}
             >
                 <View style={styles.container}>
-                    <TouchableOpacity 
-                        onPress={ navigateBack }
-                        style={{
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <Feather 
-                            name='arrow-left' 
-                            size={20} 
-                            style={{
-                                color: 'black',
-                                paddingHorizontal: 10
-                            }}
-                        
-                        />
-                        <Text style={{color:'#666666', fontSize: 12}}>Voltar</Text>
-                    </TouchableOpacity>
-                
-                    <View style={{alignItems: 'center', marginTop: 2}}> 
-                        <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
-                        <Text style={styles.text}>Matheus</Text>
-                    </View>
                     <View style={styles.action}>
                         <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
                             {
