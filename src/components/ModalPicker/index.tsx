@@ -8,7 +8,7 @@ const { height, width } =  Dimensions.get('window');
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
-    setTypeSelected:  React.Dispatch<React.SetStateAction<string>>;
+    setTypeSelected:  React.Dispatch<React.SetStateAction<string | null>>;
     color?: string;
     data: string[]
 }
