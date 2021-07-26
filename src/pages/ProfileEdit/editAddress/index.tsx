@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Modal} from "react-native"
+import { View, Text, TouchableOpacity, Modal} from "react-native"
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/core';
 
 import styles from '../styles';
 import stylesGlobal from '../../styles-global';
-import { Ionicons } from '@expo/vector-icons';
 import ModalPicker from '../../../components/ModalPicker';
 import { states } from '../../../mocks/index'
 

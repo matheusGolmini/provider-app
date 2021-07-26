@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Modal} from "react-native";
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 
