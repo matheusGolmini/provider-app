@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/core';
 import styles from '../styles';
 import stylesGlobal from '../../styles-global'
 import { useFormik} from 'formik';
-import { editEmailForm } from './editEmail.form';
+import { editEmailForm } from './email.form';
 
 
 const ProfileEditEmail = () => {
