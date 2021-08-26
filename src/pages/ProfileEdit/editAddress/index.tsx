@@ -9,6 +9,8 @@ import styles from '../styles';
 import stylesGlobal from '../../styles-global';
 import ModalPicker from '../../../components/ModalPicker';
 import { states } from '../../../mocks/index'
+import { useFormik } from 'formik';
+import axios from 'axios';
 
 
 const ProfileEditAddress = () => {
@@ -22,21 +24,45 @@ const ProfileEditAddress = () => {
     const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const[stateSelected, setStateSelected] = useState<string| null>('');
 
-    useEffect(() => {
-        if(!!cep && !!rua && !!stateSelected && !!numero){
-            setDisableButton(false)
-            setOpacityButton(1)
-        }else {
-            setDisableButton(true)
-            setOpacityButton(0.5)
+    const formik = useFormik({
+        initialValues: {
+            logradouro: '',
+            bairro: '',
+            cidade: '',
+            uf: '',
+            cep: ''
+        },
+        validationSchema: {},
+        onSubmit: values => {
+            console.log(values)
+            alterData()
+        },
+    });
+
+    useEffect( () => {
+        onBlurCep()
+    }, [formik.values.cep]);
+
+    async function onBlurCep() {
+        if(formik.values.cep?.length === 8) {
+            const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+            console.log(data)
+    
+            formik.
+                setFieldValue('uf', data.uf)
+                
+            console.log('aqui 1')
+            await formik.setFieldValue('logradouro', data.logradouro);
+            console.log('aqui 2')
+            await formik.setFieldValue('bairro', data.bairro);
+            console.log('aqui 3')
+            await formik.setFieldValue('bairro', data.bairro);
+            await formik.setFieldValue('cidade', data.localidade);
         }
-    })
+       
+    }
 
     const navigation = useNavigation();
-
-    function navigateBack(){
-        navigation.goBack()
-    }
 
     function alterData(){
         //enviar dados para serem alterados
@@ -60,67 +86,82 @@ const ProfileEditAddress = () => {
                 <View style={styles.container}>
     
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#605C99" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
                         <TextInput 
                             placeholder='* Cep'
                             placeholderTextColor='#666666'
                             keyboardType='number-pad'
                             autoCorrect={false}
-                            onChangeText={(val) => setCep(val)}
-                            style={{marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}
+                            onFocus={() => formik.setFieldTouched('confirmEmail')}
+                            onChangeText={formik.handleChange('confirmEmail')}
+                            style={{marginLeft: 20, fontSize: 18}}
                         />
 
                     </View>
                     
-                    <TouchableOpacity 
+                    {/* <TouchableOpacity 
                         style={{...styles.action}}
                         onPress={ () => setIsModalVisible(!isModalVisible) }
                     >
-                        <FontAwesome  name='home' color="#605C99" size={20}/>
-                        <Text style={{color: !!stateSelected? 'black':'#666666', marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}>{!!stateSelected ? stateSelected: '* Selecione um estado'}</Text>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
+                        <Text style={{color: !!stateSelected? 'black':'#666666', marginLeft: 20, fontSize: 18}}>{!!stateSelected ? stateSelected: '* Selecione um estado'}</Text>
                         <Feather 
                             name='arrow-down' 
-                            size={20} 
+                            size={30} 
                             style={{
                                 color: '#605C99',
                                 paddingHorizontal: 15
                             }}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    {
+                        console.log('aqui:  ',formik.values)
+                    }
+                     <View style={styles.action}>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
+                        <TextInput 
+                            placeholder='* Estado'
+                            placeholderTextColor='#666666'
+                            value={formik.values.uf}
+                            autoCorrect={false}
+                            onChangeText={(val) => setRua(val)}
+                            style={{marginLeft: 20, fontSize: 18}}
+                        />
+
+                    </View>
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#605C99" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
                         <TextInput 
                             placeholder='* Rua'
                             placeholderTextColor='#666666'
-                            keyboardType='email-address'
+                            value={formik.values.logradouro}
                             autoCorrect={false}
                             onChangeText={(val) => setRua(val)}
-                            style={{marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}
+                            style={{marginLeft: 20, fontSize: 18}}
                         />
 
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#605C99" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
                         <TextInput 
                             placeholder='* Número'
                             placeholderTextColor='#666666'
-                            keyboardType='number-pad'
                             autoCorrect={false}
                             onChangeText={(val) => setNumero(Number(val))}
-                            style={{marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}
+                            style={{marginLeft: 20, fontSize: 18}}
                         />
 
                     </View>
 
                     <View style={styles.action}>
-                        <FontAwesome  name='home' color="#605C99" size={20}/>
+                        <FontAwesome  name='home' color="#605C99" size={30}/>
                         <TextInput 
                             placeholder='Complemento'
                             placeholderTextColor='#666666'
                             keyboardType='email-address'
                             autoCorrect={false}
                             onChangeText={(val) => setComplemento(val)}
-                            style={{marginLeft: 20, fontSize: 18, fontWeight: 'bold'}}
+                            style={{marginLeft: 20, fontSize: 18}}
                         />
 
                     </View>
