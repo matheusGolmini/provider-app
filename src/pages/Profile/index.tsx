@@ -14,20 +14,20 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 const stylesT = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white"
   },
   topBar: {
-    height: 0.15 * height,
+    height: 0.16 * height,
     backgroundColor: "#605C99",
-    borderBottomRightRadius: 75
+    borderBottomRightRadius: 65
   },
   footer: {
     flexDirection:'row',
-    width: 75
+    width: 65
   }
 })
 
@@ -36,6 +36,7 @@ const Profile = () => {
   const [client, setClient] = useState<IClient>();
   const [controlPicker, setControlPicker] = useState<boolean>(false);
   const [ services, setServices] = useState<IServicesImages[]>([]);
+  const [indexCarousel, setIndexCarousel] =  useState<number>(0);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -52,6 +53,11 @@ const Profile = () => {
       }])
     }
   };
+
+  function removeImage() {
+    const n = services.filter((__value, index) => index != indexCarousel)
+    setServices(n);
+  }
 
   const navigation = useNavigation();
 
@@ -95,21 +101,53 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{alignItems: 'center', overflow:'visible'}}>
+        <View style={{alignItems: 'center'}}>
           <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
         </View>
-
-        
       </LinearGradient>
+
       <View style={stylesT.footer}>
         <View 
-          style={{...StyleSheet.absoluteFillObject, backgroundColor: '#605C99', width: 75,}}
+          style={{...StyleSheet.absoluteFillObject, backgroundColor: '#605C99', width: 65}}
         /> 
         <View style={{flex: 1, backgroundColor: "white", borderTopLeftRadius: 75, width: 10, height: 75}} />
+        
       </View>
-      <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
-      <Carousel values={{services}}/> 
-      <ScrollView 
+      {/* <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/> */}
+
+      <View style={{alignItems: 'center'}}>
+        <Text style={{fontSize: 30, color: '#c9b416', fontWeight: 'bold'}}>Score</Text>
+        <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
+      </View>
+
+
+      <Carousel values={{services, setIndex: setIndexCarousel}}/> 
+      <View style={{
+        flexDirection: 'row',
+        alignContent: 'space-between',
+        paddingHorizontal: 30,
+        alignSelf: 'flex-end', 
+      }}>
+
+
+        <TouchableOpacity
+          onPress={pickImage}
+        >
+          <Icon name='camera' size={30} style={{color: '#5e5e5a'}}/>
+        </TouchableOpacity>
+  
+
+        <TouchableOpacity
+          onPress={removeImage}
+        >
+          <Icon name='delete' size={30} style={{color: '#fc3232'}}/>
+        </TouchableOpacity>
+
+      </View>
+
+      
+      
+      {/* <ScrollView 
           style={{backgroundColor: '#fff', marginBottom: 80}}
           showsVerticalScrollIndicator={true}
         >
@@ -163,7 +201,7 @@ const Profile = () => {
               <CreateTicket/>
               : <></>
             }
-        </ScrollView>
+        </ScrollView> */}
       
     </ View>
   )

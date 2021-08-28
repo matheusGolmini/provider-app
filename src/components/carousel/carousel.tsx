@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, FlatList, Animated, Pressable, Modal, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Dimensions, FlatList, Animated, Pressable, Modal, Text, TouchableOpacity, NativeScrollEvent } from 'react-native';
 import { IServicesImages } from '../../interfaces/servicesImges';
 import CarouselItem from './carouselItem';
 
@@ -8,31 +8,30 @@ const { width, height } = Dimensions.get('window');
 
 interface Carousel {
     services: IServicesImages[];
-    color?: string
+    setIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const Carousel = (data: {values: Carousel }) => {
     const [visible, setVisible ] = useState<boolean>(false);
     const [item, setItem ] = useState<IServicesImages>();
+    const [activeDot, setActiveDot ] = useState<number | null>(0);
 
-    const scrollX = new Animated.Value(0)
-    let position = Animated.divide(scrollX, width)
+    const {services, setIndex} = data.values;
 
-    const {services, color} = data.values;
-
-    function removeImage() {
-        setVisible(!visible);
-       if(item) {
-        const index = services.indexOf(item);
-        services.splice(index, 1);
-       }
+    function changeDot(nativeEvent:  NativeScrollEvent) {
+        const slider = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        if(slider !== activeDot) {
+            setActiveDot(slider)
+            setIndex(slider)
+        }
     }
 
     if (data && services.length) {
         return (
             <View style={{height: 300, backgroundColor: 'white' }}>
-                
-                <FlatList data={services}
+               
+                <FlatList 
+                    data={services}
                     ref = {(flatList) => {flatList = flatList}}
                     keyExtractor={(item, index) => 'key' + index}
                     horizontal
@@ -44,6 +43,7 @@ const Carousel = (data: {values: Carousel }) => {
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => {
                         return  ( 
+                        
                             <Pressable
                                 onLongPress={() => { 
                                     setItem(item)
@@ -51,54 +51,19 @@ const Carousel = (data: {values: Carousel }) => {
                                 }}
                             >
                                 <CarouselItem item={{service: item}} />
+                                
                             </Pressable>
+                           
+                            
                         )
                     }}
-                    onScroll={Animated.event(
-                        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                        {useNativeDriver: false}
-                    )}
+                    onScroll={({nativeEvent}) => changeDot(nativeEvent)}
                 />
-
                 <View style={styles.dotView}>
-                    {services.map((_: IServicesImages, i: number) => {
-                        let opacity = position.interpolate({
-                            inputRange: [i - 1, i, i + 1],
-                            outputRange: [0.3, 1, 0.3],
-                            extrapolate: 'clamp'
-                        })
-                        return (
-                            <Animated.View
-                                key={i}
-                                style={{ opacity, height: 10, width: 10, backgroundColor: color, margin: 8, borderRadius: 5 }}
-                            />
-                        )
-                    })}
+                    {services.map((__value, k) => (
+                        <Text key={k} style={k == activeDot? styles.pagingActiveText :styles.pagingText}>⬤</Text>
+                    ))}
                 </View>
-                <Modal
-                    animationType='slide'
-                    transparent={true}
-                    visible={visible}
-                >
-                    <View style={{...styles.modal, borderColor: color}}>
-                        <Text style={{...styles.title , color: color}}>Quer realmente remover essa imagem?</Text>
-                        <View style={styles.buttonArea}>
-                            <TouchableOpacity 
-                                style={{...styles.buttonModal, marginHorizontal: 10, backgroundColor: color}}
-                                onPress={removeImage}
-                            >
-                                <Text style={styles.buttonText}>Sim</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={{...styles.buttonModal,  backgroundColor: color}}
-                                onPress={() => setVisible(!visible) }
-                            >
-                                <Text style={styles.buttonText}>Não</Text>
-                            </TouchableOpacity>
-                        </View>
-        
-                    </View>
-                </Modal>
             </View>
         )
     }
@@ -106,7 +71,17 @@ const Carousel = (data: {values: Carousel }) => {
 }
 
 const styles = StyleSheet.create({
-    dotView: { flexDirection: 'row', justifyContent: 'center' },
+    dotView: { 
+        flexDirection: 'row', 
+        position: 'absolute', 
+        bottom: 0, 
+        alignSelf: 'center', 
+        alignItems: 'center'
+    },
+
+    pagingText: {color: '#605C99', margin: 3, opacity: 0.5},
+
+    pagingActiveText: {color: '#302E4D', margin: 3},
 
     modal: {
         backgroundColor: '#FFF',
