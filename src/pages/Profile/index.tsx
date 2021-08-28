@@ -56,37 +56,44 @@ const Profile = () => {
 
   return (
     <>
-      <ScrollView 
-        style={{backgroundColor: '#fff'}}
-        showsVerticalScrollIndicator={false}
-      >
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', marginTop: 50, alignItems: 'center', margin: 20}}>
-          <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
-          <View style={{marginLeft: 5}}>
-            <Text style={{...styles.text, color: client?.color, marginHorizontal: 20}}>{client?.name}</Text>
-          </View>
-
-          <TouchableOpacity
-            onPress={() => goTo('ProfileEdit')}
-          >
-            <View style={{paddingHorizontal: 40}}>
-              <Icon name='account-edit' size={30}style={{color: client?.color}}/>
+        <View style={{
+          height: 135,
+          backgroundColor: '#605C99',
+          borderBottomStartRadius: 80,
+          borderBottomEndRadius: 80,
+          marginBottom: 30
+        }}>
+          <View style={{flexDirection: 'row', marginTop: 40, alignItems: 'center'}}>
+            <View style={{marginLeft: 5}}>
+              <Text style={{...styles.text, color: 'white', marginHorizontal: 30}}>{client?.name}</Text>
             </View>
-          </TouchableOpacity>
-          
+
+            <TouchableOpacity
+              onPress={() => goTo('ProfileEdit')}
+            >
+              <View style={{paddingHorizontal: 160}}>
+                <Icon name='account-edit' size={30} style={{color:'white'}}/>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
+          </View>
         </View>
-        
+
         <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
-        <Carousel values={{services, color: client?.color}}/> 
+        <Carousel values={{services}}/> 
 
-        <View >
-
+        <ScrollView 
+          style={{backgroundColor: '#fff', marginBottom: 80}}
+          showsVerticalScrollIndicator={true}
+        >
           <TouchableOpacity
             onPress={pickImage}
           >
             <View style={styles.menuItem}>
-              <Icon name='camera' size={30}style={{color: client?.color}}/>
+              <Icon name='camera' size={30}style={{color: '#605C99'}}/>
               <Text style={{...styles.menuItemText}}> Adicionar imagem </Text>
             </View>
           </TouchableOpacity>
@@ -95,46 +102,45 @@ const Profile = () => {
             onPress={() => goTo('ProfileEditEmail')}
           >
             <View style={styles.menuItem}>
-              <Icon name='email' size={30}style={{color: client?.color}}/>
+              <Icon name='email' size={30}style={{color: '#605C99'}}/>
               <Text style={{...styles.menuItemText}}> Alterar E-mail </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> 
 
           <TouchableOpacity
-            onPress={() => goTo('ProfileEditPassword')}
-          >
-            <View style={styles.menuItem}>
-              <Icon name='key' size={30}style={{color: client?.color}}/>
-              <Text style={{...styles.menuItemText}}> Alterar Senha </Text>
-            </View>
-          </TouchableOpacity>
+          onPress={() => goTo('ProfileEditPassword')}
+        >
+          <View style={styles.menuItem}>
+            <Icon name='key' size={30}style={{color: '#605C99'}}/>
+            <Text style={{...styles.menuItemText}}> Alterar Senha </Text>
+          </View>
+        </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => goTo('ProfileEditAddress')}
-          >
-            <View style={styles.menuItem}>
-              <Icon name='home' size={30}style={{color: client?.color}}/>
-              <Text style={{...styles.menuItemText}}> Alterar Endereço </Text>
-            </View>
-          </TouchableOpacity>
+          onPress={() => goTo('ProfileEditAddress')}
+        >
+          <View style={styles.menuItem}>
+            <Icon name='home' size={30}style={{color: '#605C99'}}/>
+            <Text style={{...styles.menuItemText}}> Alterar Endereço </Text>
+          </View>
+        </TouchableOpacity>
+          
           <TouchableOpacity
           onPress={() => {
             setControlPicker(!controlPicker);
-          }}>
-            <View style={styles.menuItem}>
-              <Icon name='account-check-outline' size={30}style={{color: client?.color}}/>
-              <Text style={{...styles.menuItemText}}> Ajuda </Text>
-            </View>
-          </TouchableOpacity>
-          {
-            controlPicker ? 
-            <CreateTicket/>
-            : <></>
-          }
-        </View>     
-      </View>
-      </ScrollView>
-
+        }}>
+          <View style={styles.menuItem}>
+            <Icon name='account-check-outline' size={30}style={{color: '#605C99'}}/>
+            <Text style={{...styles.menuItemText}}> Ajuda </Text>
+          </View>
+        </TouchableOpacity>
+            {
+              controlPicker ? 
+              <CreateTicket/>
+              : <></>
+            }
+        </ScrollView>
+        </View>
     </>
   )
 }

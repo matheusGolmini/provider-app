@@ -30,10 +30,10 @@ const Carousel = (data: {values: Carousel }) => {
 
     if (data && services.length) {
         return (
-            <View>
+            <View style={{height: 300, backgroundColor: 'white' }}>
                 
                 <FlatList data={services}
-                ref = {(flatList) => {flatList = flatList}}
+                    ref = {(flatList) => {flatList = flatList}}
                     keyExtractor={(item, index) => 'key' + index}
                     horizontal
                     pagingEnabled
@@ -50,7 +50,7 @@ const Carousel = (data: {values: Carousel }) => {
                                     setVisible(!visible)  
                                 }}
                             >
-                                <CarouselItem item={{service: item, color: color ? color : 'black'}} />
+                                <CarouselItem item={{service: item}} />
                             </Pressable>
                         )
                     }}
@@ -118,6 +118,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 5,
     
+    },
+
+    shadow: {
+        shadowColor: '#302E4D',
+        shadowOffset: {
+            width: 0, 
+            height: 10
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5
     },
 
     title: {

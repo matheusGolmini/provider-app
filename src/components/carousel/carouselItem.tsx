@@ -6,14 +6,13 @@ const { width, height } = Dimensions.get('window');
 
 interface CarouselItem {
     service: IServicesImages;
-    color: string;
 }
 
 const CarouselItem = (data: {item: CarouselItem }) => {
-    const  { service, color } = data.item
+    const  { service } = data.item
     return (
         <View style={styles.cardView}>
-            <Image style={{...styles.image, borderColor: color}} source={{ uri: service.url }} />
+            <Image style={{...styles.image}} source={{ uri: service.url }} />
         </View>
     )
 }
@@ -21,19 +20,14 @@ const CarouselItem = (data: {item: CarouselItem }) => {
 const styles = StyleSheet.create({
     cardView: {
         flex: 1,
-        width: width - 20,
+        width: width - 40,
         height: height / 3,
         backgroundColor: 'white',
-        margin: 10,
+        margin: 20,
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0.5, height: 0.5 },
-        shadowOpacity: 0.5,
-        shadowRadius: 3,
-        elevation: 5,
     },
     image: {
-        width: width - 20,
+        width: width - 40,
         height: height / 3,
         borderRadius: 10,
         borderWidth: 7
