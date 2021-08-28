@@ -144,65 +144,6 @@ const Profile = () => {
         </TouchableOpacity>
 
       </View>
-
-      
-      
-      {/* <ScrollView 
-          style={{backgroundColor: '#fff', marginBottom: 80}}
-          showsVerticalScrollIndicator={true}
-        >
-          <TouchableOpacity
-            onPress={pickImage}
-          >
-            <View style={styles.menuItem}>
-              <Icon name='camera' size={30}style={{color: '#605C99'}}/>
-              <Text style={{...styles.menuItemText}}> Adicionar imagem </Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => goTo('ProfileEditEmail')}
-          >
-            <View style={styles.menuItem}>
-              <Icon name='email' size={30}style={{color: '#605C99'}}/>
-              <Text style={{...styles.menuItemText}}> Alterar E-mail </Text>
-            </View>
-          </TouchableOpacity> 
-
-          <TouchableOpacity
-          onPress={() => goTo('ProfileEditPassword')}
-        >
-          <View style={styles.menuItem}>
-            <Icon name='key' size={30}style={{color: '#605C99'}}/>
-            <Text style={{...styles.menuItemText}}> Alterar Senha </Text>
-          </View>
-        </TouchableOpacity>
-
-          <TouchableOpacity
-          onPress={() => goTo('ProfileEditAddress')}
-        >
-          <View style={styles.menuItem}>
-            <Icon name='home' size={30}style={{color: '#605C99'}}/>
-            <Text style={{...styles.menuItemText}}> Alterar Endereço </Text>
-          </View>
-        </TouchableOpacity>
-          
-          <TouchableOpacity
-          onPress={() => {
-            setControlPicker(!controlPicker);
-        }}>
-          <View style={styles.menuItem}>
-            <Icon name='account-check-outline' size={30}style={{color: '#605C99'}}/>
-            <Text style={{...styles.menuItemText}}> Ajuda </Text>
-          </View>
-        </TouchableOpacity>
-            {
-              controlPicker ? 
-              <CreateTicket/>
-              : <></>
-            }
-        </ScrollView> */}
-      
     </ View>
   )
 }

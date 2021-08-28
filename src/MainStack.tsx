@@ -8,6 +8,7 @@ import ProfileEdit from './pages/ProfileEdit'
 import ProfileEditEmail from './pages/ProfileEdit/editEmail'
 import ProfileEditPassword from './pages/ProfileEdit/editPassword'
 import ProfileEditAddress from './pages/ProfileEdit/editAddress'
+import ProfileEditPeople from './pages/ProfileEdit/editPeople'
 
 const AppStack = createStackNavigator();
 
@@ -26,6 +27,26 @@ export default function Routes(){
                     options={{
                         headerTintColor: 'white',
                         title: 'Alterar Dados',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99',
+                        }
+                    }}
+                />
+
+                <AppStack.Screen 
+                    name='ProfileEditPeople' 
+                    component={ProfileEditPeople}
+
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Alterar Pessoais',
                         headerTitleAlign: 'center',
                         headerTitleStyle: {
                             color: 'white',

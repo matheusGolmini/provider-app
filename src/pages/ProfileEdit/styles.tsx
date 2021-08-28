@@ -31,6 +31,20 @@ const styles =  StyleSheet.create({
     marginTop: 5
   },
 
+  menuItem: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+  },
+
+  menuItemText: {
+    color: '#696969',
+    marginLeft: 20,
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 26,
+  },
+
   button: {
     backgroundColor: '#4169E1',
     width: 100,
