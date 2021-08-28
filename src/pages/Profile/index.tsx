@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet, ImageBackgroundBase } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import styles from './styles';
@@ -11,6 +11,25 @@ import { IServicesImages } from '../../interfaces/servicesImges';
 import { servicesImages } from '../../mocks/mock-images-jobs';
 import Reating from '../../components/Rating';
 import * as ImagePicker from 'expo-image-picker';
+
+import { LinearGradient } from 'expo-linear-gradient';
+
+const { height } = Dimensions.get('window');
+const stylesT = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white"
+  },
+  topBar: {
+    height: 0.15 * height,
+    backgroundColor: "#605C99",
+    borderBottomRightRadius: 75
+  },
+  footer: {
+    flexDirection:'row',
+    width: 75
+  }
+})
 
 const Profile = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -55,37 +74,42 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={{
-          height: 135,
-          backgroundColor: '#605C99',
-          borderBottomStartRadius: 80,
-          borderBottomEndRadius: 80,
-          marginBottom: 30
-        }}>
-          <View style={{flexDirection: 'row', marginTop: 40, alignItems: 'center'}}>
-            <View style={{marginLeft: 5}}>
-              <Text style={{...styles.text, color: 'white', marginHorizontal: 30}}>{client?.name}</Text>
-            </View>
+    <View style={stylesT.container}>
+      <LinearGradient 
+        style={stylesT.topBar}
+        start={{x:1,y:1}}
+	      end={{x:1,y:0}}
+        locations={[.3,0.7]}
+	      colors={['#605C99','#302E4D']}
+      > 
+        <View style={{flexDirection: 'row', marginTop: 40, alignItems: 'center'}}>
+          <View style={{marginLeft: 5}}>
+            <Text style={{...styles.text, color: 'white', marginHorizontal: 30}}>{client?.name}</Text>
+          </View>
 
-            <TouchableOpacity
-              onPress={() => goTo('ProfileEdit')}
-            >
-              <View style={{paddingHorizontal: 160}}>
-                <Icon name='account-edit' size={30} style={{color:'white'}}/>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{alignItems: 'center'}}>
-            <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
-          </View>
+          <TouchableOpacity
+            onPress={() => goTo('ProfileEdit')}
+          >
+            <View style={{paddingHorizontal: 160}}>
+              <Icon name='account-edit' size={30} style={{color:'white'}}/>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={{alignItems: 'center', overflow:'visible'}}>
+          <Image style={styles.logo} source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}} />
         </View>
 
-        <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
-        <Carousel values={{services}}/> 
-
-        <ScrollView 
+        
+      </LinearGradient>
+      <View style={stylesT.footer}>
+        <View 
+          style={{...StyleSheet.absoluteFillObject, backgroundColor: '#605C99', width: 75,}}
+        /> 
+        <View style={{flex: 1, backgroundColor: "white", borderTopLeftRadius: 75, width: 10, height: 75}} />
+      </View>
+      <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3}/>
+      <Carousel values={{services}}/> 
+      <ScrollView 
           style={{backgroundColor: '#fff', marginBottom: 80}}
           showsVerticalScrollIndicator={true}
         >
@@ -140,11 +164,9 @@ const Profile = () => {
               : <></>
             }
         </ScrollView>
-        </View>
-    </>
+      
+    </ View>
   )
 }
-
-
 
 export default Profile;
