@@ -7,7 +7,6 @@ import {
   Dimensions,
   StyleSheet,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from "./styles";
 import { IClient } from "../../interfaces/client";
@@ -18,6 +17,7 @@ import { IServicesImages } from "../../interfaces/servicesImges";
 import { servicesImages } from "../../mocks/mock-images-jobs";
 import Reating from "../../components/Rating";
 import * as ImagePicker from "expo-image-picker";
+import { Entypo } from '@expo/vector-icons';
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -111,7 +111,7 @@ const Profile = () => {
 
           <TouchableOpacity onPress={() => goTo("ProfileEdit")}>
             <View style={{ paddingHorizontal: 160 }}>
-              <Icon name="account-edit" size={30} style={{ color: "white" }} />
+              <Entypo name="edit" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
         </View>
@@ -167,11 +167,11 @@ const Profile = () => {
       >
         <View style={{ flexDirection: "row", alignContent: "flex-start", }}>
           <TouchableOpacity onPress={pickImage}>
-            <Icon name="camera" size={30} style={{ color: "#302E4D" }} />
+            <Entypo name="image-inverted" size={30} style={{ color: "#302E4D" }} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={removeImage}>
-            <Icon name="delete" size={30} style={{ color: "#fc3232" }} />
+            <Entypo name="cup" size={30} style={{ color: "#fc3232" }} />
           </TouchableOpacity>
         </View>
 
@@ -185,7 +185,7 @@ const Profile = () => {
             }}
           >
             <View style={{ flexDirection: "column" }}>
-              <Icon name="logout" size={30} style={{ color: "#302E4D" }} />
+              <Entypo name="log-out" size={30} style={{ color: "#302E4D" }} />
               <Text
                 style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
               >
@@ -199,10 +199,10 @@ const Profile = () => {
             }}
           >
             <View>
-              <Icon
-                name="account-check-outline"
+              <Entypo
+                name="help"
                 size={30}
-                style={{ color: "#302E4D" }}
+                style={{ color: "#fc3232" }}
               />
               <Text
                 style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
