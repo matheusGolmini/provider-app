@@ -111,7 +111,7 @@ const Profile = () => {
 
           <TouchableOpacity onPress={() => goTo("ProfileEdit")}>
             <View style={{ paddingHorizontal: 160 }}>
-              <Entypo name="edit" size={30} style={{ color: "white" }} />
+              <Entypo name="user" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
         </View>
