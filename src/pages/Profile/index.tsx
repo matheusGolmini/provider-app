@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -160,34 +160,12 @@ const Profile = () => {
       <View
         style={{
           flex: 2,
-          flexDirection: "row",
-          alignContent: "space-between",
-          paddingHorizontal: 25,
-          alignSelf: "flex-end",
+          flexDirection: "row-reverse",
+          alignSelf: 'flex-start',
+          paddingHorizontal: 20,
         }}
       >
-        <TouchableOpacity
-          style={{ flex: 1, flexDirection: "row"}}
-          onPress={() => {
-            setControlPicker(!controlPicker);
-          }}
-        >
-          <View style={{ flexDirection: "column",}}>
-            <Icon
-              name="account-check-outline"
-              size={30}
-              style={{ color: "#302E4D" }}
-            />
-            <Text
-              style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
-            >
-            Ajuda
-            </Text>
-          </View>
-        </TouchableOpacity>
-        {controlPicker ? <CreateTicket /> : <></>}
-
-        <View style={{ flexDirection: "row", alignContent: 'flex-end' }}>
+        <View style={{ flexDirection: "row", alignContent: "flex-start", }}>
           <TouchableOpacity onPress={pickImage}>
             <Icon name="camera" size={30} style={{ color: "#302E4D" }} />
           </TouchableOpacity>
@@ -195,6 +173,45 @@ const Profile = () => {
           <TouchableOpacity onPress={removeImage}>
             <Icon name="delete" size={30} style={{ color: "#fc3232" }} />
           </TouchableOpacity>
+        </View>
+
+        <View
+          style={{ flexDirection: "row", flex: 1}}
+        >
+          <TouchableOpacity
+            style={{ paddingHorizontal: 5}}
+            onPress={() => {
+              goTo('Login')
+            }}
+          >
+            <View style={{ flexDirection: "column" }}>
+              <Icon name="logout" size={30} style={{ color: "#302E4D" }} />
+              <Text
+                style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
+              >
+                Sair
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setControlPicker(!controlPicker);
+            }}
+          >
+            <View>
+              <Icon
+                name="account-check-outline"
+                size={30}
+                style={{ color: "#302E4D" }}
+              />
+              <Text
+                style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
+              >
+                Ajuda
+              </Text>
+            </View>
+          </TouchableOpacity>
+          {controlPicker ? <CreateTicket /> : <></>}
         </View>
       </View>
     </View>
