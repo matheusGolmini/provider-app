@@ -23,7 +23,7 @@ const MonthlyBarChart = ({defaultSize, isText, dataValues} : {defaultSize?: numb
     const fill = 'rgb(134, 65, 244)'
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginEnd: 50, marginLeft: 10 }}>
             {
                 isText
                 ? 
@@ -49,7 +49,7 @@ const MonthlyBarChart = ({defaultSize, isText, dataValues} : {defaultSize?: numb
                 /> 
                 <BarChart style={{ height: sizeHeight, width: sizeWidth }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30 }}>
             
-                    <Grid belowChart={false}/>
+                    <Grid belowChart={true} />
                 </BarChart>
             </View>
             <XAxis
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: '#37b7dc'
+        color: '#36294a'
     }
 })
 

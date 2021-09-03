@@ -4,8 +4,8 @@ const { width, height } = Dimensions.get('window');
 
 const styles =  StyleSheet.create({
   logo: {
-    width: 100,
-    height: 100,
+    width: 110,
+    height: 110,
     borderRadius: 100
   },
 

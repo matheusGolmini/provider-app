@@ -127,7 +127,7 @@ export function ListContractSign(propsComponent: PropsComponent) {
                 keyExtractor={(service: IDetailService) => String(service.id)}
                 showsVerticalScrollIndicator={false}    
                 renderItem={({item: service})=> (
-                    <View style={ { ...styles.task, borderColor: service.color }}>
+                    <View style={ styles.task }>
                         <Image style={styles.logo} source={{uri: service.imageProvider}}/>
                         <Text style={{...styles.text, color: service.color, marginTop: 15}}>Cliente {service.nameProvider}</Text>
                         <Text style={{...styles.text, color: service.color}}>Data inicio: 01/02/2021</Text>

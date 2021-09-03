@@ -16,7 +16,10 @@ export default StyleSheet.create({
         borderRadius: 8,
         backgroundColor: '#fff',
         marginBottom: 16,
-        borderWidth: 10,
+        borderWidth: 2,
+        borderColor: '#605C99',
+        shadowRadius: 3.5,
+        elevation: 5
     },
     textDefault: {
         fontSize: 20,

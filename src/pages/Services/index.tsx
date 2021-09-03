@@ -4,6 +4,7 @@ import ReturnImageNotService from '../../components/notService';
 import { IDetailService } from '../../interfaces/detailService ';
 import mockService from '../../mocks/mock-detail-service';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View } from 'react-native';
 
 function ServicesInProgress() {
   const [service, setService] = useState<IDetailService[]>([]);
@@ -68,18 +69,23 @@ const Tab = createMaterialTopTabNavigator();
 const Services = () =>  {
   return (
     <>
+      <View
+        style={{
+          height: 40,
+          backgroundColor: "#302E4D",
+        }}
+      />
       <Tab.Navigator
         tabBarOptions={{
-          activeTintColor: '#37b7dc',
+          activeTintColor: '#302E4D',
           inactiveTintColor: '#DCDCDC',
           labelStyle: {
             fontWeight: 'bold'
           },
           indicatorStyle: {
-            backgroundColor: '#37b7dc'
+            backgroundColor: '#302E4D'
           }     
         }}
-        style={{marginTop:24}}
       >
         <Tab.Screen name="Assinar contrato" component={ContractSign}/>
         <Tab.Screen name="Serviços em andamento" component={ServicesInProgress}/>
