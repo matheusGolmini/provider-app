@@ -5,11 +5,11 @@ export default StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 100,
-        marginLeft: 50,
     },
     container: {
         marginTop: 20,
-        margin: 50
+        margin: 50,
+        marginBottom: 100
     },
     task: {
         padding: 24,
@@ -29,7 +29,7 @@ export default StyleSheet.create({
     text: {
         fontSize: 18,
         marginTop: 10,
-        color: '#41414d',
+        color: '#302E4D',
         fontWeight: 'bold',
     },
     description: {
@@ -44,10 +44,11 @@ export default StyleSheet.create({
         marginTop: 15,
     },
     tasksButton2: {
-        borderRadius: 8,
+        borderRadius: 5,
         alignItems: 'center',
         marginTop: 20,
-        borderWidth: 5,
+        backgroundColor: '#605C99',
+        height: 30
     },
     buttonText: {
         fontSize: 18,

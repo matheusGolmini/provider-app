@@ -48,6 +48,22 @@ const mockServiceInProgress: IDetailService[] = [
         start_date: new Date(),
         end_date: new Date(),
         help_open: false
+    },
+    {
+        id: '2',
+        combinedContract: 'Pintar a parede do quarto de rosa.',
+        color: '#00BFFF',
+        days: 20,
+        imageProvider: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg',
+        nameProvider: 'Matheus',
+        phone: '41 99999-9999',
+        is_finishing: false,
+        service: 'Pintor',
+        is_payment: true,
+        value: 800,
+        start_date: new Date(),
+        end_date: new Date(),
+        help_open: false
     }
 ];
 

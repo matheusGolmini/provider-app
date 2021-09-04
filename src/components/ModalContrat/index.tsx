@@ -16,7 +16,7 @@ const ModalContrat = ({setIsModalVisible, setSignedContract}: ModalPicker) => {
     const [opacity, setOpacity] = useState<number>(0.5);
 
     function scroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
-        if(event.nativeEvent.contentOffset.y >=  4770) {
+        if(event.nativeEvent.contentOffset.y >=  4600) {
             setOpacity(1)
             setDisabled(false)
         }else {
@@ -39,7 +39,7 @@ const ModalContrat = ({setIsModalVisible, setSignedContract}: ModalPicker) => {
                 <TouchableOpacity 
                     onPress={() => setIsModalVisible(false)}
                 >
-                    <Feather name={'x'} size={27} color={'#37b7dc'}/>
+                    <Feather name={'x'} size={27} color={'#302E4D'}/>
                 </TouchableOpacity>
                 
                 <Text style={styles.title}> Leia e Assine </Text>
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     modal : {
         backgroundColor: 'white',
         borderRadius: 10,
-        borderWidth: 5,
-        borderColor: '#37b7dc',
+        borderWidth: 2,
+        borderColor: '#605C99',
         alignItems: 'center'
     },
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: '#37b7dc',
+        color: '#302E4D',
     },
 
     text: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     contrat: {
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#37b7dc',
+        borderColor: '#605C99',
     },
 
     contratText: {
@@ -118,12 +118,11 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#37b7dc',
-        borderRadius: 8,
+        backgroundColor: '#605C99',
+        height: 30,
+        borderRadius: 5,
         alignItems: 'center',
-        borderWidth: 5,
-        borderColor: '#37b7dc',
-        marginVertical: 5
+        marginVertical: 7
     },
 
     buttonText: {
