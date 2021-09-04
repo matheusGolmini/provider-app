@@ -3,33 +3,24 @@ import { View, Text, StyleSheet,Image } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import CreateTicket from '../../components/createTicket';
 import Reating from '../../components/Rating';
+import TabBar from '../../components/TabBar';
 
 
 const Info = () => {
     const [controlPicker, setControlPicker] = useState<boolean>(false);
     return(
-        <>
-            <View style={styles.container}>
-                <Image
-                    style={{...styles.logo}} 
-                    source={require('../../assets/duvida.jpg')}
-                />
-                
+        <View style={styles.container}>
+            <TabBar />
+            <View style={{alignItems: 'center'}}>
                 <Text style={styles.title}>Informações</Text>
-
-            
             </View>
-
+    
             <ScrollView
                 style={{marginTop: 15}}
                 showsVerticalScrollIndicator={false}
             >
 
-           
-
                 <View style={styles.info}>
-
-                
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={styles.subTitle}>Score</Text>
                         <Reating 
@@ -47,8 +38,6 @@ const Info = () => {
                         
                         <Text style={styles.textQuestion}>Porcentagem de cada score:</Text>
                         <ScoreInfo />
-                        
-                        
                     </View>
                 </View>
             </ScrollView>
@@ -68,7 +57,7 @@ const Info = () => {
                     : <></>
                 }
             </View>
-        </>
+        </View>
     )
 }
 
@@ -136,9 +125,8 @@ function ScoreInfo () {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1,
+        backgroundColor: 'white'
     },
 
     logo: {

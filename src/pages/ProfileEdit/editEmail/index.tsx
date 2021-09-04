@@ -31,7 +31,7 @@ const ProfileEditEmail = () => {
         console.log('alterado: ', formik.values.email)
         navigation.navigate('Home')
     }
-    formik.setFieldValue
+
     return (
         <> 
             <View 
