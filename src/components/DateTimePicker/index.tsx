@@ -113,8 +113,6 @@ const ComponentDateTimePicker = ({setInitDate, initDate, setEndDate, endDate}: C
 
 const styles = StyleSheet.create({
     buttonPicker: {
-        backgroundColor: '#37b7dc',
-        marginTop: 10,
         width: 300,
         height: 50,
         flexDirection: 'row',
@@ -122,6 +120,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         alignItems: 'center',
+        backgroundColor: '#302E4D',
+        marginTop: 10,
     },
 
     buttonTextPicker: {

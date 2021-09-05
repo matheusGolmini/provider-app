@@ -115,7 +115,7 @@ const ProfileEditEmail = () => {
                         </View>
                         : null
                     }
-
+               
                     <View style={{alignItems: 'center'}}>
                         <TouchableOpacity 
                             style={{...stylesGlobal.button, opacity: formik.touched.email === undefined? 0.5 : !formik.isValid ? 0.5: 1}}

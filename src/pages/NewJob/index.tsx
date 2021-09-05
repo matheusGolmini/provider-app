@@ -1,291 +1,281 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Modal } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import ModalPicker from '../../components/ModalPicker';
-import ComponentDateTimePicker from '../../components/DateTimePicker';
-import { types } from '../../mocks/index';
-import ModalCreateNewService from '../../components/ModalCreateNewService';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/core";
+
+import stylesGlobal from "../styles-global";
+import { useFormik } from "formik";
+import { newJobForm } from "./newJob.form";
+import TabBar from "../../components/TabBar";
+import ComponentDateTimePicker from "../../components/DateTimePicker";
 
 const NewJob = () => {
-    const[emailClient, setEmailClient] = useState<string>('');
-    const[sortDescription, setSortDescription] = useState<string>('');
-    const[description, setDescription] = useState<string>('');
-    const[serviceDaysNumber, setServiceDaysNumber] = useState<string>('');
-    const[serviceValue, setServiceValue] = useState<string>('');
-    // const[typeServices, setTypeServices] = useState<string[]>(['Eletricista', 'Pedreiro', 'Encanador']);
-    const[typeSelected, setTypeSelected] = useState<string>('');
-    const[isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-    const[isModalFinishiVisible, setIsModalFinishiVisible] = useState<boolean>(false);
-
-    //calendar
-    const [initDate, setInitDate] = useState<string | null>(null);
-    const [endDate, setEndDate] = useState<string | null>(null);
- 
-    //buttonControl
-    const [disableButton, setDisableButton] = useState<boolean>(true);
-    const [opacityButton, setOpacityButton] = useState<number>(); 
-
-    useEffect(() => {
-        if(
-            !!emailClient && 
-            !!sortDescription && 
-            !!description &&
-            !!serviceDaysNumber && 
-            !!serviceValue && 
-            !!initDate &&
-            !!endDate
-        ) {
-            setDisableButton(false)
-            setOpacityButton(1)
-        } else {
-            setDisableButton(true)
-            setOpacityButton(0.5)
-        }
-    }, [emailClient, sortDescription, description, serviceDaysNumber, serviceValue, initDate, endDate])
-
-    function saveNewService() {
-        console.log(
-            {
-                "emailClient": emailClient ,
-                "sortDescription": sortDescription,
-                "description": description,
-                "serviceDaysNumber": serviceDaysNumber,
-                "serviceValue": serviceValue,
-                "initDate": initDate,
-                "endDate": endDate,
-                "typeSelected": typeSelected
-            }
-            
-        );
-        setIsModalFinishiVisible(!isModalFinishiVisible)
-        clearState()
-
-    }
-
-    function clearState() {
-        setEmailClient('');
-        setSortDescription('');
-        setDescription('');
-        setTypeSelected('');
-        setServiceDaysNumber('');
-        setServiceValue('');
-        setInitDate(null);
-        setEndDate(null);
-    }
-
-    return(
-        <> 
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.container}>
-                    <Image
-                        style={{...styles.logo}} 
-                        source={{uri: 'https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg'}}
-                    />
-                    <Text style={{...styles.text, marginTop: 10}}>Adicione um serviço</Text>
-
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            value={emailClient}
-                            keyboardType={'email-address'}
-                            onChangeText={(val) => setEmailClient(val)}
-                            placeholder='E-mail do cliente' 
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-
-
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            onChangeText={(val) => setSortDescription(val)}
-                            placeholder='Descrição curta' 
-                            value={sortDescription}
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            onChangeText={(val) => setDescription(val)}
-                            placeholder='Descrição completa' 
-                            value={description}
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-               
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            keyboardType={'number-pad'}
-                            onChangeText={(val) => setServiceDaysNumber(val)}
-                            value={serviceDaysNumber}
-                            placeholder='Quantidade estimada de dias' 
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-
-
-                    <View style={styles.input}>
-                        <TextInput 
-                            style={styles.inputText} 
-                            keyboardType={'number-pad'}
-                            onChangeText={(val) => setServiceValue(val)}
-                            value={serviceValue}
-                            placeholder='Valor do serviço' 
-                            placeholderTextColor='#37b7dc'
-                        />
-                    </View>
-
-                    <ComponentDateTimePicker 
-                        endDate={endDate}
-                        initDate={initDate}
-                        setEndDate={setEndDate}
-                        setInitDate={setInitDate}
-                    />
-                 
-                    {/* Pode ser usada em um feature futura*/}
-                    {/* <TouchableOpacity 
-                        style={{...styles.buttonPicker}}
-                        onPress={ () => setIsModalVisible(!isModalVisible) }
-                    >
-                        <Text style={styles.buttonTextPicker}>{typeSelected === '' ? 'Selecione o tipo de serviço' : typeSelected}</Text>
-                        <Feather 
-                            name='arrow-down' 
-                            size={20} 
-                            style={{
-                                color: 'white',
-                                paddingHorizontal: 15
-                            }}
-                        />
-                    </TouchableOpacity> */}
-
-                    <Modal
-                        transparent={true}
-                        animationType={'fade'}
-                        visible={isModalVisible}
-                    >
-                        <ModalPicker 
-                            setIsModalVisible={setIsModalVisible}
-                            setTypeSelected={setTypeSelected}
-                            data={types}
-                        />
-
-                    </Modal>
-
-                    <TouchableOpacity 
-                        style={{...styles.button, marginBottom: 30, marginTop: 10}}
-                        disabled={disableButton}
-                        onPress={ saveNewService }
-                    >
-                        <Text style={{...styles.buttonText, opacity: opacityButton}}>Cadastrar</Text>
-                    </TouchableOpacity>
-
-                    <Modal
-                        transparent={true}
-                        animationType={'fade'}
-                        visible={isModalFinishiVisible}
-                    >
-                        <ModalCreateNewService 
-                            setIsModalVisible={setIsModalFinishiVisible}
-                        />
-                    </Modal>
-                    
-                </View>
-            </ScrollView>
-        </>
-    )
-}
-
-
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+  const [initDate, setInitDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      confirmEmail: "",
+      sortDescription: "",
+      description: "",
+      serviceValue: "",
     },
-    logo: {
-        width: 150,
-        height: 150,
-        borderRadius: 100,
-        borderWidth: 5,
-        marginTop: 20,
+    validationSchema: newJobForm,
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+      alterData();
+      setEndDate(null);
+      setInitDate(null);
+      resetForm();
     },
-    text: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: '#37b7dc'
-    },
-    textInfo: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#37b7dc',
-        marginHorizontal: 5
-    },
-    inputText: {
-        width: '100%',
-        backgroundColor: '#FFF',
-        height: 50,
-        padding: 8,
-        fontSize: 16,
-        color: '#37b7dc',
-        fontWeight: 'bold',
-        borderColor: '#37b7dc',
-        borderWidth: 5,
-        borderRadius: 10,
-    },
-    input: {
-        marginTop: 10,
-        width: 300,
-        height: 50,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#37b7dc',
-        borderRadius: 10,
-        fontWeight: 'bold',
-    },
-    button: {
-        backgroundColor: '#37b7dc',
-        width: 300,
-        height: 60,
-        flexDirection: 'row',
-        borderRadius: 10,
-        overflow: 'hidden',
-        alignItems: 'center',
-    },
-    
-    buttonText: {
-        flex: 1,
-        justifyContent: 'center',
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
+  });
 
-    buttonPicker: {
-        backgroundColor: '#37b7dc',
-        marginTop: 10,
-        width: 300,
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderRadius: 10,
-        overflow: 'hidden',
-        alignItems: 'center',
-    },
+  const navigation = useNavigation();
 
-    buttonTextPicker: {
-        padding: 8,
-        alignItems: 'center',
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    }
-})
+  function alterData() {
+    console.log("alterado: ", formik.values.email);
+    navigation.navigate("Home");
+  }
+
+  return (
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <TabBar />
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "#fff",
+          marginBottom: 250,
+        }}
+      >
+        <Text style={styles.text}> Adicione um serviço </Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{marginBottom: 100}}>
+            <View style={{ ...styles.input }}>
+              <TextInput
+                style={{
+                  ...styles.inputText,
+                  borderColor:
+                    formik.touched.email && formik.errors.email
+                      ? "red"
+                      : "#302E4D",
+                }}
+                placeholder="E-mail"
+                placeholderTextColor="#666666"
+                keyboardType="email-address"
+                autoCorrect={false}
+                value={formik.values.email}
+                onFocus={() => formik.setFieldTouched("email")}
+                onChangeText={formik.handleChange("email")}
+              />
+            </View>
+            {formik.touched.email && formik.errors.email ? (
+              <View
+                style={{
+                  alignItems: "flex-start",
+                }}
+              >
+                <Text testID="error-email" style={styles.error}>
+                  {formik.errors.email}
+                </Text>
+              </View>
+            ) : null}
+
+            <View style={{ ...styles.input }}>
+              <TextInput
+                style={{
+                  ...styles.inputText,
+                  borderColor:
+                    formik.touched.confirmEmail && formik.errors.confirmEmail
+                      ? "red"
+                      : "#302E4D",
+                }}
+                placeholder="Confirmação de e-mail"
+                placeholderTextColor="#666666"
+                keyboardType="email-address"
+                autoCorrect={false}
+                value={formik.values.confirmEmail}
+                onFocus={() => formik.setFieldTouched("confirmEmail")}
+                onChangeText={formik.handleChange("confirmEmail")}
+              />
+            </View>
+            {formik.touched.confirmEmail && formik.errors.confirmEmail ? (
+              <View
+                style={{
+                  alignItems: "flex-start",
+                }}
+              >
+                <Text testID="error-email" style={styles.error}>
+                  {formik.errors.confirmEmail}
+                </Text>
+              </View>
+            ) : null}
+
+            <View style={styles.input}>
+              <TextInput
+                style={{
+                  ...styles.inputText,
+                  borderColor:
+                    formik.touched.sortDescription &&
+                    formik.errors.sortDescription
+                      ? "red"
+                      : "#302E4D",
+                }}
+                placeholder="Descrição curta"
+                placeholderTextColor="#666666"
+                value={formik.values.sortDescription}
+                autoCorrect={false}
+                onFocus={() => formik.setFieldTouched("sortDescription")}
+                onChangeText={formik.handleChange("sortDescription")}
+              />
+            </View>
+            {formik.touched.sortDescription && formik.errors.sortDescription ? (
+              <View
+                style={{
+                  alignItems: "flex-start",
+                }}
+              >
+                <Text testID="error-email" style={styles.error}>
+                  {formik.errors.sortDescription}
+                </Text>
+              </View>
+            ) : null}
+
+            <View style={styles.input}>
+              <TextInput
+                style={{
+                  ...styles.inputText,
+                  borderColor:
+                    formik.touched.description && formik.errors.description
+                      ? "red"
+                      : "#302E4D",
+                }}
+                placeholder="Descrição completa"
+                placeholderTextColor="#666666"
+                value={formik.values.description}
+                autoCorrect={false}
+                onFocus={() => formik.setFieldTouched("description")}
+                onChangeText={formik.handleChange("description")}
+              />
+            </View>
+            {formik.touched.description && formik.errors.description ? (
+              <View
+                style={{
+                  alignItems: "flex-start",
+                }}
+              >
+                <Text testID="error-email" style={styles.error}>
+                  {formik.errors.description}
+                </Text>
+              </View>
+            ) : null}
+
+            <View style={styles.input}>
+              <TextInput
+                style={{
+                  ...styles.inputText,
+                  borderColor:
+                    formik.touched.serviceValue && formik.errors.serviceValue
+                      ? "red"
+                      : "#302E4D",
+                }}
+                placeholder="Valor do serviço"
+                placeholderTextColor="#666666"
+                value={formik.values.serviceValue}
+                keyboardType={"number-pad"}
+                autoCorrect={false}
+                onFocus={() => formik.setFieldTouched("serviceValue")}
+                onChangeText={formik.handleChange("serviceValue")}
+              />
+            </View>
+            {formik.touched.serviceValue && formik.errors.serviceValue ? (
+              <View
+                style={{
+                  alignItems: "flex-start",
+                }}
+              >
+                <Text testID="error-email" style={styles.error}>
+                  {formik.errors.serviceValue}
+                </Text>
+              </View>
+            ) : null}
+
+            <ComponentDateTimePicker
+              endDate={endDate}
+              initDate={initDate}
+              setEndDate={setEndDate}
+              setInitDate={setInitDate}
+            />
+
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  ...stylesGlobal.button,
+                  opacity:
+                    formik.touched.email === undefined || !initDate || !endDate
+                      ? 0.5
+                      : !formik.isValid
+                      ? 0.5
+                      : 1,
+                }}
+                onPress={() => formik.handleSubmit()}
+                disabled={
+                  formik.touched.email === undefined || !initDate || !endDate
+                    ? true
+                    : !formik.isValid
+                }
+              >
+                <Text style={stylesGlobal.buttonText}>Salvar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
 
 export default NewJob;
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#302E4D",
+  },
+  input: {
+    marginTop: 10,
+    width: 300,
+    height: 50,
+  },
+  textInfo: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#37b7dc",
+    marginHorizontal: 5,
+  },
+  inputText: {
+    width: "100%",
+    backgroundColor: "#FFF",
+    height: 50,
+    padding: 8,
+    fontSize: 16,
+    color: "#302E4D",
+    fontWeight: "bold",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  error: {
+    color: "white",
+    backgroundColor: "red",
+    fontSize: 16,
+    padding: 2,
+    borderRadius: 3,
+    marginTop: 2,
+  },
+});
