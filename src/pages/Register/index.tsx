@@ -4,8 +4,7 @@ import { Text, View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Progress from "../../components/progress";
 import FormPerson from "./RegisterOne";
-
-const { height } = Dimensions.get("window");
+import RegisterTwo from "./RegisterTwo";
 
 export interface IControlProgress {
   index: number;
@@ -17,7 +16,7 @@ const ControlRegister = ({ index, setIndex }: IControlProgress) => {
     case 0:
       return <FormPerson index={index} setIndex={setIndex} />;
     case 1:
-      return <View></View>;
+      return <RegisterTwo index={index} setIndex={setIndex} />;
     case 2:
       return <View></View>;
     default:
