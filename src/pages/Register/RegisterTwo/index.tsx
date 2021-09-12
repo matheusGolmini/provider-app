@@ -15,8 +15,9 @@ import { registerTwoForm } from "./registerTwo.form";
 
 const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
   const [imageDocument, setImageDocument] = React.useState<string | null>(null);
+  const [imageProfile, setImageProfile] = React.useState<string | null>(null);
 
-  const pickImage = async () => {
+  const pickImage = async (type: string) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -25,7 +26,9 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
     });
 
     if (!result.cancelled) {
-      setImageDocument(result.uri);
+      type === "imageProfile"
+        ? setImageProfile(result.uri)
+        : setImageDocument(result.uri);
     }
   };
 
@@ -41,7 +44,7 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
     onSubmit: (values, { resetForm }) => {
       //Enivar para o backend
       setIndex((index += 1));
-      console.log(values);
+      console.log({ ...values, imageDocument, imageProfile });
       resetForm();
     },
   });
@@ -172,7 +175,7 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
 
           <TouchableOpacity
             style={{ ...styles.buttonDocument }}
-            onPress={() => pickImage()}
+            onPress={() => pickImage("imageDocument")}
           >
             <Text
               style={{
@@ -195,12 +198,39 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
             />
           </TouchableOpacity>
 
+          <TouchableOpacity
+            style={{ ...styles.buttonDocument }}
+            onPress={() => pickImage("imageProfile")}
+          >
+            <Text
+              style={{
+                ...styles.buttonDocumentText,
+                opacity: !!imageProfile ? 1 : 0.5,
+              }}
+            >
+              {!!imageProfile
+                ? "Imagem adicionada"
+                : "Adicione uma imagem de perfil"}
+            </Text>
+            <Feather
+              name="check"
+              color="white"
+              size={30}
+              style={{
+                marginHorizontal: 20,
+                opacity: !!imageProfile ? 1 : 0.5,
+              }}
+            />
+          </TouchableOpacity>
+
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={{
                 ...stylesGlobal.button,
                 opacity:
-                  formik.touched.cpf === undefined || imageDocument === null
+                  formik.touched.cpf === undefined ||
+                  imageDocument === null ||
+                  imageProfile === null
                     ? 0.5
                     : !formik.isValid
                     ? 0.5
@@ -208,7 +238,9 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
               }}
               onPress={() => formik.handleSubmit()}
               disabled={
-                formik.touched.cpf === undefined || imageDocument === null
+                formik.touched.cpf === undefined ||
+                imageDocument === null ||
+                imageProfile === null
                   ? true
                   : !formik.isValid
               }
