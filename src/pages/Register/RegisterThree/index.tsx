@@ -5,26 +5,31 @@ import {
   View,
   TextInput,
   StyleSheet,
+  Modal,
 } from "react-native";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
 import { IControlProgress } from "..";
+import { Feather } from "@expo/vector-icons";
+import ModalPicker from "../../../components/ModalPicker";
+import MockService from "../../../mocks/mock-detail-service";
 
 const RegisterThree = ({ index, setIndex }: IControlProgress) => {
   const [control, setControl] = React.useState(true);
+  const [stateSelected, setStateSelected] = React.useState<string | null>("");
+  const [isModalVisible, setIsModalVisible] = React.useState<boolean>(false);
 
   const formik = useFormik({
     initialValues: {
       logradouro: "",
       bairro: "",
       cidade: "",
-      uf: "",
       cep: "",
     },
     onSubmit: (values, { resetForm }) => {
       //Enivar para o backend
       setIndex((index += 1));
-      console.log(values);
+      console.log({ ...values, stateSelected });
       resetForm();
     },
   });
@@ -35,7 +40,7 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
       formik.values.bairro !== "" &&
       formik.values.cidade !== "" &&
       formik.values.cep !== "" &&
-      formik.values.uf !== ""
+      stateSelected !== ""
     ) {
       setControl(false);
     } else {
@@ -46,7 +51,7 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
     formik.values.bairro,
     formik.values.cidade,
     formik.values.cep,
-    formik.values.uf,
+    stateSelected,
   ]);
 
   return (
@@ -109,30 +114,32 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
               style={{
                 ...styles.inputText,
               }}
-              placeholder="Estado"
-              placeholderTextColor="#666666"
-              keyboardType="default"
-              autoCorrect={false}
-              value={formik.values.uf}
-              onFocus={() => formik.setFieldTouched("uf")}
-              onChangeText={formik.handleChange("uf")}
-            />
-          </View>
-
-          <View style={{ ...styles.input }}>
-            <TextInput
-              style={{
-                ...styles.inputText,
-              }}
               placeholder="CEP"
               placeholderTextColor="#666666"
-              keyboardType="default"
+              keyboardType="numeric"
               autoCorrect={false}
               value={formik.values.cep}
               onFocus={() => formik.setFieldTouched("cep")}
               onChangeText={formik.handleChange("cep")}
             />
           </View>
+
+          <TouchableOpacity
+            style={{ ...styles.buttonDocument }}
+            onPress={() => setIsModalVisible(!isModalVisible)}
+          >
+            <Text style={styles.buttonDocumentText}>
+              {!!stateSelected ? stateSelected : "Selecione um estado"}
+            </Text>
+            <Feather
+              name="arrow-down"
+              size={20}
+              style={{
+                color: "white",
+                paddingHorizontal: 15,
+              }}
+            />
+          </TouchableOpacity>
 
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
@@ -146,6 +153,18 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
               <Text style={stylesGlobal.buttonText}>Salvar</Text>
             </TouchableOpacity>
           </View>
+
+          <Modal
+            transparent={true}
+            animationType={"fade"}
+            visible={isModalVisible}
+          >
+            <ModalPicker
+              setIsModalVisible={setIsModalVisible}
+              setTypeSelected={setStateSelected}
+              data={MockService.getStates()}
+            />
+          </Modal>
         </View>
       </View>
     </>
@@ -159,7 +178,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
-
+  action: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginLeft: 20,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F2F2F2",
+    paddingBottom: 5,
+  },
   error: {
     color: "white",
     backgroundColor: "red",

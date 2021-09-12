@@ -27,7 +27,7 @@ const ModalPicker = ({setIsModalVisible, setTypeSelected, data, color}: ModalPic
                 key={index}
                 onPress={() => onPressItem(item)}
             >
-                <Text style={{...styles.text, color: color ? color :'#37b7dc'}}>
+                <Text style={{...styles.text}}>
                     {item}
                 </Text>
 
@@ -41,7 +41,7 @@ const ModalPicker = ({setIsModalVisible, setTypeSelected, data, color}: ModalPic
             style={styles.container}
         >
             <View
-                style={{...styles.modal, width: width- 20, height: height/ 2, borderColor: color ? color : '#37b7dc'}}
+                style={{...styles.modal, width: width- 60, height: height/ 3, borderColor: "#605C99"}}
             >
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -67,18 +67,18 @@ const styles = StyleSheet.create({
     modal : {
         backgroundColor: 'white',
         borderRadius: 10,
-        borderWidth: 5,
+        borderWidth: 2,
         
     },
 
     option: {
-        alignItems: 'flex-start'
+        alignItems: 'center'
     },
 
     text: {
         margin: 20,
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#37b7dc'
+        color: 'black'
     }
 })
