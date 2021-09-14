@@ -27,8 +27,10 @@ const FormPerson = ({ index, setIndex }: IControlProgress) => {
     },
     validationSchema: personForm,
     onSubmit: (values, { resetForm }) => {
+      setTimeout(() => {
+        setIndex((index += 1));
+      }, 100)
       //Enivar para o backend
-      setIndex((index += 1));
       console.log(values);
       resetForm();
     },
