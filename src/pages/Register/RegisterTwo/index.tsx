@@ -43,7 +43,9 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
     validationSchema: registerTwoForm,
     onSubmit: (values, { resetForm }) => {
       //Enivar para o backend
-      setIndex((index += 1));
+      setTimeout(() => {
+        setIndex((index += 1));
+      }, 100)
       console.log({ ...values, imageDocument, imageProfile });
       resetForm();
     },

@@ -28,7 +28,9 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
     },
     onSubmit: (values, { resetForm }) => {
       //Enivar para o backend
-      setIndex((index += 1));
+      setTimeout(() => {
+        setIndex((index += 1));
+      }, 100)
       console.log({ ...values, stateSelected });
       resetForm();
     },
