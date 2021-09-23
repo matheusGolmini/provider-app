@@ -10,10 +10,15 @@ import {
 } from "react-native";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
-import { IControlProgress } from "..";
+import { IControlProgress, IData } from "..";
 import { registerTwoForm } from "./registerTwo.form";
 
-const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
+interface IRegisterTwo extends IControlProgress {
+  data: IData | undefined;
+  setData: React.Dispatch<React.SetStateAction<IData | undefined>>;
+}
+
+const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
   const [imageDocument, setImageDocument] = React.useState<string | null>(null);
   const [imageProfile, setImageProfile] = React.useState<string | null>(null);
 
@@ -42,7 +47,18 @@ const RegisterTwo = ({ index, setIndex }: IControlProgress) => {
     },
     validationSchema: registerTwoForm,
     onSubmit: (values, { resetForm }) => {
-      //Enivar para o backend
+      if (data) {
+        setData({
+          ...data,
+          cpf: values.cpf,
+          rg: values.rg,
+          cnpj: values.cnpj,
+          accountNumber: values.accountNumber,
+          imageProfile: imageProfile ? imageProfile : "i",
+          imageDoc: imageDocument ? imageDocument : "i",
+          sex: 'i'
+        })
+      }
       setTimeout(() => {
         setIndex((index += 1));
       }, 100)

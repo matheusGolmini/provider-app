@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -6,18 +6,40 @@ import {
   TextInput,
   StyleSheet,
   Modal,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
-import { IControlProgress } from "..";
+import { IControlProgress, IData } from "..";
 // import { Feather } from "@expo/vector-icons";
 // import ModalPicker from "../../../components/ModalPicker";
 // import MockService from "../../../mocks/mock-detail-service";
 import axios from "axios";
 import { editAddressForm } from "../../ProfileEdit/editAddress/address.form";
+import { ProviderService } from "../../../service/api/provider-service";
+import { useNavigation } from "@react-navigation/core";
 
-const RegisterThree = ({ index, setIndex }: IControlProgress) => {
- 
+interface IRegisterThree extends IControlProgress {
+  data: IData | undefined;
+}
+
+export interface IAddress {
+  country: string;
+  state: string;
+  city: string;
+  region: string;
+  street: string;
+  type: string;
+  zip: string;
+  number: string;
+  complement?: string;
+}
+
+const RegisterThree = ({ index, setIndex, data }: IRegisterThree) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: {
       logradouro: "",
@@ -29,12 +51,36 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
       complemento: "",
     },
     validationSchema: editAddressForm,
-    onSubmit: (values, { resetForm }) => {
-      //Enivar para o backend
+    onSubmit: async (values, { resetForm }) => {
+      if (data) {
+        setIsLoading(true);
+        try {
+          console.log(data)
+          const res = await ProviderService.createProvider(data);
+          await ProviderService.addAddress(res.idServiceProvider, {
+            country: "BR",
+            state: values.uf,
+            city: values.cidade,
+            region: values.bairro,
+            street: values.logradouro,
+            type: "default",
+            zip: values.cep,
+            number: values.numero,
+            complement: values.complemento,
+          });
+          
+        } catch (error) {
+          setIsLoading(false);
+          Alert.alert("Cadastro", "Estamos com problema no momento, tenta mais tarde!");
+          navigation.navigate('Login')
+          setIndex(0);
+        }
+      }
+
       setTimeout(() => {
+        setIsLoading(false);
         setIndex((index += 1));
       }, 100);
-      console.log({ ...values });
       resetForm();
     },
   });
@@ -239,19 +285,35 @@ const RegisterThree = ({ index, setIndex }: IControlProgress) => {
               onChangeText={formik.handleChange("complemento")}
             />
           </View>
+          {isLoading && (
+            <ActivityIndicator
+              size="large"
+              color="#605C99"
+              style={{ marginTop: 20 }}
+            />
+          )}
 
-          <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
-              style={{
-                ...stylesGlobal.button,
-                opacity: formik.touched.cep === undefined? 0.5 : !formik.isValid ? 0.5: 1
-              }}
-              onPress={() => formik.handleSubmit()}
-              disabled={formik.touched.cep === undefined? true : !formik.isValid }
-            >
-              <Text style={stylesGlobal.buttonText}>Salvar</Text>
-            </TouchableOpacity>
-          </View>
+          {!isLoading && (
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  ...stylesGlobal.button,
+                  opacity:
+                    formik.touched.cep === undefined
+                      ? 0.5
+                      : !formik.isValid
+                      ? 0.5
+                      : 1,
+                }}
+                onPress={() => formik.handleSubmit()}
+                disabled={
+                  formik.touched.cep === undefined ? true : !formik.isValid
+                }
+              >
+                <Text style={stylesGlobal.buttonText}>Salvar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
           {/* <TouchableOpacity
             style={{ ...styles.buttonDocument }}
             onPress={() => setIsModalVisible(!isModalVisible)}

@@ -13,36 +13,57 @@ export interface IControlProgress {
   setIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
+export interface IData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  cpf: string;
+  rg: string;
+  cnpj: string;
+  accountNumber: string;
+  sex: string;
+  imageProfile?: string;
+  imageDoc?: string;
+}
 const ControlRegister = ({ index, setIndex }: IControlProgress) => {
+  const [data, setData] = React.useState<IData | undefined>();
+
   switch (index) {
     case 0:
-      return <FormPerson index={index} setIndex={setIndex} />;
+      return <FormPerson index={index} setIndex={setIndex} setData={setData} />;
     case 1:
-      return <RegisterTwo index={index} setIndex={setIndex} />;
+      return (
+        <RegisterTwo
+          index={index}
+          setIndex={setIndex}
+          setData={setData}
+          data={data}
+        />
+      );
     case 2:
-      return <RegisterThree index={index} setIndex={setIndex} />;
+      return <RegisterThree index={index} setIndex={setIndex} data={data} />;
     case 3:
       return <RegisterEnd />;
     default:
+      setIndex(0);
       return <View></View>;
   }
 };
 
 const Register = () => {
-
   const [index, setIndex] = React.useState(0);
 
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 50, alignItems: "center" }}>
-        {
-          index === 3 ?
+        {index === 3 ? (
           <Image
             style={stylesGlobal.logo}
             source={require("../../assets/logo.jpg")}
           />
-         : null
-        }
+        ) : null}
         <Text style={{ fontWeight: "bold", fontSize: 30 }}>
           Cadastro {index === 3 ? "Finalizado" : ""}
         </Text>
@@ -106,4 +127,3 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
-
