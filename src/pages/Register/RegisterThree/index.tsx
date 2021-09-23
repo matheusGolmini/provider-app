@@ -55,7 +55,6 @@ const RegisterThree = ({ index, setIndex, data }: IRegisterThree) => {
       if (data) {
         setIsLoading(true);
         try {
-          console.log(data)
           const res = await ProviderService.createProvider(data);
           await ProviderService.addAddress(res.idServiceProvider, {
             country: "BR",
