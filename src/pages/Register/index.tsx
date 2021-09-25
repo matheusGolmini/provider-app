@@ -25,7 +25,8 @@ export interface IData {
   accountNumber: string;
   sex: string;
   imageProfile?: string;
-  imageDoc?: string;
+  imageDocument?: string;
+  workPlaces: string[];
 }
 const ControlRegister = ({ index, setIndex }: IControlProgress) => {
   const [data, setData] = React.useState<IData | undefined>();

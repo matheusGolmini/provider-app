@@ -5,19 +5,23 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/core";
-
 import stylesGlobal from "../styles-global";
 import { useFormik } from "formik";
 import { newJobForm } from "./newJob.form";
 import TabBar from "../../components/TabBar";
 import ComponentDateTimePicker from "../../components/DateTimePicker";
+import { ConstractService } from "../../service/api/contract-service";
+import { text } from "../../mocks";
 
 const NewJob = () => {
   const [initDate, setInitDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,21 +31,30 @@ const NewJob = () => {
       serviceValue: "",
     },
     validationSchema: newJobForm,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      alterData();
-      setEndDate(null);
-      setInitDate(null);
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        setIsLoading(true);
+        await ConstractService.createContract({
+          amountTotal: values.serviceValue,
+          briefDescription: values.sortDescription,
+          longDescription: values.description,
+          clientEmail: values.email,
+          endDate: String(endDate),
+          startDate: String(initDate),
+          agreement: text,
+        });
+        setIsLoading(false);
+        Alert.alert("Sucesso", "Servico cadastrado com sucesso! Aguarda a análise da nossa equipe.");
+        setEndDate(null);
+        setInitDate(null);
+        resetForm();
+      } catch (error) {
+        setIsLoading(false);
+        Alert.alert("Erro", "Erro ao salvar o serviço, tente mais tarde!");
+      }
     },
   });
 
-  const navigation = useNavigation();
-
-  function alterData() {
-    console.log("alterado: ", formik.values.email);
-    navigation.navigate("Home");
-  }
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -55,7 +68,7 @@ const NewJob = () => {
       >
         <Text style={styles.text}> Adicione um serviço </Text>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{marginBottom: 100}}>
+          <View style={{ marginBottom: 100 }}>
             <View style={{ ...styles.input }}>
               <TextInput
                 style={{
@@ -65,7 +78,7 @@ const NewJob = () => {
                       ? "red"
                       : "#302E4D",
                 }}
-                placeholder="E-mail"
+                placeholder="E-mail do cliente"
                 placeholderTextColor="#666666"
                 keyboardType="email-address"
                 autoCorrect={false}
@@ -95,7 +108,7 @@ const NewJob = () => {
                       ? "red"
                       : "#302E4D",
                 }}
-                placeholder="Confirmação de e-mail"
+                placeholder="Confirmar e-mail do cliente"
                 placeholderTextColor="#666666"
                 keyboardType="email-address"
                 autoCorrect={false}
@@ -212,27 +225,39 @@ const NewJob = () => {
               setInitDate={setInitDate}
             />
 
-            <View style={{ alignItems: "center" }}>
-              <TouchableOpacity
-                style={{
-                  ...stylesGlobal.button,
-                  opacity:
+            {isLoading && (
+              <ActivityIndicator
+                size="large"
+                color="#605C99"
+                style={{ marginTop: 20 }}
+              />
+            )}
+
+            {!isLoading && (
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity
+                  style={{
+                    ...stylesGlobal.button,
+                    opacity:
+                      formik.touched.email === undefined ||
+                      !initDate ||
+                      !endDate
+                        ? 0.5
+                        : !formik.isValid
+                        ? 0.5
+                        : 1,
+                  }}
+                  onPress={() => formik.handleSubmit()}
+                  disabled={
                     formik.touched.email === undefined || !initDate || !endDate
-                      ? 0.5
+                      ? true
                       : !formik.isValid
-                      ? 0.5
-                      : 1,
-                }}
-                onPress={() => formik.handleSubmit()}
-                disabled={
-                  formik.touched.email === undefined || !initDate || !endDate
-                    ? true
-                    : !formik.isValid
-                }
-              >
-                <Text style={stylesGlobal.buttonText}>Salvar</Text>
-              </TouchableOpacity>
-            </View>
+                  }
+                >
+                  <Text style={stylesGlobal.buttonText}>Salvar</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>

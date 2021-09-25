@@ -55,7 +55,8 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
           cnpj: values.cnpj,
           accountNumber: values.accountNumber,
           imageProfile: imageProfile ? imageProfile : "i",
-          imageDoc: imageDocument ? imageDocument : "i",
+          imageDocument: imageDocument ? imageDocument : "i",
+          workPlaces: ['Curitiba'],
           sex: 'i'
         })
       }

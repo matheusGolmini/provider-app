@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const newJobForm = yup.object().shape({
-  email: yup.string().required("E-mail é obrigatório").email("E-mail inválido"),
+  email: yup.string().required("E-mail do cliente é obrigatório").email("E-mail inválido"),
 
   confirmEmail: yup
     .string()
