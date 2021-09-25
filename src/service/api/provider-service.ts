@@ -28,7 +28,7 @@ interface ServiceProviderResponse {
 
 export class ProviderService {
     static async login(data: ILogin) {
-        const res = await api.post<ILoginResponse>('login', data);
+        const res = await api.post<ILoginResponse>('login-provider', data);
         AsyncStorage.setItem("TOKEN", res.data.access_token);
         return res.data;
     }

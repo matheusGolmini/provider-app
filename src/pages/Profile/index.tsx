@@ -18,7 +18,7 @@ import { servicesImages } from "../../mocks/mock-images-jobs";
 import Reating from "../../components/Rating";
 import * as ImagePicker from "expo-image-picker";
 import { Entypo } from '@expo/vector-icons';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { height, width } = Dimensions.get("window");
@@ -181,6 +181,7 @@ const Profile = () => {
           <TouchableOpacity
             style={{ paddingHorizontal: 5}}
             onPress={() => {
+              AsyncStorage.removeItem("TOKEN");
               goTo('Login')
             }}
           >
