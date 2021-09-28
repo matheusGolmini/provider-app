@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextInput } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/core";
-
 import styles from "../styles";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
@@ -40,7 +38,6 @@ const ProfileEditEmail = () => {
     },
   });
 
-  const navigation = useNavigation();
 
   return (
     <>
