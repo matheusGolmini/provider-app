@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IPerson, IUpdatePerson } from "../../interfaces";
 import { IData } from "../../pages/Register";
 import { IAddress } from "../../pages/Register/RegisterThree";
 import api from "../config";
@@ -10,7 +11,8 @@ interface ILogin {
 
 interface ILoginResponse {
     access_token: string, 
-    name: string
+    name: string,
+    person: IPerson
 }
 
 interface ILoginToken {
@@ -30,12 +32,14 @@ export class ProviderService {
     static async login(data: ILogin) {
         const res = await api.post<ILoginResponse>('login-provider', data);
         AsyncStorage.setItem("TOKEN", res.data.access_token);
+        AsyncStorage.setItem("person", JSON.stringify(res.data.person));
         return res.data;
     }
 
     static async loginToken(token: ILoginToken) {
         const res = await api.post<ILoginResponse>('login-token', token);
-        AsyncStorage.setItem("TOKEN", res.data.access_token);
+        await AsyncStorage.setItem("TOKEN", res.data.access_token);
+        await AsyncStorage.setItem("person", JSON.stringify(res.data.person));
         return res.data;
     }
 
@@ -47,4 +51,20 @@ export class ProviderService {
     static async addAddress(id: string, address: IAddress): Promise<void>  {
         await api.post(`person-address/${id}`, address);
     };
+
+    static async upadatePerson(data: IUpdatePerson): Promise<void>  {
+        const personString = String(await AsyncStorage.getItem("person"));
+        const person = JSON.parse(personString) as IPerson;
+        const jwt = await this.getJwt();
+        await api.patch(`client/${person.id}`, data,{headers: {Authorization: jwt}});
+
+        Object.assign(person, data);
+        console.log('person2', person);
+        AsyncStorage.setItem("person", JSON.stringify(person));
+        
+    };
+
+    private static async getJwt(): Promise<string> {
+        return `Bearer ${ await AsyncStorage.getItem("TOKEN")}`
+    }
 }

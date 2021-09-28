@@ -45,8 +45,6 @@ const ProfileEdit = () => {
           </View>
         </TouchableOpacity>
 
-        
-
         <TouchableOpacity onPress={() => goTo("ProfileEditPassword")}>
           <View style={styles.menuItem}>
             <Entypo name="key" size={30} style={{ color: "#605C99" }} />
