@@ -7,11 +7,13 @@ import {
   View,
   TextInput,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
 import { IControlProgress, IData } from "..";
 import { registerTwoForm } from "./registerTwo.form";
+import { UploadService } from "../../../service/api/upload-service";
 
 interface IRegisterTwo extends IControlProgress {
   data: IData | undefined;
@@ -19,8 +21,9 @@ interface IRegisterTwo extends IControlProgress {
 }
 
 const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
-  const [imageDocument, setImageDocument] = React.useState<string | null>(null);
-  const [imageProfile, setImageProfile] = React.useState<string | null>(null);
+  const [imageDocument, setImageDocument] = React.useState<any | null>(null);
+  const [imageProfile, setImageProfile] = React.useState<any | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const pickImage = async (type: string) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -29,11 +32,19 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!result.cancelled) {
+      let name = type === "imageProfile" ? "PerfilImage" : "DocImage";
+      const image = {
+        name,
+        size: result.width,
+        uri: result.uri,
+        type: "application/octet-stream",
+      } as any;
+      const formData = new FormData();
+      formData.append("file", image);
       type === "imageProfile"
-        ? setImageProfile(result.uri)
-        : setImageDocument(result.uri);
+        ? setImageProfile(formData)
+        : setImageDocument(formData);
     }
   };
 
@@ -46,24 +57,29 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
       accountNumber: "",
     },
     validationSchema: registerTwoForm,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       if (data) {
+        setIsLoading(true);
+        const urls = await Promise.all([
+          UploadService.uploadImage(imageDocument),
+          UploadService.uploadImage(imageProfile),
+        ]);
         setData({
           ...data,
           cpf: values.cpf,
           rg: values.rg,
           cnpj: values.cnpj,
           accountNumber: values.accountNumber,
-          imageProfile: imageProfile ? imageProfile : "i",
-          imageDocument: imageDocument ? imageDocument : "i",
-          workPlaces: ['Curitiba'],
-          sex: 'i'
-        })
+          imageProfile: urls[1],
+          imageDocument: urls[0],
+          workPlaces: ["Curitiba"],
+          sex: "i",
+        });
       }
       setTimeout(() => {
+        setIsLoading(false);
         setIndex((index += 1));
-      }, 100)
-      console.log({ ...values, imageDocument, imageProfile });
+      }, 100);
       resetForm();
     },
   });
@@ -241,32 +257,40 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
               }}
             />
           </TouchableOpacity>
-
-          <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
-              style={{
-                ...stylesGlobal.button,
-                opacity:
+          {isLoading && (
+            <ActivityIndicator
+              size="large"
+              color="#605C99"
+              style={{ marginTop: 20 }}
+            />
+          )}
+          {!isLoading && (
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                style={{
+                  ...stylesGlobal.button,
+                  opacity:
+                    formik.touched.cpf === undefined ||
+                    imageDocument === null ||
+                    imageProfile === null
+                      ? 0.5
+                      : !formik.isValid
+                      ? 0.5
+                      : 1,
+                }}
+                onPress={() => formik.handleSubmit()}
+                disabled={
                   formik.touched.cpf === undefined ||
                   imageDocument === null ||
                   imageProfile === null
-                    ? 0.5
+                    ? true
                     : !formik.isValid
-                    ? 0.5
-                    : 1,
-              }}
-              onPress={() => formik.handleSubmit()}
-              disabled={
-                formik.touched.cpf === undefined ||
-                imageDocument === null ||
-                imageProfile === null
-                  ? true
-                  : !formik.isValid
-              }
-            >
-              <Text style={stylesGlobal.buttonText}>Salvar</Text>
-            </TouchableOpacity>
-          </View>
+                }
+              >
+                <Text style={stylesGlobal.buttonText}>Salvar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </>

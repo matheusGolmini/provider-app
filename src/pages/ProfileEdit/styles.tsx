@@ -4,16 +4,43 @@ const { width, height } = Dimensions.get('window');
 
 const styles =  StyleSheet.create({
   logo: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     borderRadius: 100,
     marginTop: 10,
   },
 
   container: {
-    marginTop: 40,
+    marginTop: 25,
     marginVertical: (height + 70) - height,
     height: height,
+  },
+
+  inputText: {
+    width: "100%",
+    backgroundColor: "#FFF",
+    height: 50,
+    padding: 8,
+    fontSize: 16,
+    color: "#302E4D",
+    fontWeight: "bold",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+
+  error: {
+    color: "white",
+    backgroundColor: "red",
+    fontSize: 16,
+    padding: 2,
+    borderRadius: 3,
+    marginTop: 2,
+  },
+
+  input: {
+    marginTop: 10,
+    width: 300,
+    height: 50,
   },
 
   text: {
