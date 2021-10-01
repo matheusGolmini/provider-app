@@ -8,12 +8,15 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import stylesGlobal from "../../styles-global";
 import { useFormik } from "formik";
 import { IControlProgress, IData } from "..";
 import { registerTwoForm } from "./registerTwo.form";
 import { UploadService } from "../../../service/api/upload-service";
+import { SkillService } from "../../../service/api/skill-service";
+import ModalPicker from "../../../components/ModalPicker";
 
 interface IRegisterTwo extends IControlProgress {
   data: IData | undefined;
@@ -24,6 +27,9 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
   const [imageDocument, setImageDocument] = React.useState<any | null>(null);
   const [imageProfile, setImageProfile] = React.useState<any | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [skills, setSkills] = React.useState<string[]>([]);
+  const [isModalVisible, setIsModalVisible] = React.useState<boolean>(false);
+  const [skillSelected, setSkillSelected] = React.useState<string | null>("");
 
   const pickImage = async (type: string) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -73,6 +79,7 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
           imageProfile: urls[1],
           imageDocument: urls[0],
           workPlaces: ["Curitiba"],
+          skillSelected: String(skillSelected),
           sex: "i",
         });
       }
@@ -83,6 +90,12 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
       resetForm();
     },
   });
+
+  React.useEffect(() => {
+    SkillService.getAllSkills().then((skills) => {
+      setSkills(skills.map((skill) => skill.name));
+    });
+  }, []);
 
   return (
     <>
@@ -257,6 +270,43 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
               }}
             />
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{ ...styles.buttonDocument }}
+            onPress={() => setIsModalVisible(true)}
+          >
+            <Text
+              style={{
+                ...styles.buttonDocumentText,
+                opacity: !!skillSelected ? 1 : 0.5,
+              }}
+            >
+              {!!skillSelected
+                ? "Vocação adicionada"
+                : "Escolha sua vocação"}
+            </Text>
+            <Feather
+              name="check"
+              color="white"
+              size={30}
+              style={{
+                marginHorizontal: 20,
+                opacity: !!skillSelected ? 1 : 0.5,
+              }}
+            />
+          </TouchableOpacity>
+
+          <Modal
+            transparent={true}
+            animationType={"fade"}
+            visible={isModalVisible}
+          >
+            <ModalPicker
+              setIsModalVisible={setIsModalVisible}
+              setTypeSelected={setSkillSelected}
+              data={skills}
+            />
+          </Modal>
           {isLoading && (
             <ActivityIndicator
               size="large"
@@ -272,7 +322,8 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
                   opacity:
                     formik.touched.cpf === undefined ||
                     imageDocument === null ||
-                    imageProfile === null
+                    imageProfile === null || 
+                    skillSelected === null
                       ? 0.5
                       : !formik.isValid
                       ? 0.5

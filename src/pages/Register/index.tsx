@@ -26,6 +26,7 @@ export interface IData {
   sex: string;
   imageProfile?: string;
   imageDocument?: string;
+  skillSelected?: string;
   workPlaces: string[];
 }
 const ControlRegister = ({ index, setIndex }: IControlProgress) => {
@@ -54,7 +55,7 @@ const ControlRegister = ({ index, setIndex }: IControlProgress) => {
 };
 
 const Register = () => {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(1);
 
   return (
     <View style={styles.container}>
