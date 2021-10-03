@@ -18,12 +18,12 @@ import styles from "../styles";
 import stylesGlobal from "../../styles-global";
 import { ProviderService } from "../../../service/api/provider-service";
 import { UtilsObject } from "../../../utils/object";
-import { IUpdatePerson } from "../../../interfaces";
+import { IPerson, IUpdatePerson } from "../../../interfaces";
 import { UploadService } from "../../../service/api/upload-service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const EditPeople = () => {
   const [image, setImage] = useState<any | null>(null);
-  const [imageUrl, setImageUrl] = useState<any | null>(null);
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const [opacityButton, setOpacityButton] = useState<number>(0.5);
   const [name, setName] = useState<string>("");
@@ -32,8 +32,8 @@ const EditPeople = () => {
   const [bankAccountNumber, setBankAccountNumber] = useState<string>("");
   const [rg, setRg] = useState<string>("");
   const [cnpj, setCnpj] = useState<string>("");
-  const [visible, setVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [person, setPerson] = useState<IPerson>();
 
   useEffect(() => {
     if (
@@ -55,25 +55,22 @@ const EditPeople = () => {
 
   const navigation = useNavigation();
 
-  function navigateBack() {
-    navigation.goBack();
-  }
-
   async function alterData() {
     //enviar dados para serem alterados
     try {
       setIsLoading(true);
+      let url = undefined;
       if (image) {
         let formData = new FormData();
         formData.append("file", image);
-        setImageUrl(await UploadService.uploadImage(formData));
+        url = await UploadService.uploadImage(formData);
       }
 
       const data = UtilsObject.removeKeyUndefined<IUpdatePerson>({
         cpf,
         rg,
         phone,
-        imageProfile: imageUrl,
+        imageProfile: url,
         firstName: name,
       });
 
@@ -85,10 +82,6 @@ const EditPeople = () => {
       Alert.alert("Erro", "Sistema com problema");
     }
     navigation.navigate("Home");
-  }
-
-  function goTo(screenName: string) {
-    navigation.navigate(screenName);
   }
 
   const pickImage = async () => {
@@ -109,6 +102,13 @@ const EditPeople = () => {
     }
   };
 
+  useEffect(() => {
+    AsyncStorage.getItem("person").then((personString) => {
+      const person = JSON.parse(String(personString)) as IPerson;
+      setPerson(person);
+    });
+  }, []);
+  
   return (
     <>
       <ScrollView
@@ -121,7 +121,9 @@ const EditPeople = () => {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
                   source={{
-                    uri: "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
+                    uri: person?.imageProfile
+                      ? person?.imageProfile
+                      : "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
                   }}
                   style={{ ...styles.logo, borderColor: "#4169E1" }}
                 />

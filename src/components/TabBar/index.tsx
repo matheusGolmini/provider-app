@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IPerson } from "../../interfaces";
 
 const { height } = Dimensions.get("window");
 
 export default function TabBar() {
+  const [person, setPerson] = useState<IPerson>();
+
+  useEffect(() => {
+    AsyncStorage.getItem("person").then((personString) => {
+      const person = JSON.parse(String(personString)) as IPerson;
+      setPerson(person);
+    });
+  }, []);
+  
   return (
     <>
       <LinearGradient
@@ -18,7 +29,9 @@ export default function TabBar() {
           <Image
             style={styles.logo}
             source={{
-              uri: "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
+              uri: person?.imageProfile
+                ? person?.imageProfile
+                : "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
             }}
           />
         </View>

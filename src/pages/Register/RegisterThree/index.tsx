@@ -313,33 +313,6 @@ const RegisterThree = ({ index, setIndex, data }: IRegisterThree) => {
               </TouchableOpacity>
             </View>
           )}
-          {/* <TouchableOpacity
-            style={{ ...styles.buttonDocument }}
-            onPress={() => setIsModalVisible(!isModalVisible)}
-          >
-            <Text style={styles.buttonDocumentText}>
-              {!!stateSelected ? stateSelected : "Selecione um estado"}
-            </Text>
-            <Feather
-              name="arrow-down"
-              size={20}
-              style={{
-                color: "white",
-                paddingHorizontal: 15,
-              }}
-            />
-          </TouchableOpacity> */}
-          {/* <Modal
-            transparent={true}
-            animationType={"fade"}
-            visible={isModalVisible}
-          >
-            <ModalPicker
-              setIsModalVisible={setIsModalVisible}
-              setTypeSelected={setStateSelected}
-              data={MockService.getStates()}
-            />
-          </Modal> */}
         </View>
       </View>
     </>

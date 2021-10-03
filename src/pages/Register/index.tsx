@@ -55,7 +55,7 @@ const ControlRegister = ({ index, setIndex }: IControlProgress) => {
 };
 
 const Register = () => {
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
 
   return (
     <View style={styles.container}>

@@ -33,11 +33,13 @@ const FormPerson = ({ index, setIndex, setData }: IFormPersonData) => {
     onSubmit: (values, { resetForm }) => {
       setTimeout(() => {
         setIndex((index += 1));
-      }, 100)
+      }, 100);
+
+      const array = values.name.split('');
 
       setData({
-        firstName: values.name,
-        lastName: values.name,
+        firstName: array[0],
+        lastName: array[1],
         email: values.email,
         phone: values.phone,
         password: values.password,
@@ -45,9 +47,10 @@ const FormPerson = ({ index, setIndex, setData }: IFormPersonData) => {
         rg: "",
         sex: "i",
         cnpj: "",
-        accountNumber: ""
+        workPlaces: [],
+        accountNumber: "",
       });
-      
+
       resetForm();
     },
   });

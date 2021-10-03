@@ -17,9 +17,10 @@ import { IServicesImages } from "../../interfaces/servicesImges";
 import { servicesImages } from "../../mocks/mock-images-jobs";
 import Reating from "../../components/Rating";
 import * as ImagePicker from "expo-image-picker";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import { IPerson } from "../../interfaces";
 
 const { height, width } = Dimensions.get("window");
 const stylesT = StyleSheet.create({
@@ -44,6 +45,7 @@ const Profile = () => {
   const [controlPicker, setControlPicker] = useState<boolean>(false);
   const [services, setServices] = useState<IServicesImages[]>([]);
   const [indexCarousel, setIndexCarousel] = useState<number>(0);
+  const [person, setPerson] = useState<IPerson>();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -72,17 +74,12 @@ const Profile = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    //buscar os dados no bacno
-    setClient({
-      email: "matheus@gmail.com",
-      id: "1231213",
-      name: "Matheus",
-      phone: "41 997628216",
-      avatar: "../../assets/avatar.jpg",
-      color: "#00BFFF",
-      ratingNumber: 3,
+    AsyncStorage.getItem("person").then((personString) => {
+      const person = JSON.parse(String(personString)) as IPerson;
+      setPerson(person);
     });
     setServices(servicesImages);
+    
   }, []);
 
   function goTo(screenName: string) {
@@ -105,7 +102,7 @@ const Profile = () => {
             <Text
               style={{ ...styles.text, color: "white", marginHorizontal: 30 }}
             >
-              {client?.name}
+              {person?.firstName}
             </Text>
           </View>
 
@@ -119,7 +116,9 @@ const Profile = () => {
           <Image
             style={styles.logo}
             source={{
-              uri: "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
+              uri: person?.imageProfile
+                ? person?.imageProfile
+                : "https://image.freepik.com/vetores-gratis/pintor-com-escova-de-rolo-e-pintura-balde-icone-dos-desenhos-animados-ilustracao-vetorial-conceito-de-icone-de-profissao-de-pessoas-isolado-vetor-premium-estilo-flat-cartoon_138676-1882.jpg",
             }}
           />
         </View>
@@ -161,13 +160,17 @@ const Profile = () => {
         style={{
           flex: 2,
           flexDirection: "row-reverse",
-          alignSelf: 'flex-start',
+          alignSelf: "flex-start",
           paddingHorizontal: 20,
         }}
       >
-        <View style={{ flexDirection: "row", alignContent: "flex-start", }}>
+        <View style={{ flexDirection: "row", alignContent: "flex-start" }}>
           <TouchableOpacity onPress={pickImage}>
-            <Entypo name="image-inverted" size={30} style={{ color: "#302E4D" }} />
+            <Entypo
+              name="image-inverted"
+              size={30}
+              style={{ color: "#302E4D" }}
+            />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={removeImage}>
@@ -175,14 +178,12 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View
-          style={{ flexDirection: "row", flex: 1}}
-        >
+        <View style={{ flexDirection: "row", flex: 1 }}>
           <TouchableOpacity
-            style={{ paddingHorizontal: 5}}
+            style={{ paddingHorizontal: 5 }}
             onPress={() => {
               AsyncStorage.removeItem("TOKEN");
-              goTo('Login')
+              goTo("Login");
             }}
           >
             <View style={{ flexDirection: "column" }}>
@@ -200,11 +201,7 @@ const Profile = () => {
             }}
           >
             <View>
-              <Entypo
-                name="help"
-                size={30}
-                style={{ color: "#fc3232" }}
-              />
+              <Entypo name="help" size={30} style={{ color: "#fc3232" }} />
               <Text
                 style={{ color: "#575555", fontWeight: "bold", fontSize: 16 }}
               >
