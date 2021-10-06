@@ -42,19 +42,25 @@ const NewJob = () => {
           endDate: String(endDate),
           startDate: String(initDate),
           agreement: text,
+          terminatedServiceProvider: false,
         });
         setIsLoading(false);
-        Alert.alert("Sucesso", "Servico cadastrado com sucesso! Aguarda a análise da nossa equipe.");
+        Alert.alert(
+          "Sucesso",
+          "Servico cadastrado com sucesso! Aguarda a análise da nossa equipe."
+        );
         setEndDate(null);
         setInitDate(null);
         resetForm();
-      } catch (error) {
+      } catch (error: any) {
         setIsLoading(false);
-        Alert.alert("Erro", "Erro ao salvar o serviço, tente mais tarde!");
+        Alert.alert(
+          "Solicitação não foi finalizada:",
+          error.response.data.message
+        );
       }
     },
   });
-
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>

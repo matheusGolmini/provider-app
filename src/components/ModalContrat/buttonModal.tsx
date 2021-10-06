@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import ModalContrat from '.';
+import React, { useState } from "react";
+import { Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import ModalContrat from ".";
 
-const ButtonContrat = () => {
+interface IButtonContrat {
+  agreement: string;
+  contractId: string;
+}
+
+const ButtonContrat = ({ agreement, contractId }: IButtonContrat) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [signedContract, setSignedContract] = useState<boolean>(false);
 
-  return(
+  return (
     <>
       <TouchableOpacity
         style={{
@@ -33,36 +38,32 @@ const ButtonContrat = () => {
           }}
         />
       </TouchableOpacity>
-      <Modal
-        transparent={true}
-        animationType={"fade"}
-        visible={isModalVisible}
-      >
+      <Modal transparent={true} animationType={"fade"} visible={isModalVisible}>
         <ModalContrat
           setIsModalVisible={setIsModalVisible}
           setSignedContract={setSignedContract}
+          agreement={agreement}
+          contractId={contractId}
         />
       </Modal>
-        
     </>
-  )
-}
+  );
+};
 
 export default ButtonContrat;
-
 
 const styles = StyleSheet.create({
   button: {
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
-    backgroundColor: '#605C99',
-    height: 30
+    backgroundColor: "#605C99",
+    height: 30,
   },
 
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white'
-  }
-})
+    fontWeight: "bold",
+    color: "white",
+  },
+});

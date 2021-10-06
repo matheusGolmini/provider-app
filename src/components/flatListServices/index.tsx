@@ -1,35 +1,37 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Linking,
-  Modal,
-} from "react-native";
-
+import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 import styles from "./styles";
 import { FlatList } from "react-native-gesture-handler";
 import { IDetailService } from "../../interfaces/detailService ";
 import Rating from "../../components/Rating/index";
-import ModalContrat from "../ModalContrat";
 import CreateTicket from "../createTicket";
-import { Feather } from "@expo/vector-icons";
 import ButtonContrat from "../ModalContrat/buttonModal";
+import {
+  ConstractService,
+  IConstractResponse,
+} from "../../service/api/contract-service";
 
 interface PropsComponent {
   props: {
-    service: IDetailService[];
+    service: IConstractResponse[];
   };
 }
 
-function contractService(text: string) {
-  Linking.openURL(`whatsapp://send?text=${text}&phone=5541984875054`);
+function contractService(text: string, phone: string) {
+  Linking.openURL(`whatsapp://send?text=${text}&phone=${phone}`);
 }
 
 export function ListServiceInProgress(propsComponent: PropsComponent) {
-  const text = `Olá%20é%20o%20Matheus,%20gostaria%20de%20tirar%20umas%20duvidas%20com%20você.`;
   const [controlPicker, setControlPicker] = useState<boolean>(false);
+
+  const finalizarService = async (contractId: string) => {
+    try {
+      await ConstractService.updateFinalizarContrato(contractId);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -38,58 +40,111 @@ export function ListServiceInProgress(propsComponent: PropsComponent) {
         showsVerticalScrollIndicator={false}
         renderItem={({ item: service }) => (
           <View style={{ ...styles.task }}>
-            <View style={{ alignItems: 'center'}}>
+            <View style={{ alignItems: "center" }}>
               <Image
                 style={styles.logo}
-                source={{ uri: service.imageProvider }}
+                source={{ uri: service.Person.imageProfile }}
               />
             </View>
-            <Text
-              style={{ ...styles.text, marginTop: 15 }}
-            >
-              Cliente {service.nameProvider}
-            </Text>
-            <Text style={{ ...styles.text }}>
-              Data inicio: 01/02/2021
-            </Text>
-            <Text style={{ ...styles.text }}>
-              Acordo: {service.combinedContract}
-            </Text>
-            <Text style={{ ...styles.text }}>
-              Data finalização: 01/22/2021
-            </Text>
+            {!service.terminatedServiceProvider ? (
+              <>
+                <Text style={{ ...styles.text, marginTop: 15 }}>
+                  Cliente {service.Person.firstName}
+                </Text>
+                <Text style={{ ...styles.text }}>
+                  Data inicio: {service.startDate}
+                </Text>
+                <Text style={{ ...styles.text }}>
+                  Acordo: {service.briefDescription}
+                </Text>
+                <Text style={{ ...styles.text }}>
+                  Data finalização: {service.endDate}
+                </Text>
 
-            <Text style={{ ...styles.text }}>
-              Valor pago: {service.value} reais
-            </Text>
+                <Text style={{ ...styles.text }}>
+                  Valor pago: {service.amountTotal} reais
+                </Text>
 
-            <TouchableOpacity
-              style={{
-                ...styles.tasksButton2
-              }}
-              onPress={() => contractService(text)}
-            >
-              <Text style={{ ...styles.buttonText, color: "white" }}>
-                {" "}
-                Falar com {service.nameProvider}
-              </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    ...styles.tasksButton2,
+                  }}
+                  onPress={() =>
+                    contractService(
+                      `Olá%20é%20o%20${service.Person.firstName},%20gostaria%20de%20tirar%20uma%20dúvida%20com%20você.`,
+                      service.Person.phone
+                    )
+                  }
+                >
+                  <Text style={{ ...styles.buttonText, color: "white" }}>
+                    Falar com {service.Person.firstName}
+                  </Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              style={{
-                ...styles.tasksButton2
-              }}
-              onPress={() => {
-                service.help_open = !service.help_open;
-                setControlPicker(!controlPicker);
-              }}
-            >
-              <Text style={{ ...styles.buttonText, color: "white" }}>
-                {" "}
-                Ajuda
-              </Text>
-            </TouchableOpacity>
-            {service.help_open ? <CreateTicket service={service} /> : <></>}
+                <TouchableOpacity
+                  style={{
+                    ...styles.tasksButton2,
+                  }}
+                  onPress={() => finalizarService(service.id)}
+                >
+                  <Text style={{ ...styles.buttonText, color: "white" }}>
+                    Finalizar Serviço
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    ...styles.tasksButton2,
+                  }}
+                  onPress={() => {
+                    service.help_open = !service.help_open;
+                    setControlPicker(!controlPicker);
+                  }}
+                >
+                  <Text style={{ ...styles.buttonText, color: "white" }}>
+                    {" "}
+                    Ajuda
+                  </Text>
+                </TouchableOpacity>
+                {service.help_open ? <CreateTicket service={service} /> : <></>}
+              </>
+            ) : (
+              <>
+                <Text style={{ ...styles.text, marginTop: 15 }}>
+                  Aguadando o cliente finalizar o serviço.
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    ...styles.tasksButton2,
+                  }}
+                  onPress={() =>
+                    contractService(
+                      `Olá%20é%20o%20${service.Person.firstName},%20gostaria%20de%20tirar%20uma%20dúvida%20com%20você.`,
+                      service.Person.phone
+                    )
+                  }
+                >
+                  <Text style={{ ...styles.buttonText, color: "white" }}>
+                    Falar com {service.Person.firstName}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    ...styles.tasksButton2,
+                  }}
+                  onPress={() => {
+                    service.help_open = !service.help_open;
+                    setControlPicker(!controlPicker);
+                  }}
+                >
+                  <Text style={{ ...styles.buttonText, color: "white" }}>
+                    {" "}
+                    Ajuda
+                  </Text>
+                </TouchableOpacity>
+                {service.help_open ? <CreateTicket service={service} /> : <></>}
+              </>
+            )}
           </View>
         )}
       />
@@ -103,40 +158,38 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
     <View style={styles.container}>
       <FlatList
         data={propsComponent.props.service}
-        keyExtractor={(service: IDetailService) => String(service.id)}
+        keyExtractor={(service: IConstractResponse) => String(service.id)}
         showsVerticalScrollIndicator={false}
         renderItem={({ item: service }) => (
           <View style={{ ...styles.task }}>
-            <View style={{ alignItems: 'center'}}>
+            <View style={{ alignItems: "center" }}>
               <Image
                 style={styles.logo}
-                source={{ uri: service.imageProvider }}
+                source={{ uri: service.Person.imageProfile }}
               />
             </View>
-            <Text
-              style={{ ...styles.text, marginTop: 15 }}
-            >
-              Cliente {service.nameProvider}
-            </Text>
-            <Text style={{ ...styles.text}}>
-              Data inicio: 01/02/2021
+            <Text style={{ ...styles.text, marginTop: 15 }}>
+              Cliente {service.Person.firstName}
             </Text>
             <Text style={{ ...styles.text }}>
-              Acordo: {service.combinedContract}
+              Data inicio: {service.startDate}
             </Text>
             <Text style={{ ...styles.text }}>
-              Data finalização: 01/22/2021
+              Acordo: {service.briefDescription}
+            </Text>
+            <Text style={{ ...styles.text }}>
+              Data finalização: {service.endDate}
             </Text>
 
             <Text style={{ ...styles.text }}>
-              Valor pago: {service.value} reais
+              Valor pago: {service.amountTotal} reais
             </Text>
 
             <Rating value={true} sizeHeight={45} sizeWidth={45} />
 
             <TouchableOpacity
               style={{
-                ...styles.tasksButton2
+                ...styles.tasksButton2,
               }}
               onPress={() => {
                 service.help_open = !service.help_open;
@@ -158,34 +211,40 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
 
 export function ListContractSign(propsComponent: PropsComponent) {
   const [controlPicker, setControlPicker] = useState<boolean>(false);
-
   return (
     <View style={styles.container}>
       <FlatList
         data={propsComponent.props.service}
-        keyExtractor={(service: IDetailService) => String(service.id)}
+        keyExtractor={(service: IConstractResponse) => String(service.id)}
         showsVerticalScrollIndicator={false}
         renderItem={({ item: service }) => (
           <View style={styles.task}>
-           <View style={{ alignItems: 'center'}}>
+            <View style={{ alignItems: "center" }}>
               <Image
                 style={styles.logo}
-                source={{ uri: service.imageProvider }}
+                source={{ uri: service.Person.imageProfile }}
               />
             </View>
             <Text style={{ ...styles.text, marginTop: 15 }}>
-              Cliente {service.nameProvider}
+              Cliente {service.Person.firstName}
             </Text>
-            <Text style={{ ...styles.text }}>Data inicio: 01/02/2021</Text>
             <Text style={{ ...styles.text }}>
-              Acordo: {service.combinedContract}
+              Data inicio: {service.startDate}
             </Text>
-            <Text style={{ ...styles.text }}>Data finalização: 01/22/2021</Text>
+            <Text style={{ ...styles.text }}>
+              Acordo: {service.briefDescription}
+            </Text>
+            <Text style={{ ...styles.text }}>
+              Data finalização: {service.endDate}
+            </Text>
 
             <Text style={{ ...styles.text }}>
-              Valor pago: {service.value} reais
+              Valor pago: {service.amountTotal} reais
             </Text>
-            <ButtonContrat />
+            <ButtonContrat
+              agreement={service.agreement}
+              contractId={service.id}
+            />
 
             <TouchableOpacity
               style={{ ...styles.tasksButton2 }}
@@ -200,7 +259,6 @@ export function ListContractSign(propsComponent: PropsComponent) {
               </Text>
             </TouchableOpacity>
             {service.help_open ? <CreateTicket service={service} /> : <></>}
-
           </View>
         )}
       />

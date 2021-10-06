@@ -1,72 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { ListContractSign, ListServiceInProgress, ListServicesFinished } from '../../components/flatListServices';
-import ReturnImageNotService from '../../components/notService';
-import { IDetailService } from '../../interfaces/detailService ';
-import mockService from '../../mocks/mock-detail-service';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+  ListContractSign,
+  ListServiceInProgress,
+  ListServicesFinished,
+} from "../../components/flatListServices";
+import ReturnImageNotService from "../../components/notService";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { View } from "react-native";
+import {
+  ConstractService,
+  IConstractResponse,
+} from "../../service/api/contract-service";
 
 function ServicesInProgress() {
-  const [service, setService] = useState<IDetailService[]>([]);
+  const [service, setService] = useState<IConstractResponse[]>([]);
   useEffect(() => {
-      getService();
-  }, []);
+    ConstractService.getInprogress()
+      .then((data) => {
+        setService(data);
+      })
+      .catch((erro: any) => {
+        console.log(erro.response.data);
+      });
+  });
 
-  function getService() {
-    setService(mockService.getServiceInProgress)
+  if (service.length) {
+    return <ListServiceInProgress props={{ service }} />;
   }
-  if(service.length) {
-    return (
-      <ListServiceInProgress props={{service}}/>
-    );
-  }
-  return (
-    <ReturnImageNotService text="Nenhum Serviço"/>
-  )
+  return <ReturnImageNotService text="Nenhum Serviço" />;
 }
 
 function ServicesFinished() {
-  const [service, setService] = useState<IDetailService[]>([]);
+  const [service, setService] = useState<IConstractResponse[]>([]);
   useEffect(() => {
-      getService();
-  }, []);
+    ConstractService.getFinished()
+      .then((data) => {
+        setService(data);
+      })
+      .catch((erro: any) => {
+        console.log(erro.response.data);
+      });
+  });
 
-  function getService() {
-    setService(mockService.getServiceServicesFinished())
+  if (service.length) {
+    return <ListServicesFinished props={{ service }} />;
   }
-  if(service.length) {
-    return (
-      <ListServicesFinished props={{service}}/>
-    );
-  }
-  return (
-    <ReturnImageNotService text="Nenhum Serviço Finalizado"/>
-  )
+  return <ReturnImageNotService text="Nenhum Serviço Finalizado" />;
 }
 
 function ContractSign() {
-  const [service, setService] = useState<IDetailService[]>([]);
+  const [service, setService] = useState<IConstractResponse[]>([]);
   useEffect(() => {
-      getService();
-  }, []);
-
-  function getService() {
-    setService(mockService.getServiceInProgress)
+    ConstractService.getWaitingSignature()
+      .then((data) => {
+        setService(data);
+      })
+      .catch((erro: any) => {
+        console.log(erro.response.data);
+      });
+  });
+  
+  if (service.length) {
+    return <ListContractSign props={{ service }} />;
   }
-  if(service.length) {
-    return (
-      <ListContractSign props={{service}}/>
-    );
-  }
-  return (
-    <ReturnImageNotService text="Nenhum Serviço"/>
-  )
+  return <ReturnImageNotService text="Nenhum Serviço" />;
 }
-
 
 const Tab = createMaterialTopTabNavigator();
 
-const Services = () =>  {
+const Services = () => {
   return (
     <>
       <View
@@ -77,22 +79,25 @@ const Services = () =>  {
       />
       <Tab.Navigator
         tabBarOptions={{
-          activeTintColor: '#302E4D',
-          inactiveTintColor: '#DCDCDC',
+          activeTintColor: "#302E4D",
+          inactiveTintColor: "#DCDCDC",
           labelStyle: {
-            fontWeight: 'bold'
+            fontWeight: "bold",
           },
           indicatorStyle: {
-            backgroundColor: '#302E4D'
-          }     
+            backgroundColor: "#302E4D",
+          },
         }}
       >
-        <Tab.Screen name="Assinar contrato" component={ContractSign}/>
-        <Tab.Screen name="Serviços em andamento" component={ServicesInProgress}/>
+        <Tab.Screen name="Assinar contrato" component={ContractSign} />
+        <Tab.Screen
+          name="Serviços em andamento"
+          component={ServicesInProgress}
+        />
         <Tab.Screen name="Serviços finalizados" component={ServicesFinished} />
       </Tab.Navigator>
     </>
   );
-}
-  
+};
+
 export default Services;

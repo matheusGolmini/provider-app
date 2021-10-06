@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
-
-const { height, width } =  Dimensions.get('window');
+const { width } =  Dimensions.get('window');
 
 interface ModalPicker {
     setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +29,6 @@ const ModalConfirmRegister = ({setIsModalVisible}: ModalPicker) => {
                     <Text style={{...styles.buttonText}}> Entendi </Text>
                 </TouchableOpacity>
             </View>
-            
         </View>
     )
 }

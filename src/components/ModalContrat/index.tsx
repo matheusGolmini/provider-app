@@ -1,133 +1,158 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { text } from '../../mocks/index';
-import { Feather } from '@expo/vector-icons';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { ConstractService } from "../../service/api/contract-service";
+import { ContractStatus } from "../../enum/status";
 
-
-const { height, width } =  Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 interface ModalPicker {
-    setIsModalVisible:  React.Dispatch<React.SetStateAction<boolean>>;
-    setSignedContract: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setSignedContract: React.Dispatch<React.SetStateAction<boolean>>;
+  agreement: string;
+  contractId: string;
 }
 
-const ModalContrat = ({setIsModalVisible, setSignedContract}: ModalPicker) => {
-    const [disabled, setDisabled] = useState<boolean>(true);
-    const [opacity, setOpacity] = useState<number>(0.5);
+const ModalContrat = ({
+  setIsModalVisible,
+  setSignedContract,
+  agreement,
+  contractId,
+}: ModalPicker) => {
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [opacity, setOpacity] = useState<number>(0.5);
 
-    function scroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
-        if(event.nativeEvent.contentOffset.y >=  4600) {
-            setOpacity(1)
-            setDisabled(false)
-        }else {
-            setOpacity(0.5)
-            setDisabled(true)
-        }
+  function scroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
+    if (event.nativeEvent.contentOffset.y >= 4600) {
+      setOpacity(1);
+      setDisabled(false);
+    } else {
+      setOpacity(0.5);
+      setDisabled(true);
+    }
+  }
+
+  function contractSign() {
+    try {
+      ConstractService.updateStatus(contractId, {
+        status: ContractStatus.ESPERANDO_PAGAMENTO,
+      });
+    } catch (error: any) {
+      console.log(error.response.data);
     }
 
-    function contractSign()  {
-        console.log("Eu aceito o contrato");
-        setIsModalVisible(false)
-        setSignedContract(true)
-    }
+    console.log("Eu aceito o contrato");
+    setIsModalVisible(false);
+    setSignedContract(true);
+  }
 
-    return(
-        <View style={styles.container}>
-            <View
-                style={{...styles.modal, width: width- 10, height: height/ 1.5, alignItems: 'center',}}
-            >   
-                <TouchableOpacity 
-                    onPress={() => setIsModalVisible(false)}
-                >
-                    <Feather name={'x'} size={27} color={'#302E4D'}/>
-                </TouchableOpacity>
-                
-                <Text style={styles.title}> Leia e Assine </Text>
-                
-                <View
-                    style={{...styles.contrat, width: width- 30, height: height/ 2}}
-                >  
-                    <ScrollView
-                        onScroll={scroll}
-                        scrollEventThrottle={16}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <Text style={styles.contratText}>{text}</Text>
-                    </ScrollView>
-                </View>
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          ...styles.modal,
+          width: width - 10,
+          height: height / 1.5,
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+          <Feather name={"x"} size={27} color={"#302E4D"} />
+        </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={{...styles.button, opacity: opacity}} 
-                    disabled={disabled}
-                    onPress={() => contractSign()}
-                >
-                    <Text style={styles.buttonText}> Assinar contrato </Text>
-                </TouchableOpacity>
-            </View>
-            
+        <Text style={styles.title}> Leia e Assine </Text>
+
+        <View
+          style={{ ...styles.contrat, width: width - 30, height: height / 2 }}
+        >
+          <ScrollView
+            onScroll={scroll}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text style={styles.contratText}>{agreement}</Text>
+          </ScrollView>
         </View>
-    )
-}
+
+        <TouchableOpacity
+          style={{ ...styles.button, opacity: opacity }}
+          disabled={disabled}
+          onPress={() => contractSign()}
+        >
+          <Text style={styles.buttonText}> Assinar contrato </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 export default ModalContrat;
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    
-    modal : {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#605C99',
-        alignItems: 'center'
-    },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    option: {
-        alignItems: 'center'
-    },
+  modal: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#605C99",
+    alignItems: "center",
+  },
 
-    title: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: '#302E4D',
-    },
+  option: {
+    alignItems: "center",
+  },
 
-    text: {
-        margin: 15,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#37b7dc',
-    },
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#302E4D",
+  },
 
-    contrat: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#605C99',
-    },
+  text: {
+    margin: 15,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#37b7dc",
+  },
 
-    contratText: {
-        margin: 15,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-    },
+  contrat: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#605C99",
+  },
 
-    button: {
-        backgroundColor: '#605C99',
-        height: 30,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginVertical: 7
-    },
+  contratText: {
+    margin: 15,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+  },
 
-    buttonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'white'
-    }
-})
+  button: {
+    backgroundColor: "#605C99",
+    height: 30,
+    borderRadius: 5,
+    alignItems: "center",
+    marginVertical: 7,
+  },
+
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+});
