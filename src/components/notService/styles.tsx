@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     textNotService: {
         fontSize: 25,
-        color: '#A2C43A',
+        color: '#605C99',
         marginBottom:50,
         alignSelf:"center",
         fontWeight:"bold"
