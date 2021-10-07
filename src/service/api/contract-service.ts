@@ -55,9 +55,9 @@ export class ConstractService {
         return res.data;
     }
 
-    static async updateFinalizarContrato(contractId: string): Promise<IConstractResponse[]> {
+    static async updateFinalizarContrato(contractId: string, terminatedServiceProvider: boolean): Promise<IConstractResponse[]> {
         const jwt = await this.getJwt();
-        const res = await api.patch<IConstractResponse[]>(`contract/${contractId}`, {terminatedServiceProvider: true}, {headers: {Authorization: jwt}});
+        const res = await api.patch<IConstractResponse[]>(`contract/${contractId}`, {terminatedServiceProvider}, {headers: {Authorization: jwt}});
         return res.data;
     }
 
