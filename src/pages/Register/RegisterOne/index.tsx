@@ -35,7 +35,7 @@ const FormPerson = ({ index, setIndex, setData }: IFormPersonData) => {
         setIndex((index += 1));
       }, 100);
 
-      const array = values.name.split('');
+      const array = values.name.split(' ');
 
       setData({
         firstName: array[0],
