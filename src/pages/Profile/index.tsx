@@ -145,7 +145,7 @@ const Profile = () => {
         <ActivityIndicator
           size="large"
           color="#605C99"
-          style={{ marginTop: 100 }}
+          style={{ marginTop: 250 }}
         />
       )}
       {!isLoadingPage && (
@@ -230,7 +230,7 @@ const Profile = () => {
             <ActivityIndicator
               size="large"
               color="#605C99"
-              style={{ marginTop: 250 }}
+              style={{ marginTop: 100 }}
             />
           )}
 

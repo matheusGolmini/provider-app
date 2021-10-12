@@ -9,6 +9,7 @@ import ProfileEditEmail from './pages/ProfileEdit/editEmail'
 import ProfileEditPassword from './pages/ProfileEdit/editPassword'
 import ProfileEditAddress from './pages/ProfileEdit/editAddress'
 import ProfileEditPeople from './pages/ProfileEdit/editPeople'
+import Help from './pages/Help';
 
 const AppStack = createStackNavigator();
 
@@ -83,6 +84,24 @@ export default function Routes(){
                     options={{
                         headerTintColor: 'white',
                         title: 'Alterar Senha',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        },
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: '#605C99'
+                        }
+                    }}
+                />
+                <AppStack.Screen 
+                    name='Help' 
+                    component={Help} 
+                    options={{
+                        headerTintColor: 'white',
+                        title: 'Ajuda',
                         headerTitleAlign: 'center',
                         headerTitleStyle: {
                             color: 'white',
