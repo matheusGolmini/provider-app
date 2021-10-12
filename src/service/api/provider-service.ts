@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IPerson, IUpdatePerson } from "../../interfaces";
+import { IPerson, IUpdatePerson, IGetServiceProviderById } from "../../interfaces";
 import { IData } from "../../pages/Register";
 import { IAddress } from "../../pages/Register/RegisterThree";
 import api from "../config";
@@ -26,6 +26,10 @@ interface ServiceProviderResponse {
     cnpj: string;
     joinDate: Date;
     descriptionNotApproved: string;
+}
+
+interface UpdateServiceProvider {
+    imageServices: string[];
 }
 
 export class ProviderService {
@@ -59,9 +63,21 @@ export class ProviderService {
         await api.patch(`client/${person.id}`, data,{headers: {Authorization: jwt}});
 
         Object.assign(person, data);
-        console.log('person2', person);
         AsyncStorage.setItem("person", JSON.stringify(person));
         
+    };
+
+    static async upadateServiceProvider(data: UpdateServiceProvider): Promise<void>  {
+        const personString = String(await AsyncStorage.getItem("person"));
+        const person = JSON.parse(personString) as IPerson;
+        const jwt = await this.getJwt();
+        await api.patch(`provider/${person.id}`, data,{headers: {Authorization: jwt}});
+    };
+
+    static async getServiceProviderById(id: string): Promise<IGetServiceProviderById>  {
+        const jwt = await this.getJwt();
+        const res = await api.get<IGetServiceProviderById>(`provider/${id}`,{headers: {Authorization: jwt}});
+        return res.data;
     };
 
     private static async getJwt(): Promise<string> {
