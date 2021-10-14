@@ -70,16 +70,16 @@ const Profile = () => {
       setIsUploadImage(true);
       UploadService.uploadImage(formData).then((value) => {
         if (haveImages) {
-          setServices([
-            ...services,
-            {
-              id: services[services.length - 1].id + 1,
-              url: value,
-            },
-          ]);
-          ProviderService.upadateServiceProvider({
-            imageServices: services.map((value) => value.url),
+          const imageServices = services;
+          imageServices.push({
+            id: services[services.length - 1].id + 1,
+            url: value,
           });
+
+          ProviderService.upadateServiceProvider({
+            imageServices: imageServices.map((value) => value.url),
+          });
+          setServices(imageServices);
         } else {
           setServices([
             {
@@ -104,7 +104,7 @@ const Profile = () => {
       setHaveImages(false);
       setServices(images);
       ProviderService.upadateServiceProvider({ imageServices: [] });
-    }else {
+    } else {
       setServices(images);
       const imageServices = images.map((value) => value.url);
       ProviderService.upadateServiceProvider({ imageServices });
