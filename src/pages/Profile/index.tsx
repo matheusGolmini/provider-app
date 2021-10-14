@@ -311,7 +311,8 @@ const Profile = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      setControlPicker(!controlPicker);
+                      // setControlPicker(!controlPicker);
+                      navigation.navigate("Help");
                     }}
                   >
                     <View>
