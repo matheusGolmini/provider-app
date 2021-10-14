@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, Modal } from "react-native";
-import styles from "./style";
+import { View, Text, Modal, Alert } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { IDetailService } from "../../interfaces/detailService ";
 import { Feather } from "@expo/vector-icons";
 import ModalPicker from "../../components/ModalPicker";
+import { TicketService } from "../../service/api/ticket-service";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { IPropUseRoute } from "../../interfaces/propUseRoute";
+import styles from "./style";
 
 const Help = () => {
+  const route = useRoute<IPropUseRoute<{ idService: string }>>();
   const types = [
     "Dúvida",
     "Problemas com um serviço",
@@ -16,14 +19,20 @@ const Help = () => {
   const [typeSelected, setTypeSelected] = useState<string | null>("");
   const [message, setMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = React.useState<boolean>(false);
+  const navigation = useNavigation();
 
-  function submit(message: string, type: string, service?: IDetailService) {
-    if (message) {
-      console.log(service);
-      console.log("OK!");
+  function submit() {
+    if (message && typeSelected) {
+      TicketService.createTicket({
+        description: message,
+        type: typeSelected,
+        idService: route.params?.idService,
+      });
+
       return true;
     } else {
       console.log("Inválido!");
+      return false;
     }
   }
 
@@ -49,7 +58,7 @@ const Help = () => {
             opacity: !!typeSelected ? 1 : 0.5,
           }}
         >
-          Selecione uma opção
+          {!!typeSelected? typeSelected : 'Selecione uma opção'}
         </Text>
         <Feather
           name="check"
@@ -73,9 +82,14 @@ const Help = () => {
         style={{ ...styles.button }}
         disabled={message === ""}
         onPress={() => {
-          if (submit(message, String(typeSelected))) {
+          if (submit()) {
             setMessage("");
             setTypeSelected(null);
+            Alert.alert(
+              "Sucesso",
+              "Solicitação criada! Nossa equipe vai entrar em contato por e-mail."
+            );
+            navigation.goBack();
           }
         }}
       >

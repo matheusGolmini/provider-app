@@ -11,12 +11,12 @@ import styles from "./styles";
 import { FlatList } from "react-native-gesture-handler";
 import { IDetailService } from "../../interfaces/detailService ";
 import Rating from "../../components/Rating/index";
-import CreateTicket from "../createTicket";
 import ButtonContrat from "../ModalContrat/buttonModal";
 import {
   ConstractService,
   IConstractResponse,
 } from "../../service/api/contract-service";
+import { useNavigation } from "@react-navigation/core";
 
 interface PropsComponent {
   props: {
@@ -29,8 +29,8 @@ function contractService(text: string, phone: string) {
 }
 
 export function ListServiceInProgress(propsComponent: PropsComponent) {
-  const [controlPicker, setControlPicker] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   const finalizarService = async (
     contractId: string,
@@ -119,24 +119,15 @@ export function ListServiceInProgress(propsComponent: PropsComponent) {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      style={{
-                        ...styles.tasksButton2,
-                      }}
+                      style={{ ...styles.tasksButton2 }}
                       onPress={() => {
-                        service.help_open = !service.help_open;
-                        setControlPicker(!controlPicker);
+                        navigation.navigate("Help", { idService: service.id });
                       }}
                     >
                       <Text style={{ ...styles.buttonText, color: "white" }}>
-                        {" "}
                         Ajuda
                       </Text>
                     </TouchableOpacity>
-                    {service.help_open ? (
-                      <CreateTicket service={service} />
-                    ) : (
-                      <></>
-                    )}
                   </>
                 ) : (
                   <>
@@ -169,24 +160,15 @@ export function ListServiceInProgress(propsComponent: PropsComponent) {
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={{
-                        ...styles.tasksButton2,
-                      }}
+                      style={{ ...styles.tasksButton2 }}
                       onPress={() => {
-                        service.help_open = !service.help_open;
-                        setControlPicker(!controlPicker);
+                        navigation.navigate("Help", { idService: service.id });
                       }}
                     >
                       <Text style={{ ...styles.buttonText, color: "white" }}>
-                        {" "}
                         Ajuda
                       </Text>
                     </TouchableOpacity>
-                    {service.help_open ? (
-                      <CreateTicket service={service} />
-                    ) : (
-                      <></>
-                    )}
                   </>
                 )}
               </>
@@ -199,7 +181,7 @@ export function ListServiceInProgress(propsComponent: PropsComponent) {
 }
 
 export function ListServicesFinished(propsComponent: PropsComponent) {
-  const [controlPicker, setControlPicker] = useState<boolean>(false);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <FlatList
@@ -234,20 +216,15 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
             <Rating value={true} sizeHeight={45} sizeWidth={45} />
 
             <TouchableOpacity
-              style={{
-                ...styles.tasksButton2,
-              }}
+              style={{ ...styles.tasksButton2 }}
               onPress={() => {
-                service.help_open = !service.help_open;
-                setControlPicker(!controlPicker);
+                navigation.navigate("Help", { idService: service.id });
               }}
             >
               <Text style={{ ...styles.buttonText, color: "white" }}>
-                {" "}
                 Ajuda
               </Text>
             </TouchableOpacity>
-            {service.help_open ? <CreateTicket service={service} /> : <></>}
           </View>
         )}
       />
@@ -256,7 +233,7 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
 }
 
 export function ListContractSign(propsComponent: PropsComponent) {
-  const [controlPicker, setControlPicker] = useState<boolean>(false);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <FlatList
@@ -295,16 +272,13 @@ export function ListContractSign(propsComponent: PropsComponent) {
             <TouchableOpacity
               style={{ ...styles.tasksButton2 }}
               onPress={() => {
-                service.help_open = !service.help_open;
-                setControlPicker(!controlPicker);
+                navigation.navigate("Help", { idService: service.id });
               }}
             >
               <Text style={{ ...styles.buttonText, color: "white" }}>
-                {" "}
                 Ajuda
               </Text>
             </TouchableOpacity>
-            {service.help_open ? <CreateTicket service={service} /> : <></>}
           </View>
         )}
       />
