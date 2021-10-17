@@ -212,8 +212,8 @@ export function ListServicesFinished(propsComponent: PropsComponent) {
             <Text style={{ ...styles.text }}>
               Valor pago: {service.amountTotal} reais
             </Text>
-
-            <Rating value={true} sizeHeight={45} sizeWidth={45} />
+            
+            <Rating value={true} sizeHeight={45} sizeWidth={45} contract={service} />
 
             <TouchableOpacity
               style={{ ...styles.tasksButton2 }}

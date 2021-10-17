@@ -200,9 +200,9 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
                     ? "red"
                     : "#302E4D",
               }}
-              placeholder="Número da conta bancária"
+              placeholder="Chave Pix"
               placeholderTextColor="#666666"
-              keyboardType="numeric"
+              keyboardType="default"
               autoCorrect={false}
               value={formik.values.accountNumber}
               onFocus={() => formik.setFieldTouched("accountNumber")}

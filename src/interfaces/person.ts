@@ -7,4 +7,5 @@ export interface IPerson {
     cpf: string,
     rg: string,
     imageProfile: string,
+    rating: number | null;
 }

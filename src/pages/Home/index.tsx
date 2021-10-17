@@ -4,42 +4,67 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import ServicesPieChart from "../../components/Graphics/servicesPieChart";
 import MonthlyBarChart from "../../components/Graphics/monthlyBarChart";
 import Reating from "../../components/Rating";
 import { getUserMock, UserService } from "../../mocks";
-import { isSaveAddress } from "../../mocks/index";
 import TabBar from "../../components/TabBar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IPerson } from "../../interfaces";
 
 const Home = () => {
   const [userService, setUserService] = useState<UserService | undefined>(
     undefined
   );
-  const [isModalAddressVisible, setIsModalAddressVisible] =
-    useState<boolean>(false);
+  const [person, setPerson] = useState<IPerson>();
+  const [isLoadingPage, setIsLoadingPage] = useState<boolean>(true);
 
   useEffect(() => {
+    AsyncStorage.getItem("person").then((personString) => {
+      const person = JSON.parse(String(personString)) as IPerson;
+      setPerson(person);
+      setIsLoadingPage(false);
+    });
     setUserService(getUserMock());
-    setIsModalAddressVisible(isSaveAddress ? false : true);
   }, []);
 
   return (
     <View style={styles.container}>
-      <TabBar />
-      <Reating value={false} sizeHeight={40} sizeWidth={40} ratingNumber={3} />
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-      >
-        <View style={{flexDirection: 'row', marginBottom: 120}}>
-          <MonthlyBarChart isText={true} dataValues={userService?.monthValue} />
+      {isLoadingPage && (
+        <ActivityIndicator
+          size="large"
+          color="#605C99"
+          style={{ marginTop: 250 }}
+        />
+      )}
+      {!isLoadingPage && (
+        <>
+          <TabBar />
+          <Reating
+            value={false}
+            sizeHeight={40}
+            sizeWidth={40}
+            ratingNumber={Math.trunc(
+              person?.rating ? Number(person.rating) : 0
+            )}
+          />
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+            <View style={{ flexDirection: "row", marginBottom: 120 }}>
+              <MonthlyBarChart
+                isText={true}
+                dataValues={userService?.monthValue}
+              />
 
-          <ServicesPieChart isText={true} dataValue={userService?.services} />
-
-        </View>
-        
-      </ScrollView>
+              <ServicesPieChart
+                isText={true}
+                dataValue={userService?.services}
+              />
+            </View>
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 };

@@ -223,7 +223,9 @@ const Profile = () => {
               value={false}
               sizeHeight={40}
               sizeWidth={40}
-              ratingNumber={3}
+              ratingNumber={Math.trunc(
+                person?.rating ? Number(person.rating) : 0
+              )}
             />
           </View>
           {isUploadImage && (
