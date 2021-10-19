@@ -41,7 +41,7 @@ const FormPerson = ({ index, setIndex, setData }: IFormPersonData) => {
         firstName: array[0],
         lastName: array[1],
         email: values.email,
-        phone: values.phone,
+        phone: values.phone.includes('55')? values.phone : '55'+values.phone,
         password: values.password,
         cpf: "",
         rg: "",
