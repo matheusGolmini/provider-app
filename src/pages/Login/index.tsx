@@ -33,7 +33,7 @@ const Login = () => {
       try {
         setIsLoading(true);
         await ProviderService.login({
-          username: values.email,
+          username: values.email.toLocaleLowerCase(),
           password: values.password,
         });
         setIsLoading(false);

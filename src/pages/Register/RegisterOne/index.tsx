@@ -40,7 +40,7 @@ const FormPerson = ({ index, setIndex, setData }: IFormPersonData) => {
       setData({
         firstName: array[0],
         lastName: array[1],
-        email: values.email,
+        email: values.email.toLocaleLowerCase(),
         phone: values.phone.includes('55')? values.phone : '55'+values.phone,
         password: values.password,
         cpf: "",
