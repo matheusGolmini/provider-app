@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-svg-charts";
 import { Text } from "react-native-svg";
-import Lybrary, { Dimensions, View } from "react-native";
-import { Service } from "../../mocks";
+import { Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
+
+interface Service {
+  color: string;
+  serviceAmount: number;
+}
 
 const ServicesPieChart = ({
   defaultSize,
@@ -13,10 +17,10 @@ const ServicesPieChart = ({
 }: {
   defaultSize?: number;
   isText: boolean;
-  dataValue?: Service[];
+  dataValue: Service[];
 }) => {
   const [size, setSize] = useState<number>(defaultSize ? defaultSize : 300);
-
+  console.log('aqui 2: ', dataValue);
   useEffect(() => {
     const valid = size > width || size > height ? false : true;
     if (!valid) {
@@ -24,19 +28,11 @@ const ServicesPieChart = ({
     }
   });
 
-  const data = dataValue ? dataValue : [30, 10, 25, 18, 17];
-  const pieData = data.map((value: number | Service, index: number) => ({
-    value: typeof value === "number" ? value : value.serviceAmount,
+  const pieData = dataValue.map((value: Service, index: number) => ({
+    value: value.serviceAmount === 0 ? 0.5:value.serviceAmount,
     key: `${index}-${value}`,
     svg: {
-      fill:
-        typeof value === "number"
-          ? (
-              "#" +
-              ((Math.random() * 0xffffff) << 0).toString(16) +
-              "000000"
-            ).slice(0, 7)
-          : value.color,
+      fill: value.color,
     },
   }));
 
@@ -53,42 +49,17 @@ const ServicesPieChart = ({
           alignmentBaseline={"middle"}
           fontSize={22}
         >
-          {data.value}
+          {data.value === 0.5 ? 0 : data.value}
         </Text>
       );
     });
   };
 
   return (
-    <View style={{marginEnd: width / 4}}>
-      {isText ? (
-        <View style={styles.container}>
-          <Lybrary.Text style={styles.text}>Serviços Realizados</Lybrary.Text>
-        </View>
-      ) : (
-        <Lybrary.Text />
-      )}
-
-      <PieChart style={{ height: size, marginTop: 10 }} data={pieData}>
-        <Label />
-      </PieChart>
-    </View>
+    <PieChart style={{ height: size, marginTop: 10 }} data={pieData}>
+      <Label />
+    </PieChart>
   );
 };
-
-const styles = Lybrary.StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 25,
-    fontWeight: "bold",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#36294a",
-  },
-});
 
 export default ServicesPieChart;

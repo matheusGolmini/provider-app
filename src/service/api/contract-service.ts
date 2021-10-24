@@ -24,11 +24,23 @@ export interface IConstractResponse extends IConstract {
     }
 }
 
+export interface IContractProviderStatusResponse {
+    finalizado: number,
+    aguardandoAssintura: number,
+    emAndamento: number,
+}
+
 export class ConstractService {
 
     static async createContract(data: IConstract): Promise<void> {
         const jwt = await this.getJwt();
         await api.post<void>('contract', data, {headers: {Authorization: jwt}})
+    };
+
+    static async getStatus(): Promise<IContractProviderStatusResponse> {
+        const jwt = await this.getJwt();
+        const res = await api.get<IContractProviderStatusResponse>('contract/provider/status', {headers: {Authorization: jwt}});
+        return res.data;
     };
 
     static async getWaitingSignature(): Promise<IConstractResponse[]> {
