@@ -13,8 +13,8 @@ export const registerTwoForm = yup.object().shape({
 
   cnpj: yup
     .string()
-    .required("CPNJ é obrigatório")
     .test("", "CNPJ inválido", (value: any): boolean => {
+      if(!value) return true;
       return cnpj.isValid(value);
     }),
 

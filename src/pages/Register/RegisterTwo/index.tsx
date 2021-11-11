@@ -66,18 +66,14 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
     onSubmit: async (values, { resetForm }) => {
       if (data) {
         setIsLoading(true);
-        const urls = await Promise.all([
-          UploadService.uploadImage(imageDocument),
-          UploadService.uploadImage(imageProfile),
-        ]);
         setData({
           ...data,
           cpf: values.cpf,
           rg: values.rg,
           cnpj: values.cnpj,
           accountNumber: values.accountNumber,
-          imageProfile: urls[1],
-          imageDocument: urls[0],
+          imageProfile: UploadService.uploadImage(imageProfile),
+          imageDocument: UploadService.uploadImage(imageDocument),
           workPlaces: ["Curitiba"],
           skillSelected: String(skillSelected),
           sex: "i",
@@ -223,6 +219,29 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
 
           <TouchableOpacity
             style={{ ...styles.buttonDocument }}
+            onPress={() => setIsModalVisible(true)}
+          >
+            <Text
+              style={{
+                ...styles.buttonDocumentText,
+                opacity: !!skillSelected ? 1 : 0.5,
+              }}
+            >
+              {!!skillSelected ? "Vocação adicionada" : "Escolha sua vocação"}
+            </Text>
+            <Feather
+              name="check"
+              color="white"
+              size={30}
+              style={{
+                marginHorizontal: 20,
+                opacity: !!skillSelected ? 1 : 0.5,
+              }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{ ...styles.buttonDocument }}
             onPress={() => pickImage("imageDocument")}
           >
             <Text
@@ -271,31 +290,6 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={{ ...styles.buttonDocument }}
-            onPress={() => setIsModalVisible(true)}
-          >
-            <Text
-              style={{
-                ...styles.buttonDocumentText,
-                opacity: !!skillSelected ? 1 : 0.5,
-              }}
-            >
-              {!!skillSelected
-                ? "Vocação adicionada"
-                : "Escolha sua vocação"}
-            </Text>
-            <Feather
-              name="check"
-              color="white"
-              size={30}
-              style={{
-                marginHorizontal: 20,
-                opacity: !!skillSelected ? 1 : 0.5,
-              }}
-            />
-          </TouchableOpacity>
-
           <Modal
             transparent={true}
             animationType={"fade"}
@@ -322,7 +316,7 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
                   opacity:
                     formik.touched.cpf === undefined ||
                     imageDocument === null ||
-                    imageProfile === null || 
+                    imageProfile === null ||
                     skillSelected === null
                       ? 0.5
                       : !formik.isValid
@@ -333,7 +327,8 @@ const RegisterTwo = ({ index, setIndex, data, setData }: IRegisterTwo) => {
                 disabled={
                   formik.touched.cpf === undefined ||
                   imageDocument === null ||
-                  imageProfile === null
+                  imageProfile === null ||
+                  skillSelected === null
                     ? true
                     : !formik.isValid
                 }

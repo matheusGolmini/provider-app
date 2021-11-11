@@ -54,6 +54,12 @@ const RegisterThree = ({ index, setIndex, data }: IRegisterThree) => {
     onSubmit: async (values, { resetForm }) => {
       if (data) {
         setIsLoading(true);
+        const url = await Promise.all([
+          data.imageDocument,
+          data.imageProfile,
+        ]);
+        data.imageDocument = url[0];
+        data.imageProfile = url[1];
         try {
           const res = await ProviderService.createProvider(data);
           await ProviderService.addAddress(res.idServiceProvider, {

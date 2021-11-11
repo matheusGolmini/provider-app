@@ -24,8 +24,8 @@ export interface IData {
   cnpj: string;
   accountNumber: string;
   sex: string;
-  imageProfile?: string;
-  imageDocument?: string;
+  imageProfile?: Promise<string> | string;
+  imageDocument?: Promise<string> | string;
   skillSelected?: string;
   workPlaces: string[];
 }
